@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="D:\JAVAworkspace\CywmsSupplier\CYWMS_Supplier\LinkOS\src\main\assets"/><source path="D:\JAVAworkspace\CywmsSupplier\CYWMS_Supplier\LinkOS\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="D:\JAVAworkspace\CywmsSupplier\CYWMS_Supplier\LinkOS\src\release\assets"/></dataSet></merger>

@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "F:\\DEVELOPMENT\\WORKPACE\\Project\\SCG\\project\\CYWMS\\app\\2019.6.26\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\debug\\menu\\menu_setting.xml",
+        "source": "F:\\DEVELOPMENT\\WORKPACE\\Project\\SCG\\project\\CYWMS\\app\\2019.6.26\\CYWMS\\LinkOS\\src\\main\\res\\menu\\menu_setting.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\debug\\menu\\menu_setting.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\src\\main\\res\\menu\\menu_setting.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\debug\\menu\\menu_setting.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\src\\main\\res\\menu\\menu_setting.xml"
+    }
+]

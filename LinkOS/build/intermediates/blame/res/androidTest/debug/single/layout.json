@@ -1,0 +1,442 @@
+[
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_action.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\e6b47caae80ad390557782e15905547d4e8a680f\\output\\res\\layout\\notification_action.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_content_include.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_screen_content_include.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_select_dialog_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_select_dialog_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\select_dialog_singlechoice_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\select_dialog_singlechoice_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_popup_menu_item_layout.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_popup_menu_item_layout.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\discovery_methods.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\discovery_methods.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_mode_close_item_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_action_mode_close_item_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_checkbox.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_list_menu_item_checkbox.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\multicast_discovery_parameters.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\multicast_discovery_parameters.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\print_status_activity.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\print_status_activity.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_part_time.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\e6b47caae80ad390557782e15905547d4e8a680f\\output\\res\\layout\\notification_template_part_time.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\formats_list_activity.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\formats_list_activity.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_mode_bar.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_action_mode_bar.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\stored_format_variables.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\stored_format_variables.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\widget_common_tool_bar.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\widget_common_tool_bar.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_title_item.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_action_bar_title_item.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\connection_builder.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\connection_builder.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_popup_menu_header_item_layout.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_popup_menu_header_item_layout.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\connection_builder.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\connection_builder.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\main.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_activity_chooser_view_list_item.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_activity_chooser_view_list_item.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\status_channel_activity.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\status_channel_activity.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\stored_format_demo.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\stored_format_demo.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\select_dialog_multichoice_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\select_dialog_multichoice_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\image_print_demo.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\image_print_demo.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\mag_card_demo.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\mag_card_demo.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_popup_menu_header_item_layout.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_popup_menu_header_item_layout.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_tooltip.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_tooltip.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\discovery_methods.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\discovery_methods.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\discovery_results.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\discovery_results.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_layout.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_list_menu_item_layout.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_menu_item_layout.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_action_menu_item_layout.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_tooltip.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_tooltip.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_search_view.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_search_view.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_activity_chooser_view.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_activity_chooser_view.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\connection_screen_with_status.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\connection_screen_with_status.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_search_view.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_search_view.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_dialog_title_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_dialog_title_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\select_dialog_singlechoice_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\select_dialog_singlechoice_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_radio.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_list_menu_item_radio.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\stored_format_demo.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\stored_format_demo.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_action.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\e6b47caae80ad390557782e15905547d4e8a680f\\output\\res\\layout\\notification_action.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\sig_capture_demo.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\sig_capture_demo.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_title_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_alert_dialog_title_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_action_tombstone.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\e6b47caae80ad390557782e15905547d4e8a680f\\output\\res\\layout\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\mag_card_demo.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\mag_card_demo.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\widget_common_tool_bar.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\widget_common_tool_bar.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\select_dialog_item_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\select_dialog_item_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_radio.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_list_menu_item_radio.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\connection_screen.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\connection_screen.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_popup_menu_item_layout.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_popup_menu_item_layout.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\direct_broadcast_discovery_parameters.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\direct_broadcast_discovery_parameters.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_up_container.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_action_bar_up_container.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_simple.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_screen_simple.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\select_dialog_item_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\select_dialog_item_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_select_dialog_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_select_dialog_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_icon_group.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\e6b47caae80ad390557782e15905547d4e8a680f\\output\\res\\layout\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\discovery_results.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\discovery_results.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\stored_format_variables.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\stored_format_variables.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_icon.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_list_menu_item_icon.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\e6b47caae80ad390557782e15905547d4e8a680f\\output\\res\\layout\\notification_template_custom_big.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_menu_layout.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_action_menu_layout.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\multicast_discovery_parameters.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\multicast_discovery_parameters.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\main.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\subnet_search_discovery_parameters.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\subnet_search_discovery_parameters.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_toolbar.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_screen_toolbar.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_title_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_alert_dialog_title_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_content_include.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_screen_content_include.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_menu_layout.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_action_menu_layout.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\support_simple_spinner_dropdown_item.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_alert_dialog_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\print_status_activity.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\print_status_activity.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_part_chronometer.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\e6b47caae80ad390557782e15905547d4e8a680f\\output\\res\\layout\\notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_alert_dialog_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_activity_chooser_view.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_activity_chooser_view.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\select_dialog_multichoice_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\select_dialog_multichoice_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\image_print_demo.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\image_print_demo.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\formats_list_activity.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\formats_list_activity.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_icon.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_list_menu_item_icon.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_toolbar.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_screen_toolbar.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\connection_screen_with_status.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\connection_screen_with_status.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_dialog_title_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_dialog_title_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_title_item.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_action_bar_title_item.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\connection_screen.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\connection_screen.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_mode_close_item_material.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_action_mode_close_item_material.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\support_simple_spinner_dropdown_item.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_simple.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_screen_simple.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_menu_item_layout.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_action_menu_item_layout.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_part_chronometer.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\e6b47caae80ad390557782e15905547d4e8a680f\\output\\res\\layout\\notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_expanded_menu_layout.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_expanded_menu_layout.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_action_tombstone.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\e6b47caae80ad390557782e15905547d4e8a680f\\output\\res\\layout\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_checkbox.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_list_menu_item_checkbox.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_up_container.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_action_bar_up_container.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_activity_chooser_view_list_item.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_activity_chooser_view_list_item.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_expanded_menu_layout.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_expanded_menu_layout.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\direct_broadcast_discovery_parameters.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\direct_broadcast_discovery_parameters.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\status_channel_activity.xml",
+        "source": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\status_channel_activity.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_layout.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_list_menu_item_layout.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_icon_group.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\e6b47caae80ad390557782e15905547d4e8a680f\\output\\res\\layout\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\subnet_search_discovery_parameters.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\subnet_search_discovery_parameters.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\e6b47caae80ad390557782e15905547d4e8a680f\\output\\res\\layout\\notification_template_custom_big.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsDaCang\\CYWMS\\CYWMS\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_mode_bar.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\4a1c74f56a69122d260a376fd76ace1d90085bc3\\output\\res\\layout\\abc_action_mode_bar.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\sig_capture_demo.xml",
+        "source": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\bundles\\debug\\res\\layout\\sig_capture_demo.xml"
+    },
+    {
+        "merged": "D:\\JAVAworkspace\\CywmsSupplier\\CYWMS_Supplier\\LinkOS\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_part_time.xml",
+        "source": "C:\\Users\\123\\.android\\build-cache\\e6b47caae80ad390557782e15905547d4e8a680f\\output\\res\\layout\\notification_template_part_time.xml"
+    }
+]
