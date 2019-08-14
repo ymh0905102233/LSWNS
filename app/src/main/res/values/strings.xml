@@ -289,6 +289,8 @@
     <string name="Message_No_MenuList">菜单权限未配置！</string>
     <string name="Message_submit_finc">是否提交盘点结果？</string>
 
+    <string name="Msg_SaveT_SubInfoADF">信息提交中...</string>
+
     <string name="Hit_ScanBarcode">请扫描物料条码</string>
     <string name="Hit_ScanPallet">请扫描托盘条码</string>
     <string name="Hit_Selectwohouse">点击选择仓库</string>
@@ -392,4 +394,7 @@
     <string name="ReportQCY">生成报检单</string>
     <string name="Product_Product_adjustCPYMH">调拨出库</string>
     <string name="Msg_SaveT_LineInStockProductlYMHADF">调拨数据提交中...</string>
+    <string name="QCType">初检类型:</string>
+    <string name="advqty">预收数</string>
+    <string name="advtitle">预收货</string>
 </resources>

@@ -99,7 +99,8 @@
         <activity android:name="com.xx.chinetek.cyproduct.LineStockIn.LineStockInBackProduct" />
         <activity android:name="com.xx.chinetek.cyproduct.LineStockOut.LineStockOutMaterial" />
         <activity android:name="com.xx.chinetek.cyproduct.LineStockOut.Zcj" />
-        <activity android:name=".Intentory.IntentoryFinc"></activity>
+        <activity android:name=".Intentory.IntentoryFinc" />
+        <activity android:name=".Receiption.AdvInChoiceActivity"></activity>
     </application>
 
 </manifest>

@@ -33,6 +33,7 @@ import com.xx.chinetek.cywms.OffShelf.OffShelfBillChoice;
 import com.xx.chinetek.cywms.Qc.QCBillChoice;
 import com.xx.chinetek.cywms.Query.QueryMain;
 import com.xx.chinetek.cywms.R;
+import com.xx.chinetek.cywms.Receiption.AdvInChoiceActivity;
 import com.xx.chinetek.cywms.Receiption.ReceiptBillChoice;
 import com.xx.chinetek.cywms.Review.ReviewBillChoice;
 import com.xx.chinetek.cywms.Stock.AdjustStock;
@@ -78,8 +79,11 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent();
         if(textView.getText().toString().equals("质检"))
             intent.setClass(context, QCBillChoice.class);
-        else if(textView.getText().toString().equals("收货"))
+        else if(textView.getText().toString().equals("收货")){
             intent.setClass(context, ReceiptBillChoice.class);
+            intent.putExtra("BusinesType","收货");
+        }
+
         else if(textView.getText().toString().equals("上架"))
             intent.setClass(context, UpShelfBillChoice.class);
         else if(textView.getText().toString().equals("下架"))
@@ -139,6 +143,9 @@ public class MainActivity extends BaseActivity {
         else if(textView.getText().toString().equals("第三方移库")) {
             intent.setClass(context, InnerMoveScan.class);
             intent.putExtra("FunctionType",1);
+        }else if(textView.getText().toString().equals("预收货")){
+            intent.setClass(context, ReceiptBillChoice.class);
+            intent.putExtra("BusinesType","预收货");
         }
         if(intent!=null)
             startActivityLeft(intent);
@@ -162,6 +169,10 @@ public class MainActivity extends BaseActivity {
                 if(!CommonUtil.isNumeric(nodUrl)) continue;
                 int Node = Integer.parseInt(nodUrl);
                 switch (Node) {
+                    case 0:
+                        itemIconList.add(R.drawable.receiption);
+                        itemNamesList.add("预收货");
+                        break;
                     case 1:
                         itemIconList.add(R.drawable.qc);
                         itemNamesList.add("质检");

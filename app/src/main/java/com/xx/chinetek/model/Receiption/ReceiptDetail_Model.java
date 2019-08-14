@@ -60,6 +60,7 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
     private String ToBatchNo;
     private String ToErpAreaNo;
     private String ToErpWarehouse;
+    private Float ADVRECEIVEQTY;
 
 
     public String getQcCode() {
@@ -409,6 +410,14 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         BatchNo = batchNo;
     }
 
+    public Float getADVRECEIVEQTY() {
+        return ADVRECEIVEQTY;
+    }
+
+    public void setADVRECEIVEQTY(Float ADVRECEIVEQTY) {
+        this.ADVRECEIVEQTY = ADVRECEIVEQTY;
+    }
+
 //    public List<PalletDetail_Model> getLstPallet() {
 //        return lstPallet;
 //    }
@@ -520,6 +529,7 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         dest.writeString(this.ToBatchNo);
         dest.writeString(this.ToErpAreaNo);
         dest.writeString(this.ToErpWarehouse);
+        dest.writeFloat(this.ADVRECEIVEQTY);
     }
 
     protected ReceiptDetail_Model(Parcel in) {
@@ -572,6 +582,7 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
         this.ToBatchNo = in.readString();
         this.ToErpAreaNo = in.readString();
         this.ToErpWarehouse = in.readString();
+        this.ADVRECEIVEQTY = (Float) in.readValue(Float.class.getClassLoader());
     }
 
     public static final Creator<ReceiptDetail_Model> CREATOR = new Creator<ReceiptDetail_Model>() {
@@ -585,6 +596,8 @@ public class ReceiptDetail_Model extends Base_Model implements Parcelable,Clonea
             return new ReceiptDetail_Model[size];
         }
     };
+
+
 }
 
 

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by GHOST on 2016/12/13.
@@ -49,6 +50,7 @@ public class Base_Model implements Parcelable {
     private String  ERPVoucherType;
     public String  ErpVoucherNo;
     private String  PrintIPAdress;
+
 
     public String getERPVoucherType() {
         return ERPVoucherType;
