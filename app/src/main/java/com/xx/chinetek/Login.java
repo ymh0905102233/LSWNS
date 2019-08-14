@@ -53,10 +53,11 @@ import java.util.Map;
 @ContentView(R.layout.activity_login)
 public class Login extends BaseActivity{
 
-    String TAG                       = "Loagin";
+    String TAG = "Loagin";
     String TAG_GetWareHouseByUserADF = "Login_GetWareHouseByUserADF";
     private static final int RESULT_GET_LOGIN_INFO        = 101;
     private static final int RESULT_GetWareHouseByUserADF = 102;
+
 
 
     @Override
@@ -84,7 +85,7 @@ public class Login extends BaseActivity{
     EditText edtPassword;
     int SelectWareHouseID = -1;
 
-    Context             context = Login.this;
+    Context context = Login.this;
     List<WareHouseInfo> lstWarehouse;
 //
 //    @Override
