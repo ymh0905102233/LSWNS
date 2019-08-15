@@ -397,4 +397,5 @@
     <string name="QCType">初检类型:</string>
     <string name="advqty">预收数</string>
     <string name="advtitle">预收货</string>
+    <string name="Msg_GetT_advInParameter">获取检验类型</string>
 </resources>
