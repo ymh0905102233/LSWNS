@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.67" />
+        app:layout_constraintGuide_end="126dp" />
 
     <EditText
         android:id="@+id/et_adv_orderInfo"
@@ -149,15 +149,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="2dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
         android:hint="批次"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline85"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_adv_barcode" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_adv_date"
+        android:layout_marginLeft="2dp"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline85"
+        app:layout_constraintHorizontal_bias="1.0" />
 
     <EditText
         android:id="@+id/et_adv_qty"
@@ -177,10 +176,10 @@
     <Button
         android:id="@+id/btn_adv_date"
         android:layout_width="0dp"
-        android:layout_height="38dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/background_login"
         android:text="选择"
@@ -192,7 +191,7 @@
     <Button
         android:id="@+id/btn_qc_type"
         android:layout_width="0dp"
-        android:layout_height="38dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"

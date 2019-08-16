@@ -147,10 +147,14 @@ public class AdvInChoiceActivity extends BaseActivity {
         BaseApplication.context = context;
         BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.advtitle), false);
         x.view().inject(this);
-
+        BaseApplication.isCloseActivity=false;//返回
+        txtCompany.setText("物料编码");
+        txtStatus.setText("");
+        txtBatch.setText("");
         final Map<String, String> params = new HashMap<String, String>();
         params.put("groupname", "advIn_QcType");
         RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_Get_AdvInParameter, getString(R.string.Msg_GetT_advInParameter), context, mHandler, RESULT_Msg_SaveAdvParameter, null, URLModel.GetURL().Get_AdvInParameter, params, null);
+
     }
 
     @Override
