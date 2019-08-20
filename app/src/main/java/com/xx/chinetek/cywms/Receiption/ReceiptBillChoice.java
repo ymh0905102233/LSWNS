@@ -155,9 +155,9 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_receiptbillchoice, menu);
         gMenuItem = menu.findItem(R.id.action_filter);
-        if (businesType.equals("预收货")) {
-            menu.findItem(R.id.action_QCfilter).setVisible(false);
-        }
+        // if (businesType.equals("预收货")) {
+        menu.findItem(R.id.action_QCfilter).setVisible(false);
+        // }
         return true;
     }
 
@@ -273,7 +273,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 receiptModels = returnMsgModel.getModelJson();
                 if (receiptModels != null && receiptModels.size() == 1 && barCodeInfos != null && barCodeInfos.size() != 0) {
-                    if (businesType.equals("预收货") ) {
+                    if (businesType.equals("预收货")) {
                         StartAdvInScanIntent(receiptModels.get(0));
                     } else {
                         StartScanIntent(receiptModels.get(0), barCodeInfos);
