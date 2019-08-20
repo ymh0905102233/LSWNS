@@ -169,8 +169,11 @@ public class URLModel {
     public String Post_DBZaRuInStockERPADF = GetWCFAdress()+"Post_DBZaRuInStockERPADF"; //生成杂入单  UserJson  StockInfoJson
 
     public String GetT_MaterialPackADF=GetWCFAdress()+"GetT_MaterialPackADF";//获取物料信息
-
     public String Post_SaveAdvInStock =GetWCFAdress()+"Post_SaveAdvInStock";//保存预到货信息
 
+
+    //ymh盘点
+    public String CheckGetBatchnoAndMaterialno =GetWCFAdress()+"CheckGetBatchnoAndMaterialno";//根据EAN，areaid获取batch
+    public String CheckSerialno =GetWCFAdress()+"CheckSerialno";//根据EAN 获取serialno
 
 }
