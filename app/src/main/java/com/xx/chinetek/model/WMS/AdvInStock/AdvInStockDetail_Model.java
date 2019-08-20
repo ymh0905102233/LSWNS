@@ -20,6 +20,8 @@ public class AdvInStockDetail_Model extends Base_Model implements Parcelable {
     private String EAN;
     private String SupBatch;
     private int QualityType;
+    private String RowNO;
+    private String RowNODel;
 
     public AdvInStockDetail_Model() {
     }
@@ -35,6 +37,8 @@ public class AdvInStockDetail_Model extends Base_Model implements Parcelable {
         EAN = in.readString();
         SupBatch = in.readString();
         QualityType = in.readInt();
+        RowNO =in.readString();
+        RowNODel=in.readString();
     }
 
     @Override
@@ -49,6 +53,9 @@ public class AdvInStockDetail_Model extends Base_Model implements Parcelable {
         dest.writeString(EAN);
         dest.writeString(SupBatch);
         dest.writeInt(QualityType);
+        dest.writeString(RowNO);
+        dest.writeString(RowNODel);
+
     }
 
     @Override
@@ -138,5 +145,21 @@ public class AdvInStockDetail_Model extends Base_Model implements Parcelable {
 
     public void setQualityType(int qualityType) {
         QualityType = qualityType;
+    }
+
+    public String getRowNO() {
+        return RowNO;
+    }
+
+    public void setRowNO(String rowNO) {
+        RowNO = rowNO;
+    }
+
+    public String getRowNODel() {
+        return RowNODel;
+    }
+
+    public void setRowNODel(String rowNODel) {
+        RowNODel = rowNODel;
     }
 }

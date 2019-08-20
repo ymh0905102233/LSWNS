@@ -190,6 +190,31 @@ public class BasisTimesUtils {
     }
 
     /**
+     * 获取年
+     * @return
+     */
+    public static int getYear(){
+        Calendar cd = Calendar.getInstance();
+        return  cd.get(Calendar.YEAR);
+    }
+    /**
+     * 获取月
+     * @return
+     */
+    public static int getMonth(){
+        Calendar cd = Calendar.getInstance();
+        return  cd.get(Calendar.MONTH)+1;
+    }
+    /**
+     * 获取日
+     * @return
+     */
+    public static int getDay(){
+        Calendar cd = Calendar.getInstance();
+        return  cd.get(Calendar.DATE);
+    }
+
+    /**
      * 获取某月最后一天(日)
      */
     public static int getLastDayOfMonth(int year, int month) {

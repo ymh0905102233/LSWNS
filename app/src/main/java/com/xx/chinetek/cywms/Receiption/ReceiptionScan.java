@@ -281,12 +281,12 @@ public class ReceiptionScan extends BaseActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 // TODO 自动生成的方法
-                                                if (receiptDetailModels.get(0).getVoucherType() == 22) {
-                                                    Intent intent = new Intent(context, QCMaterialChoice.class);
-                                                    String ErpVourcherNo = returnMsgModel.getMaterialDoc();
-                                                    intent.putExtra("ErpVourcherNo", ErpVourcherNo);
-                                                    startActivityLeft(intent);
-                                                }
+//                                                if (receiptDetailModels.get(0).getVoucherType() == 22) {
+//                                                    Intent intent = new Intent(context, QCMaterialChoice.class);
+//                                                    String ErpVourcherNo = returnMsgModel.getMaterialDoc();
+//                                                    intent.putExtra("ErpVourcherNo", ErpVourcherNo);
+//                                                    startActivityLeft(intent);
+//                                                }
                                                 closeActiviry();
                                             }
                                         }).show();
@@ -381,10 +381,10 @@ public class ReceiptionScan extends BaseActivity {
         }
 
         if (receiptDetailModels.get(index).getLstBarCode().size() != 0) {
-            if (!barCodeInfo.getBatchNo().equals(receiptDetailModels.get(index).getLstBarCode().get(0).getBatchNo())) {
-                MessageBox.Show(context, getString(R.string.Error_ReceivebatchError) + "|" + barCodeInfo.getSerialNo());
-                return false;
-            }
+//            if (!barCodeInfo.getBatchNo().equals(receiptDetailModels.get(index).getLstBarCode().get(0).getBatchNo())) {
+//                MessageBox.Show(context, getString(R.string.Error_ReceivebatchError) + "|" + barCodeInfo.getSerialNo());
+//                return false;
+//            }
             if (!barCodeInfo.getSupPrdBatch().equals(receiptDetailModels.get(index).getLstBarCode().get(0).getSupPrdBatch())) {
                 MessageBox.Show(context, getString(R.string.Error_ProductbatchError) + "|" + barCodeInfo.getSerialNo());
                 return false;

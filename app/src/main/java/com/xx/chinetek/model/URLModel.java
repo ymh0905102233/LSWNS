@@ -170,6 +170,7 @@ public class URLModel {
 
     public String GetT_MaterialPackADF=GetWCFAdress()+"GetT_MaterialPackADF";//获取物料信息
     public String Post_SaveAdvInStock =GetWCFAdress()+"Post_SaveAdvInStock";//保存预到货信息
+    public String Get_AdvInParameter =GetWCFAdress()+"Get_AdvInParameter";//获得预收货检验类型
 
 
     //ymh盘点

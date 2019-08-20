@@ -69,6 +69,8 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
     private String RelaWeight; //相对比重
     private String LabelMark; //标记
 
+    private  String EAN;//ENA码
+
     public String getRelaWeight() {
         return RelaWeight;
     }
@@ -496,6 +498,7 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
         dest.writeString(this.Palletno);
         dest.writeValue(this.PalletQty);
         dest.writeInt(this.PalletType);
+        dest.writeString(this.EAN);
     }
 
     protected BarCodeInfo(Parcel in) {
@@ -543,6 +546,7 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
         this.Palletno = in.readString();
         this.PalletQty = (Float) in.readValue(Float.class.getClassLoader());
         this.PalletType = in.readInt();
+        this.EAN = in.readString();
     }
 
     public static final Creator<BarCodeInfo> CREATOR = new Creator<BarCodeInfo>() {
@@ -556,4 +560,12 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
             return new BarCodeInfo[size];
         }
     };
+
+    public String getEAN() {
+        return EAN;
+    }
+
+    public void setEAN(String EAN) {
+        this.EAN = EAN;
+    }
 }

@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnKeyListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -36,6 +37,7 @@ import com.xx.chinetek.model.URLModel;
 import com.xx.chinetek.model.User.User;
 import com.xx.chinetek.model.WMS.AdvInStock.AdvInStockDetail_Model;
 import com.xx.chinetek.model.WMS.AdvInStock.AdvInStockInfo_Model;
+import com.xx.chinetek.model.WMS.AdvInStock.Parameter_Model;
 import com.xx.chinetek.util.Network.RequestHandler;
 import com.xx.chinetek.util.dialog.BasisTimesUtils;
 import com.xx.chinetek.util.dialog.MessageBox;
@@ -68,19 +70,21 @@ public class AdvInChoiceActivity extends BaseActivity {
 
     Context context = AdvInChoiceActivity.this;
 
+    String TAG_Get_AdvInParameter = "Get_AdvInParameter";
     String TAG_GetT_InStockDetailListByHeaderIDADF = "ReceiptionScan_GetT_InStockDetailListByHeaderIDADF";
     String TAG_GetAdvin_GetMaterialPackADF = "GetAdvin_GetMaterialPackADF";
-    String TAG_SaveAdvInStock="SaveAdvInStock";
+    String TAG_SaveAdvInStock = "SaveAdvInStock";
 
     private final int RESULT_Msg_GetT_InStockDetailListByHeaderIDADF = 101;
     private final int RESULT_Msg_GetAdvin_GetMaterialPackADF = 102;
-    private final  int RESULT_Msg_SaveAdvInStock =103;
+    private final int RESULT_Msg_SaveAdvInStock = 103;
+    private final int RESULT_Msg_SaveAdvParameter = 104;
 
     @ViewInject(R.id.et_adv_orderInfo)
     EditText txtVoucherNo;
 
-    @ViewInject(R.id.sp_adv_qc_type)
-    Spinner spQcType;
+    @ViewInject(R.id.btn_qc_type)
+    Button btnQcType;
     @ViewInject(R.id.et_adv_barcode)
     EditText etBarcode;
     @ViewInject(R.id.btn_adv_date)
@@ -125,8 +129,8 @@ public class AdvInChoiceActivity extends BaseActivity {
     MaterialPack_Model materialPack;
 
     ArrayList<AdvInStockDetail_Model> listAdvInStock = new ArrayList<>();
-
-
+    /*检验类型*/
+    ArrayList<Parameter_Model> listParameter;
     /*效期*/
     String eDate = "";
 
@@ -143,12 +147,20 @@ public class AdvInChoiceActivity extends BaseActivity {
         BaseApplication.context = context;
         BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.advtitle), false);
         x.view().inject(this);
+        BaseApplication.isCloseActivity=false;//返回
+        txtCompany.setText("物料编码");
+        txtStatus.setText("");
+        txtBatch.setText("");
+        final Map<String, String> params = new HashMap<String, String>();
+        params.put("groupname", "advIn_QcType");
+        RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_Get_AdvInParameter, getString(R.string.Msg_GetT_advInParameter), context, mHandler, RESULT_Msg_SaveAdvParameter, null, URLModel.GetURL().Get_AdvInParameter, params, null);
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_adv_in_choice);
+        // setContentView(R.layout.activity_adv_in_choice);
     }
 
     /*载入顶部按钮*/
@@ -169,6 +181,9 @@ public class AdvInChoiceActivity extends BaseActivity {
                 break;
             case RESULT_Msg_SaveAdvInStock:
                 AnalysisSetT_AdvInStock((String) msg.obj);
+                break;
+            case RESULT_Msg_SaveAdvParameter:
+                AnalysisGetT_AdvInParameter((String) msg.obj);
                 break;
         }
         super.onHandleMessage(msg);
@@ -197,8 +212,8 @@ public class AdvInChoiceActivity extends BaseActivity {
             advInStockInfo.setWarehouseID(BaseApplication.userInfo.getWarehouseID());
             advInStockInfo.setLstDetail(listAdvInStock);
             final Map<String, String> params = new HashMap<String, String>();
-            String jsonValue =GsonUtil.parseModelToJson(advInStockInfo);
-            params.put("advInStock",jsonValue );
+            String jsonValue = GsonUtil.parseModelToJson(advInStockInfo);
+            params.put("advInStock", jsonValue);
             String UserJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
             params.put("UserJson", UserJson);
             LogUtil.WriteLog(ReceiptionScan.class, TAG_GetAdvin_GetMaterialPackADF, jsonValue);
@@ -227,19 +242,19 @@ public class AdvInChoiceActivity extends BaseActivity {
         return false;
     }
 
-   // @Event(value ={R.id.tb_UnboxType,R.id.tb_PalletType,R.id.tb_BoxType} ,type = CompoundButton.OnClickListener.class)
-   // private void TBonCheckedChanged(View view) {
- //  @Event(value = {R.id.button6},type = View.OnClickListener.class)
- //  private void onClick(View view) {
+    // @Event(value ={R.id.tb_UnboxType,R.id.tb_PalletType,R.id.tb_BoxType} ,type = CompoundButton.OnClickListener.class)
+    // private void TBonCheckedChanged(View view) {
+    //  @Event(value = {R.id.button6},type = View.OnClickListener.class)
+    //  private void onClick(View view) {
     @Event(value = R.id.btn_adv_date, type = View.OnClickListener.class)
     private void onClick(View v) {
 
         if (materialPack == null) {
             MessageBox.Show(context, "请先扫描条码");
-            return ;
+            return;
         }
         /**     * 年月日选择     */ //BasisTimesUtils.THEME_HOLO_DARK
-        BasisTimesUtils.showDatePickerDialog(context,0, "请选择年月日", Calendar.YEAR, Calendar.MONTH+1, Calendar.DATE, new BasisTimesUtils.OnDatePickerListener() {
+        BasisTimesUtils.showDatePickerDialog(context, 4, "请选择年月日", BasisTimesUtils.getYear(), BasisTimesUtils.getMonth(), BasisTimesUtils.getDay(), new BasisTimesUtils.OnDatePickerListener() {
             @Override
             public void onConfirm(int year, int month, int dayOfMonth) {
                 eDate = year + "-" + month + "-" + dayOfMonth;
@@ -247,6 +262,7 @@ public class AdvInChoiceActivity extends BaseActivity {
                 String bdate = BasisTimesUtils.getDateStr(eDate, materialPack.getQUALITYDAY());
                 etBatch.setText(bdate);
             }
+
             @Override
             public void onCancel() {
                 eDate = "";
@@ -255,6 +271,28 @@ public class AdvInChoiceActivity extends BaseActivity {
         });
     }
 
+    @Event(value = R.id.btn_qc_type, type = View.OnClickListener.class)
+    private void onQcTypeClick(View v) {
+        ArrayList<String> listString = new ArrayList<>();
+        if(listParameter==null||listParameter.size()==0){
+            return;
+        }
+        for (Parameter_Model item :
+                listParameter) {
+            listString.add(item.getParameterid()+" "+item.getParameterName());
+        }
+        final String[] items = (String[]) listString.toArray(new String[listString.size()]);
+        AlertDialog alertDialog3 = new AlertDialog.Builder(this)
+                .setTitle("选择质检结果")
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        btnQcType.setText(listParameter.get(i).getParameterid()+" "+listParameter.get(i).getParameterName());
+                        return;
+                    }
+                }).create();
+        alertDialog3.show();
+    }
     @Event(value = R.id.et_adv_qty, type = OnKeyListener.class)
     private boolean etAdvQty(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
@@ -300,7 +338,13 @@ public class AdvInChoiceActivity extends BaseActivity {
             advScanValue.setIsDel(1);
             advScanValue.setEAN(materialPack.getWATERCODE());
             advScanValue.setErpVoucherNo(receiptScanDetail.getErpVoucherNo());
-            advScanValue.setQualityType(spQcType.getId());//质检类型
+            if(!btnQcType.getText().toString().substring(0,1).equals("选")){
+                String[] qcvalue= btnQcType.getText().toString().split(" ");
+                advScanValue.setQualityType(Integer.valueOf(qcvalue[0]));//质检类型
+            }
+
+            advScanValue.setRowNO(receiptScanDetail.getRowNo());
+            advScanValue.setRowNODel(receiptScanDetail.getRowNoDel());
             Date date = new Date(BasisTimesUtils.getLongTimeOfYMD(eDate));
             advScanValue.setEDate(date);
             advScanValue.setSupBatch(etBatch.getText().toString());
@@ -324,6 +368,9 @@ public class AdvInChoiceActivity extends BaseActivity {
         etBarcode.setText("");
         txtOrderQty.setText("订单数量");
         btnDate.setText("选   择");
+        if (listParameter != null && listParameter.size() > 0) {
+            btnQcType.setText(listParameter.get(0).getParameterid() + " " + listParameter.get(0).getParameterName());
+        }
         CommonUtil.setEditFocus(etBarcode);
     }
 
@@ -354,6 +401,10 @@ public class AdvInChoiceActivity extends BaseActivity {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 receiptDetailModels = returnMsgModel.getModelJson();
+                for (ReceiptDetail_Model model :
+                        receiptDetailModels) {
+                    model.setRemainQty(model.getInStockQty() - model.getADVRECEIVEQTY());
+                }
                 //自动确认扫描箱号
                 BindListVIew(receiptDetailModels);
             } else {
@@ -365,23 +416,44 @@ public class AdvInChoiceActivity extends BaseActivity {
         CommonUtil.setEditFocus(etBarcode);
     }
 
-    void AnalysisSetT_AdvInStock(String result){
-        LogUtil.WriteLog(ReceiptionScan.class, TAG_SaveAdvInStock, result);
-        try{
+    /*获取检验类型*/
+    void AnalysisGetT_AdvInParameter(String result) {
+        LogUtil.WriteLog(ReceiptionScan.class, TAG_Get_AdvInParameter, result);
+        try {
+            ReturnMsgModelList<Parameter_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<Parameter_Model>>() {
+            }.getType());
+            if (returnMsgModel.getHeaderStatus().equals("S")) {
+                listParameter = returnMsgModel.getModelJson();
+                if (listParameter != null && listParameter.size() > 0) {
+                    btnQcType.setText(listParameter.get(0).getParameterid() + " " + listParameter.get(0).getParameterName());
+                }
+            } else {
+                MessageBox.Show(context, returnMsgModel.getMessage());
+            }
+        } catch (Exception ex) {
+            MessageBox.Show(context, ex.getMessage());
+        }
+        CommonUtil.setEditFocus(etBarcode);
+    }
 
-            final ReturnMsgModel<Base_Model> returnMsgModel =  GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<Base_Model>>() {
+    void AnalysisSetT_AdvInStock(String result) {
+        LogUtil.WriteLog(ReceiptionScan.class, TAG_SaveAdvInStock, result);
+        try {
+
+            final ReturnMsgModel<Base_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<Base_Model>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 MessageBox.Show(context, returnMsgModel.getMessage());
                 closeActiviry();
-            }else {
+            } else {
                 MessageBox.Show(context, returnMsgModel.getMessage());
             }
 
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             MessageBox.Show(context, ex.getMessage());
         }
     }
+
     /*
     获取物料信息处理
 */
@@ -440,7 +512,7 @@ public class AdvInChoiceActivity extends BaseActivity {
         receiptScanDetail = null;
         for (ReceiptDetail_Model detail :
                 receiptDetailModels) {
-            if (detail.getMaterialNo().equals(materialPackMdl.getMATERIALNO()) &&(detail.getInStockQty()- detail.getADVRECEIVEQTY())  > detail.getScanQty()) {
+            if (detail.getMaterialNo().equals(materialPackMdl.getMATERIALNO()) && (detail.getInStockQty() - detail.getADVRECEIVEQTY()) > detail.getScanQty()) {
                 receiptScanDetail = detail;
                 break;
             }
