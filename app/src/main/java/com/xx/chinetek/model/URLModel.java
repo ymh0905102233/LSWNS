@@ -177,4 +177,9 @@ public class URLModel {
     public String CheckGetBatchnoAndMaterialno =GetWCFAdress()+"CheckGetBatchnoAndMaterialno";//根据EAN，areaid获取batch
     public String CheckSerialno =GetWCFAdress()+"CheckSerialno";//根据EAN 获取serialno
 
+    //ymh下架
+    public String GetAreano =GetWCFAdress()+"GetAreaModelADF";//获取库位信息
+    public String OffSerialno =GetWCFAdress()+"OffSerialno";
+
+
 }

@@ -19,6 +19,7 @@
         <activity android:name=".Receiption.SupplierFilterActivity" />
         <activity android:name=".Receiption.ReceiptionScan" />
         <activity android:name=".Receiption.ReceiptionBillDetail" />
+        <activity android:name=".Receiption.AdvInChoiceActivity" />
         <!-- <activity android:name=".BillChoice" /> -->
         <activity android:name=".UpShelf.UpShelfScanActivity" />
         <activity android:name=".UpShelf.UpShelfBillChoice" />
@@ -100,7 +101,7 @@
         <activity android:name="com.xx.chinetek.cyproduct.LineStockOut.LineStockOutMaterial" />
         <activity android:name="com.xx.chinetek.cyproduct.LineStockOut.Zcj" />
         <activity android:name=".Intentory.IntentoryFinc" />
-        <activity android:name=".Receiption.AdvInChoiceActivity"></activity>
+
     </application>
 
 </manifest>
