@@ -229,7 +229,7 @@ public class ReceiptionScan extends BaseActivity {
         try {
             ReturnMsgModelList<ReceiptDetail_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<ReceiptDetail_Model>>() {
             }.getType());
-            if (returnMsgModel.getHeaderStatus().equals("S")) {
+                if (returnMsgModel.getHeaderStatus().equals("S")) {
                 receiptDetailModels = returnMsgModel.getModelJson();
                 //自动确认扫描箱号
                 BindListVIew(receiptDetailModels);

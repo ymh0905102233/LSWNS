@@ -147,19 +147,7 @@ public class BasisTimesUtils {
         return date;
     }
 
-    /**
-     * 当前的时间(年月日)     *     * @return yyyy-MM-dd
-     */
-    public static String getDeviceTimeOfYMD() {
-        String date = "";
-        try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            date = df.format(new Date());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return date;
-    }
+
 
     /**
      * 当前的时间(年月)     *     * @return yyyy-MM
@@ -189,6 +177,29 @@ public class BasisTimesUtils {
         return lastDayOfMonth;
     }
 
+    /**
+     * 当前的时间(年月日)     *     * @return yyyy-MM-dd
+     */
+    public static String getDeviceTimeOfYMD() {
+        String date = "";
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            date = df.format(new Date());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+    /**
+     * 获取月
+     * @return
+     */
+    public static int getMonth(int Num){
+        Calendar cd =  Calendar.getInstance();
+        cd.add(Calendar.MONTH,Num);
+
+        return  cd.get(Calendar.MONTH)+1;
+    }
     /**
      * 获取年
      * @return

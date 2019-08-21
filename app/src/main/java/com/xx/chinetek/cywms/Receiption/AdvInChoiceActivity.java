@@ -210,6 +210,12 @@ public class AdvInChoiceActivity extends BaseActivity {
 
             advInStockInfo.setCreater(BaseApplication.userInfo.getUserNo());
             advInStockInfo.setWarehouseID(BaseApplication.userInfo.getWarehouseID());
+
+            for (ReceiptDetail_Model model :
+                    receiptDetailModels) {
+                model.setRemainQty(model.getInStockQty() - model.getRemainQty());
+            }
+
             advInStockInfo.setLstDetail(listAdvInStock);
             final Map<String, String> params = new HashMap<String, String>();
             String jsonValue = GsonUtil.parseModelToJson(advInStockInfo);
@@ -254,7 +260,7 @@ public class AdvInChoiceActivity extends BaseActivity {
             return;
         }
         /**     * 年月日选择     */ //BasisTimesUtils.THEME_HOLO_DARK
-        BasisTimesUtils.showDatePickerDialog(context, 4, "请选择年月日", BasisTimesUtils.getYear(), BasisTimesUtils.getMonth(), BasisTimesUtils.getDay(), new BasisTimesUtils.OnDatePickerListener() {
+        BasisTimesUtils.showDatePickerDialog(context, 3, "请选择年月日", BasisTimesUtils.getYear()+2, BasisTimesUtils.getMonth(6), BasisTimesUtils.getDay(), new BasisTimesUtils.OnDatePickerListener() {
             @Override
             public void onConfirm(int year, int month, int dayOfMonth) {
                 eDate = year + "-" + month + "-" + dayOfMonth;
