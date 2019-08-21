@@ -196,11 +196,13 @@ public class Login extends BaseActivity{
                 MessageBox.Show(context, getResources().getString(R.string.Message_No_ReceiveAreaID));
             } else if (BaseApplication.userInfo.getPickAreaID() <= 0 && URLModel.isWMS) {
                 MessageBox.Show(context, getResources().getString(R.string.Message_No_PickAreaID));
-            } else if (BaseApplication.userInfo.getToSampAreaNo() == null || BaseApplication.userInfo.getToSampAreaNo().equals("")) {
-                MessageBox.Show(context, getResources().getString(R.string.Message_No_SampAreaNo));
-            } else if (BaseApplication.userInfo.getToSampWareHouseNo() == null || BaseApplication.userInfo.getToSampWareHouseNo().equals("")) {
-                MessageBox.Show(context, getResources().getString(R.string.Message_No_QuanUserNo));
-            } else if (BaseApplication.userInfo.getLstMenu() == null || BaseApplication.userInfo.getLstMenu().size() == 0) {
+            }
+//            else if (BaseApplication.userInfo.getToSampAreaNo() == null || BaseApplication.userInfo.getToSampAreaNo().equals("")) {
+//                MessageBox.Show(context, getResources().getString(R.string.Message_No_SampAreaNo));
+//            } else if (BaseApplication.userInfo.getToSampWareHouseNo() == null || BaseApplication.userInfo.getToSampWareHouseNo().equals("")) {
+//                MessageBox.Show(context, getResources().getString(R.string.Message_No_QuanUserNo));
+//            }
+            else if (BaseApplication.userInfo.getLstMenu() == null || BaseApplication.userInfo.getLstMenu().size() == 0) {
                 MessageBox.Show(context, getResources().getString(R.string.Message_No_MenuList));
             } else {
                 SharePreferUtil.SetUserShare(context, BaseApplication.userInfo);

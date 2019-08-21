@@ -34,6 +34,8 @@ public class SharePreferUtil {
     }
 
     public static void SetShare(Context context, String IPAdress,String PrintIP,String ElecIP, Integer Port, Integer TimeOut,Boolean isWMS){
+        ElecIP="1.1.1.1";
+        PrintIP=ElecIP;
         SharedPreferences sharedPreferences=context.getSharedPreferences("Setting", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit=sharedPreferences.edit();
         edit.putString("IPAdress",IPAdress);

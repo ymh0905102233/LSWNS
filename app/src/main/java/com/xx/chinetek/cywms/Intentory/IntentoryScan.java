@@ -54,15 +54,20 @@ public class IntentoryScan extends BaseActivity {
     String TAG_GetAreanobyCheckno2="IntentoryScan_GetAreanobyCheckno2";
     String TAG_GetScanInfo="IntentoryScan_GetScanInfo";
     String TAG_InsertCheckDetail="IntentoryScan_InsertCheckDetail";
+    String TAG_CheckGetBatchnoAndMaterialno="CheckGetBatchnoAndMaterialno";
+    String TAG_CheckSerialno="TAG_CheckSerialno";
+
+
 
     private final int RESULT_Msg_GetAreanobyCheckno=101;
     private final int RESULT_Msg_GetScanInfo=102;
     private final int RESULT_Msg_InsertCheckDetail=103;
     private final int RESULT_GetAreanobyCheckno2=104;
+    private final int RESULT_Msg_CheckGetBatchnoAndMaterialno=105;
 
     String[] QCStatus={"待检","检验合格","检验不合格"};
     int[] QCStatusType={1,3,4};
-
+    String[] Batchs;
     @Override
     public void onHandleMessage(Message msg) {
         switch (msg.what) {
@@ -77,6 +82,9 @@ public class IntentoryScan extends BaseActivity {
                 break;
             case RESULT_GetAreanobyCheckno2:
                 AnalysisGetAreanobyCheckno2Json((String) msg.obj);
+                break;
+            case RESULT_Msg_CheckGetBatchnoAndMaterialno:
+                AnalysisCheckGetBatchnoAndMaterialno((String) msg.obj);
                 break;
             case NetworkError.NET_ERROR_CUSTOM:
                 ToastUtil.show("获取请求失败_____"+ msg.obj);
@@ -110,6 +118,9 @@ public class IntentoryScan extends BaseActivity {
     EditText edtStockScan;
     @ViewInject(R.id.edt_InvNum)
     EditText edtInvNum;
+    @ViewInject(R.id.txt_getbatch)
+    TextView txtgetbatch;
+
     @ViewInject(R.id.btn_PalletDetail)
     Button btnpalletDetail;
     @ViewInject(R.id.btn_PalletConfig)
@@ -189,13 +200,27 @@ public class IntentoryScan extends BaseActivity {
                 return true;
             }
             String barcode = edtInvScanBarcode.getText().toString().trim();
-            if (!barcode.equals("")) {
-                final Map<String, String> params = new HashMap<String, String>();
-                params.put("barcode", barcode);
-                String para = (new JSONObject(params)).toString();
-                LogUtil.WriteLog(IntentoryScan.class, TAG_GetScanInfo, para);
-                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetScanInfo, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_Msg_GetScanInfo, null, URLModel.GetURL().GetScanInfo, params, null);
+            //区分扫描的是否是EAN
+            if ((!barcode.contains("@"))){
+                if (!barcode.equals("")) {
+                    final Map<String, String> params = new HashMap<String, String>();
+                    params.put("EAN", barcode);
+                    params.put("areaid", checkAreaModel.getID()+"");
+                    String para = (new JSONObject(params)).toString();
+                    LogUtil.WriteLog(IntentoryScan.class, TAG_CheckGetBatchnoAndMaterialno, para);
+                    RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_CheckGetBatchnoAndMaterialno, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_Msg_CheckGetBatchnoAndMaterialno, null, URLModel.GetURL().CheckGetBatchnoAndMaterialno, params, null);
+                }
+            }else{
+                if (!barcode.equals("")) {
+                    final Map<String, String> params = new HashMap<String, String>();
+                    params.put("barcode", barcode);
+                    String para = (new JSONObject(params)).toString();
+                    LogUtil.WriteLog(IntentoryScan.class, TAG_GetScanInfo, para);
+                    RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetScanInfo, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_Msg_GetScanInfo, null, URLModel.GetURL().GetScanInfo, params, null);
+                }
             }
+
+
         }
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
         {
@@ -237,6 +262,42 @@ public class IntentoryScan extends BaseActivity {
         }
         return false;
     }
+
+    int BatchType=-1;
+    @Event(value = R.id.txt_getbatch,type =View.OnClickListener.class )
+    private void txtgetbatch(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("选择批次和物料");
+        builder.setItems(Batchs, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                String getbatch =Batchs[1].toString();
+                 getbatch =Batchs[which].toString();
+                txtgetbatch.setText(getbatch);
+                BatchType=which;
+
+                //根据选择的信息获取serialno
+                if(checkAreaModel!=null&&!edtInvScanBarcode.getText().equals("")&&!txtgetbatch.getText().equals("")){
+                    final Map<String, String> params = new HashMap<String, String>();
+                    params.put("EAN", edtInvScanBarcode.getText()+"");
+                    params.put("areaid", checkAreaModel.getID()+"");
+                    params.put("batchno", txtgetbatch.getText().toString().split(",")[0]);
+                    params.put("materialno", txtgetbatch.getText().toString().split(",")[1]);
+                    String para = (new JSONObject(params)).toString();
+                    LogUtil.WriteLog(IntentoryScan.class, TAG_CheckSerialno, para);
+                    RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_CheckSerialno, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_Msg_GetScanInfo, null, URLModel.GetURL().CheckSerialno, params, null);
+                }
+
+
+
+            }
+        });
+        builder.show();
+
+    }
+
 
 
     void GetAreanobyCheckno(Check_Model checkModel){
@@ -304,6 +365,24 @@ public class IntentoryScan extends BaseActivity {
         }
     }
 
+
+
+
+    void AnalysisCheckGetBatchnoAndMaterialno(String result){
+        LogUtil.WriteLog(IntentoryScan.class, TAG_CheckGetBatchnoAndMaterialno,result);
+        ReturnMsgModelList<String> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<String>>() {}.getType());
+        if(returnMsgModel.getHeaderStatus().equals("S")){
+            Batchs = new String[returnMsgModel.getModelJson().size()];
+            for (int i=0;i<returnMsgModel.getModelJson().size();i++){
+                Batchs[i]=returnMsgModel.getModelJson().get(i);
+            }
+        }else{
+            MessageBox.Show(context,returnMsgModel.getMessage());
+        }
+    }
+
+
+
     void  AnalysisInsertCheckDetailJson(String result){
         try {
             LogUtil.WriteLog(IntentoryScan.class, TAG_InsertCheckDetail,result);
@@ -318,6 +397,8 @@ public class IntentoryScan extends BaseActivity {
                 txtMaterialName.setText("");
                 txtStockNum.setText("");
                 txtQCStatus.setText(QCStatus[1]);
+                Batchs= null;
+                txtgetbatch.setText("选择批次和物料");
                 StatusType=1;
                 btnPalletConfig.setVisibility(View.GONE);
                 barcodeModels=new ArrayList<>();

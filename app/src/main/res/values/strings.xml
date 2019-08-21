@@ -161,6 +161,7 @@
     <string name="ProductCompleteNumber">完工数量：</string>
     <string name="NextScanMaterial">拣货物料：</string>
     <string name="suggestLocal">推荐库位：</string>
+    <string name="Car">拣货小车：</string>
     <string name="TakeSampleReturnNumber">还回数量：</string>
     <string name="palletChange">组拆托</string>
     <string name="boxChange">装拆箱</string>
