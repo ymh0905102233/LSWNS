@@ -381,10 +381,10 @@ public class ReceiptionScan extends BaseActivity {
         }
 
         if (receiptDetailModels.get(index).getLstBarCode().size() != 0) {
-//            if (!barCodeInfo.getBatchNo().equals(receiptDetailModels.get(index).getLstBarCode().get(0).getBatchNo())) {
-//                MessageBox.Show(context, getString(R.string.Error_ReceivebatchError) + "|" + barCodeInfo.getSerialNo());
-//                return false;
-//            }
+            if (!barCodeInfo.getBatchNo().equals(receiptDetailModels.get(index).getLstBarCode().get(0).getBatchNo())) {
+                MessageBox.Show(context, getString(R.string.Error_ReceivebatchError) + "|" + barCodeInfo.getSerialNo());
+                return false;
+            }
             if (!barCodeInfo.getSupPrdBatch().equals(receiptDetailModels.get(index).getLstBarCode().get(0).getSupPrdBatch())) {
                 MessageBox.Show(context, getString(R.string.Error_ProductbatchError) + "|" + barCodeInfo.getSerialNo());
                 return false;
@@ -427,7 +427,7 @@ public class ReceiptionScan extends BaseActivity {
     }
 
     private void BindListVIew(ArrayList<ReceiptDetail_Model> receiptDetailModels) {
-        receiptScanDetailAdapter=new ReceiptScanDetailAdapter(context,receiptDetailModels);
+        receiptScanDetailAdapter=new ReceiptScanDetailAdapter(context,"采购收货",receiptDetailModels);
         lsvReceiptScan.setAdapter(receiptScanDetailAdapter);
     }
 }

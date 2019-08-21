@@ -93,6 +93,9 @@ public class AdvInChoiceActivity extends BaseActivity {
     TextView txtOrderQty;
     @ViewInject(R.id.et_adv_qty)
     EditText etScanQty;
+
+    @ViewInject(R.id.et_adv_remark)
+    EditText etRemark;
     @ViewInject(R.id.lv_adv_order_info)
     ListView lvOrderInfo;
 
@@ -222,7 +225,7 @@ public class AdvInChoiceActivity extends BaseActivity {
             params.put("advInStock", jsonValue);
             String UserJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
             params.put("UserJson", UserJson);
-            LogUtil.WriteLog(ReceiptionScan.class, TAG_GetAdvin_GetMaterialPackADF, jsonValue);
+            LogUtil.WriteLog(ReceiptionScan.class, TAG_SaveAdvInStock, jsonValue);
             RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveAdvInStock, getString(R.string.Msg_SaveT_SubInfoADF), context, mHandler, RESULT_Msg_SaveAdvInStock, null, URLModel.GetURL().Post_SaveAdvInStock, params, null);
         }
 
@@ -294,7 +297,6 @@ public class AdvInChoiceActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         btnQcType.setText(listParameter.get(i).getParameterid()+" "+listParameter.get(i).getParameterName());
-                        return;
                     }
                 }).create();
         alertDialog3.show();
@@ -338,6 +340,8 @@ public class AdvInChoiceActivity extends BaseActivity {
             advScanValue.setMaterialNo(receiptScanDetail.getMaterialNo());
             advScanValue.setMaterialDesc(receiptScanDetail.getMaterialDesc());
             advScanValue.setAdvQty(scanQty);
+            advScanValue.setRemark(etRemark.getText().toString());
+            advScanValue.setMaterialNoID(receiptScanDetail.getMaterialNoID());
             advScanValue.setUnit(receiptScanDetail.getUnit());
             advScanValue.setLineStatus(1);
             advScanValue.setCreater(BaseApplication.userInfo.getQuanUserNo());
@@ -357,7 +361,9 @@ public class AdvInChoiceActivity extends BaseActivity {
             advScanValue.setERPNote(String.valueOf(receiptScanDetail.getID()));//ERP订单行
             listAdvInStock.add(advScanValue);
             receiptScanDetail.setScanQty(receiptScanDetail.getScanQty() + scanQty);
+            BindListVIew(receiptDetailModels);
             scanEnd();
+            return true;
         }
         return false;
     }
@@ -372,6 +378,7 @@ public class AdvInChoiceActivity extends BaseActivity {
         etBatch.setText("");
         etScanQty.setText("");
         etBarcode.setText("");
+        etRemark.setText("");
         txtOrderQty.setText("订单数量");
         btnDate.setText("选   择");
         if (listParameter != null && listParameter.size() > 0) {
@@ -476,7 +483,7 @@ public class AdvInChoiceActivity extends BaseActivity {
 
                     for (MaterialPack_Model pack :
                             listMaterialPacks) {
-                        listString.add(pack.getMATERIALNO());
+                        listString.add(pack.getMATERIALNO()+" "+pack.getMATERIALDESC());
                     }
                     String[] items = (String[]) listString.toArray(new String[listString.size()]);
                     AlertDialog alertDialog3 = new AlertDialog.Builder(this)
@@ -546,7 +553,7 @@ public class AdvInChoiceActivity extends BaseActivity {
     }
 
     private void BindListVIew(ArrayList<ReceiptDetail_Model> receiptDetailModels) {
-        receiptScanDetailAdapter = new ReceiptScanDetailAdapter(context, receiptDetailModels);
+        receiptScanDetailAdapter = new ReceiptScanDetailAdapter(context,"采购预到货", receiptDetailModels);
         lvOrderInfo.setAdapter(receiptScanDetailAdapter);
     }
 

@@ -90,8 +90,8 @@ public class ReceiptBillChioceItemAdapter extends BaseAdapter  {
         listItemView.txtStrVoucherType.setText(receiptModel.getStrVoucherType());
         listItemView.txtCompany.setText(receiptModel.getStrongHoldName());
         listItemView.txtdepartment.setText(receiptModel.getDepartmentName());
-        listItemView.txtSupplierCode.setText(receiptModel.getSupplierNo());
-        listItemView.txtSupplier.setText(receiptModel.getSupplierName());
+       // listItemView.txtSupplierCode.setText(receiptModel.getSupplierNo());
+       // listItemView.txtSupplier.setText(receiptModel.getSupplierName());
         if (selectItem == position) {
             convertView.setBackgroundColor(context.getResources().getColor(R.color.mediumseagreen));
         }else{

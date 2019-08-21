@@ -33,7 +33,7 @@ public class ReviewScan extends BaseActivity {
         BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.Product_Package_scan), true);
         x.view().inject(this);
         List<ReceiptDetail_Model> receiptDetailModels=getData();
-        ReceiptScanDetailAdapter receiptScanDetailAdapter=new ReceiptScanDetailAdapter(context,receiptDetailModels);
+        ReceiptScanDetailAdapter receiptScanDetailAdapter=new ReceiptScanDetailAdapter(context,"",receiptDetailModels);
         lsvReviewscan.setAdapter(receiptScanDetailAdapter);
 
     }

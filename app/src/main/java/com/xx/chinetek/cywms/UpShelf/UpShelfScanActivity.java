@@ -391,7 +391,7 @@ public class UpShelfScanActivity extends BaseActivity {
 
     boolean CheckBarcode(StockInfo_Model StockInfo_Model) {
         if (StockInfo_Model != null && inStockTaskDetailsInfoModels != null) {
-            InStockTaskDetailsInfo_Model inStockTaskDetailsInfoModel = new InStockTaskDetailsInfo_Model(StockInfo_Model.getMaterialNo());
+            InStockTaskDetailsInfo_Model inStockTaskDetailsInfoModel = new InStockTaskDetailsInfo_Model(StockInfo_Model.getMaterialNo(),StockInfo_Model.getBatchNo());
             int index = -1;
             try {
                 index = inStockTaskDetailsInfoModels.indexOf(inStockTaskDetailsInfoModel);

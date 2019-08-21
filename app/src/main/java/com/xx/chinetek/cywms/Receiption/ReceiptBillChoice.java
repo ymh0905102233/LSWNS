@@ -95,6 +95,8 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
     List<Map<String, String>> SupplierList = new ArrayList<Map<String, String>>();//供应商列表
     ReceiptBillChioceItemAdapter receiptBillChioceItemAdapter;
 
+    ArrayList<Receipt_Model> receiptScanModels;//查询单据信息
+
     ArrayList<BarCodeInfo> barCodeInfos;
 
     @Override
@@ -146,6 +148,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
         receiptModel.setStatus(1);
         if (businesType.equals("预收货")) {
             receiptModel.setVoucherType(22);//筛选显示采购订单
+            receiptModel.setStrVoucherType("预到货");//过滤预到货单据状态
         }
         GetT_InStockList(receiptModel);
     }
@@ -243,19 +246,35 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
 //            if(receiptModels!=null && receiptModels.size()>0) {
             String code = edtfilterContent.getText().toString().trim();
 //                //扫描单据号、检查单据列表
-//                Receipt_Model receiptModel = new Receipt_Model(code);
-//                int index=receiptModels.indexOf(receiptModel);
-//                if (index!=-1) {
-//                    StartScanIntent(receiptModels.get(index), null);
-//                    return false;
-//                } else {
+            receiptScanModels = new ArrayList<>();
+            for (Receipt_Model model :
+                    receiptModels) {
+                if (model.getErpVoucherNo().contains(code)) {
+                    receiptScanModels.add(model);
+                }
+            }
+            if(receiptScanModels.size()>0){
+                BindListVIew(receiptScanModels);
+            }else{
+                MessageBox.Show(context,"没有符合条件的单据");
+            }
+
+
+//            Receipt_Model receiptModel = new Receipt_Model(code);
+//            int index = receiptModels.indexOf(receiptModel);
+//            if (index != -1) {
+//                StartScanIntent(receiptModels.get(index), null);
+//                return false;
+//            }
+
+// else {
             //扫描箱条码
-            final Map<String, String> params = new HashMap<String, String>();
+        /*    final Map<String, String> params = new HashMap<String, String>();
             params.put("BarCode", code);
             params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
             LogUtil.WriteLog(ReceiptBillChoice.class, TAG_GetT_PalletDetailByBarCode, code);
             RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_PalletDetailByBarCode, getString(R.string.Msg_GetT_InStockListADF), context, mHandler, RESULT_GetT_PalletDetailByBarCode, null, URLModel.GetURL().GetT_PalletDetailByBarCodeADF, params, null);
-            return false;
+            return false;*/
 //                }
 //            }
             // StartScanIntent(null,null);

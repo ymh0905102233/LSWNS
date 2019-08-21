@@ -22,6 +22,7 @@ public class AdvInStockDetail_Model extends Base_Model implements Parcelable {
     private int QualityType;
     private String RowNO;
     private String RowNODel;
+    private String remark;
 
     public AdvInStockDetail_Model() {
     }
@@ -161,5 +162,13 @@ public class AdvInStockDetail_Model extends Base_Model implements Parcelable {
 
     public void setRowNODel(String rowNODel) {
         RowNODel = rowNODel;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }
