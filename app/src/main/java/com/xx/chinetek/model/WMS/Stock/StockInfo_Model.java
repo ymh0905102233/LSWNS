@@ -79,6 +79,37 @@ public class StockInfo_Model extends Base_Model implements Parcelable,Cloneable 
     private Date ProductDate;
     private String SupPrdBatch;
     private Date SupPrdDate;
+    private int HouseProp;
+    private String EAN;
+    public int ScanType;
+
+    public int getHouseProp() {
+        return HouseProp;
+    }
+
+    public void setHouseProp(int houseProp) {
+        HouseProp = houseProp;
+    }
+
+    public String getEAN() {
+        return EAN;
+    }
+
+    public void setEAN(String EAN) {
+        this.EAN = EAN;
+    }
+
+    public int getScanType() {
+        return ScanType;
+    }
+
+    public void setScanType(int scanType) {
+        ScanType = scanType;
+    }
+
+    public static Creator<StockInfo_Model> getCREATOR() {
+        return CREATOR;
+    }
 
     public Date getProductDate() {
         return ProductDate;
@@ -645,6 +676,9 @@ public class StockInfo_Model extends Base_Model implements Parcelable,Cloneable 
         dest.writeLong(this.ProductDate != null ? this.ProductDate.getTime() : -1);
         dest.writeString(this.SupPrdBatch);
         dest.writeLong(this.SupPrdDate != null ? this.SupPrdDate.getTime() : -1);
+        dest.writeInt(this.HouseProp);
+        dest.writeString(this.EAN);
+        dest.writeInt(this.ScanType);
     }
 
     protected StockInfo_Model(Parcel in) {
@@ -710,6 +744,9 @@ public class StockInfo_Model extends Base_Model implements Parcelable,Cloneable 
         this.SupPrdBatch = in.readString();
         long tmpSupPrdDate = in.readLong();
         this.SupPrdDate = tmpSupPrdDate == -1 ? null : new Date(tmpSupPrdDate);
+        this.HouseProp = in.readInt();
+        this.EAN = in.readString();
+        this.ScanType = in.readInt();
     }
 
     public static final Creator<StockInfo_Model> CREATOR = new Creator<StockInfo_Model>() {

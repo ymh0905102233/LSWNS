@@ -29,6 +29,7 @@ import com.xx.chinetek.model.Base_Model;
 import com.xx.chinetek.model.ReturnMsgModel;
 import com.xx.chinetek.model.ReturnMsgModelList;
 import com.xx.chinetek.model.URLModel;
+import com.xx.chinetek.model.WMS.Inventory.Barcode_Model;
 import com.xx.chinetek.model.WMS.Review.OutStockDetailInfo_Model;
 import com.xx.chinetek.model.WMS.Review.OutStock_Model;
 import com.xx.chinetek.model.WMS.Stock.StockInfo_Model;
@@ -59,7 +60,7 @@ public class ReviewScan extends BaseActivity {
 
     String TAG_GetT_OutStockReviewDetailListByHeaderIDADF="ReviewScan_GetT_OutStockReviewDetailListByHeaderIDADF";
     String TAG_ScanOutStockReviewByBarCodeADF="ReviewScan_ScanOutStockReviewByBarCodeADF";
-    String TAG_SaveT_OutStockReviewPalletDetailADF="ReviewScan_SaveT_OutStockReviewPalletDetailADF";
+//    String TAG_SaveT_OutStockReviewPalletDetailADF="ReviewScan_SaveT_OutStockReviewPalletDetailADF";
     String TAG_SaveT_OutStockReviewDetailADF="ReviewScan_SaveT_OutStockReviewDetailADF";
     String TAG_GetStockByOutStockReviewByID="ReviewScan_GetStockByOutStockReviewByID";
     String TAG_DeletePalletByErpVoucherNo="ReviewScan_DeletePalletByErpVoucherNo";
@@ -67,12 +68,15 @@ public class ReviewScan extends BaseActivity {
     private final int RESULT_GetT_OutStockReviewDetailListByHeaderIDADF=101;
     private final int RESULT_ScanOutStockReviewByBarCodeADF=102;
     private final int RESULT_SaveT_OutStockReviewDetailADF=103;
-    private final int RESULT_Msg_SaveT_OutStockReviewPalletDetailADF=104;
+//    private final int RESULT_Msg_SaveT_OutStockReviewPalletDetailADF=104;
     private final int RESULT_GetStockByOutStockReviewByID=105;
     private final int RESULT_DeletePalletByErpVoucherNo=106;
 
     private final int  RequestCode_PalletDetail=10002;
 
+
+    String TAG_PostReviewADF="TAG_PostReviewADF";
+    private final int RESULT_PostReviewADF=107;
     @Override
     public void onHandleMessage(Message msg) {
         switch (msg.what) {
@@ -82,9 +86,9 @@ public class ReviewScan extends BaseActivity {
             case RESULT_ScanOutStockReviewByBarCodeADF:
                 AnalysiseScanOutStockReviewByBarCodeADFJson((String) msg.obj);
                 break;
-            case RESULT_Msg_SaveT_OutStockReviewPalletDetailADF:
-                 AnalysisetT_SaveT_OutStockReviewPalletDetailADFJson((String) msg.obj);
-                break;
+//            case RESULT_Msg_SaveT_OutStockReviewPalletDetailADF:
+//                 AnalysisetT_SaveT_OutStockReviewPalletDetailADFJson((String) msg.obj);
+//                break;
             case RESULT_SaveT_OutStockReviewDetailADF:
                 AnalysisSaveT_OutStockReviewDetailADFJson((String) msg.obj);
                 break;
@@ -104,10 +108,6 @@ public class ReviewScan extends BaseActivity {
 
 
     Context context = ReviewScan.this;
-    @ViewInject(R.id.btn_PalletDetail)
-    Button btnPalletDetail;
-    @ViewInject(R.id.btn_Combinepallet)
-    Button btnCombinepallet;
     @ViewInject(R.id.edt_ReviewScanBarcode)
     EditText edtReviewScanBarcode;
     @ViewInject(R.id.txt_VoucherNo)
@@ -163,23 +163,32 @@ public class ReviewScan extends BaseActivity {
             if (DoubleClickCheck.isFastDoubleClick(context)) {
                 return false;
             }
-            Boolean isFinishReceipt = true;
-            for (OutStockDetailInfo_Model outStockDetailInfoModel : outStockDetailInfoModels) {
-                if (outStockDetailInfoModel.getScanQty().compareTo(outStockDetailInfoModel.getOutStockQty()) != 0) {
-                    MessageBox.Show(context, getString(R.string.Error_CannotReview));
-                    isFinishReceipt = false;
-                    break;
-                }
-            }
-            if (isFinishReceipt) {
+            if(outStockDetailInfoModels==null||outStockDetailInfoModels.size()==0){
                 String userJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
-                String modelJson = GsonUtil.parseModelToJson(outStockDetailInfoModels);
                 final Map<String, String> params = new HashMap<String, String>();
                 params.put("UserJson", userJson);
-                params.put("ModelJson", modelJson);
-                LogUtil.WriteLog(ReviewScan.class, TAG_SaveT_OutStockReviewDetailADF, modelJson);
-                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_OutStockReviewDetailADF, getString(R.string.Msg_SaveT_OutStockReviewDetailADF), context, mHandler, RESULT_SaveT_OutStockReviewDetailADF, null, URLModel.GetURL().SaveT_OutStockReviewDetailADF, params, null);
+                params.put("ModelJson", outStockModel.getErpVoucherNo());
+                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_PostReviewADF, getString(R.string.Msg_SaveT_OutStockReviewDetailADF), context, mHandler, RESULT_PostReviewADF, null, URLModel.GetURL().PostReviewADF, params, null);
+            }else{
+                MessageBox.Show(context,"必须整单提交数据！");
             }
+//            Boolean isFinishReceipt = true;
+//            for (OutStockDetailInfo_Model outStockDetailInfoModel : outStockDetailInfoModels) {
+//                if (outStockDetailInfoModel.getScanQty().compareTo(outStockDetailInfoModel.getOutStockQty()) != 0) {
+//                    MessageBox.Show(context, getString(R.string.Error_CannotReview));
+//                    isFinishReceipt = false;
+//                    break;
+//                }
+//            }
+//            if (isFinishReceipt) {
+//                String userJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
+//                String modelJson = GsonUtil.parseModelToJson(outStockDetailInfoModels);
+//                final Map<String, String> params = new HashMap<String, String>();
+//                params.put("UserJson", userJson);
+//                params.put("ModelJson", modelJson);
+//                LogUtil.WriteLog(ReviewScan.class, TAG_SaveT_OutStockReviewDetailADF, modelJson);
+//                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_OutStockReviewDetailADF, getString(R.string.Msg_SaveT_OutStockReviewDetailADF), context, mHandler, RESULT_SaveT_OutStockReviewDetailADF, null, URLModel.GetURL().SaveT_OutStockReviewDetailADF, params, null);
+//            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -200,29 +209,33 @@ public class ReviewScan extends BaseActivity {
             String code=edtReviewScanBarcode.getText().toString().trim();
 
             final Map<String, String> params = new HashMap<String, String>();
-            params.put("BarCode", code);
+            StockInfo_Model model = new StockInfo_Model();
+            model.setBarcode(code);
+            model.setScanType(2);
+            String ModelJson = parseModelToJson(model);
+            params.put("ModelStockJson", ModelJson);
             LogUtil.WriteLog(ReviewScan.class, TAG_ScanOutStockReviewByBarCodeADF, code);
-            RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_ScanOutStockReviewByBarCodeADF, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_ScanOutStockReviewByBarCodeADF, null, URLModel.GetURL().ScanOutStockReviewByBarCodeADF, params, null);
+            RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_ScanOutStockReviewByBarCodeADF, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_ScanOutStockReviewByBarCodeADF, null, URLModel.GetURL().GetReviewStockModelADF, params, null);
         }
         return false;
     }
 
 
-    @Event(R.id.btn_Combinepallet)
-    private void btnCombinepalletClick(View view){
-        if (DoubleClickCheck.isFastDoubleClick(context)) {
-            return;
-        }
-        ArrayList<OutStockDetailInfo_Model> palletDetailModels=GetPalletModels();
-        if(palletDetailModels.size()!=0){
-            final Map<String, String> params = new HashMap<String, String>();
-            String ModelJson = parseModelToJson(palletDetailModels);
-            params.put("UserJson", parseModelToJson(BaseApplication.userInfo));
-            params.put("ModelJson", ModelJson);
-            LogUtil.WriteLog(ReviewScan.class, TAG_SaveT_OutStockReviewPalletDetailADF, ModelJson);
-           RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_OutStockReviewPalletDetailADF, getString(R.string.Msg_SaveT_PalletDetailADF), context, mHandler, RESULT_Msg_SaveT_OutStockReviewPalletDetailADF, null,  URLModel.GetURL().SaveT_OutStockReviewPalletDetailADF, params, null);
-        }
-    }
+//    @Event(R.id.btn_Combinepallet)
+//    private void btnCombinepalletClick(View view){
+//        if (DoubleClickCheck.isFastDoubleClick(context)) {
+//            return;
+//        }
+//        ArrayList<OutStockDetailInfo_Model> palletDetailModels=GetPalletModels();
+//        if(palletDetailModels.size()!=0){
+//            final Map<String, String> params = new HashMap<String, String>();
+//            String ModelJson = parseModelToJson(palletDetailModels);
+//            params.put("UserJson", parseModelToJson(BaseApplication.userInfo));
+//            params.put("ModelJson", ModelJson);
+//            LogUtil.WriteLog(ReviewScan.class, TAG_SaveT_OutStockReviewPalletDetailADF, ModelJson);
+//           RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_OutStockReviewPalletDetailADF, getString(R.string.Msg_SaveT_PalletDetailADF), context, mHandler, RESULT_Msg_SaveT_OutStockReviewPalletDetailADF, null,  URLModel.GetURL().SaveT_OutStockReviewPalletDetailADF, params, null);
+//        }
+//    }
 
     @Event(R.id.btn_PalletDetail)
     private void btnPalletDetailClick(View view){
@@ -328,35 +341,35 @@ public class ReviewScan extends BaseActivity {
         CommonUtil.setEditFocus(edtReviewScanBarcode);
     }
 
-    /*
-    提交组托
-     */
-    void AnalysisetT_SaveT_OutStockReviewPalletDetailADFJson(String result){
-        try {
-            LogUtil.WriteLog(ReviewScan.class, TAG_SaveT_OutStockReviewPalletDetailADF,result);
-            ReturnMsgModel<Base_Model> returnMsgModel =  GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<Base_Model>>() {
-            }.getType());
-            if(returnMsgModel.getHeaderStatus().equals("S")){
-                MessageBox.Show(context,returnMsgModel.getMessage());
-                //更改实体类组托状态
-                for (int i=0;i<outStockDetailInfoModels.size();i++) {
-                    if(outStockDetailInfoModels.get(i).getLstStock()!=null) {
-                        for (int j = 0; j < outStockDetailInfoModels.get(i).getLstStock().size(); j++) {
-                            outStockDetailInfoModels.get(i).getLstStock().get(j).setStockBarCodeStatus(1);
-                        }
-                    }
-                    outStockDetailInfoModels.get(i).setOustockStatus(0);
-                }
-                BindListVIew(outStockDetailInfoModels);
-            }else
-            {
-                MessageBox.Show(context,returnMsgModel.getMessage());
-            }
-        } catch (Exception ex) {
-            MessageBox.Show(context, ex.getMessage());
-        }
-        CommonUtil.setEditFocus(edtReviewScanBarcode);
-    }
+//    /*
+//    提交组托
+//     */
+//    void AnalysisetT_SaveT_OutStockReviewPalletDetailADFJson(String result){
+//        try {
+//            LogUtil.WriteLog(ReviewScan.class, TAG_SaveT_OutStockReviewPalletDetailADF,result);
+//            ReturnMsgModel<Base_Model> returnMsgModel =  GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<Base_Model>>() {
+//            }.getType());
+//            if(returnMsgModel.getHeaderStatus().equals("S")){
+//                MessageBox.Show(context,returnMsgModel.getMessage());
+//                //更改实体类组托状态
+//                for (int i=0;i<outStockDetailInfoModels.size();i++) {
+//                    if(outStockDetailInfoModels.get(i).getLstStock()!=null) {
+//                        for (int j = 0; j < outStockDetailInfoModels.get(i).getLstStock().size(); j++) {
+//                            outStockDetailInfoModels.get(i).getLstStock().get(j).setStockBarCodeStatus(1);
+//                        }
+//                    }
+//                    outStockDetailInfoModels.get(i).setOustockStatus(0);
+//                }
+//                BindListVIew(outStockDetailInfoModels);
+//            }else
+//            {
+//                MessageBox.Show(context,returnMsgModel.getMessage());
+//            }
+//        } catch (Exception ex) {
+//            MessageBox.Show(context, ex.getMessage());
+//        }
+//        CommonUtil.setEditFocus(edtReviewScanBarcode);
+//    }
 
 
     /*
@@ -379,6 +392,16 @@ public class ReviewScan extends BaseActivity {
                     InitFrm(stockInfoModels.get(0));
                 }
                 BindListVIew(outStockDetailInfoModels);
+
+                //扫描完成提交触发
+                String userJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
+                String modelJson = GsonUtil.parseModelToJson(outStockDetailInfoModels);
+                final Map<String, String> params = new HashMap<String, String>();
+                params.put("UserJson", userJson);
+                params.put("ModelJson", modelJson);
+                LogUtil.WriteLog(ReviewScan.class, TAG_SaveT_OutStockReviewDetailADF, modelJson);
+                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_OutStockReviewDetailADF, getString(R.string.Msg_SaveT_OutStockReviewDetailADF), context, mHandler, RESULT_SaveT_OutStockReviewDetailADF, null, URLModel.GetURL().SaveT_OutStockReviewDetailADF, params, null);
+
             }else
             {
                 MessageBox.Show(context,returnMsgModel.getMessage());
@@ -393,17 +416,23 @@ public class ReviewScan extends BaseActivity {
         LogUtil.WriteLog(ReviewScan.class, TAG_SaveT_OutStockReviewDetailADF,result);
         ReturnMsgModelList<OutStock_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<OutStock_Model>>() {}.getType());
         if(returnMsgModel.getHeaderStatus().equals("S")) {
-            new AlertDialog.Builder(context).setCancelable(false).setTitle("提示").setIcon(android.R.drawable.ic_dialog_info).setMessage(returnMsgModel.getMessage())
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // TODO 自动生成的方法
-                            Intent intent = new Intent(context, TruckLoad.class);
-                            intent.putExtra("VoucherNo", txtVoucherNo.getText().toString().trim());
-                            startActivityLeft(intent);
-                            closeActiviry();
-                        }
-                    }).show();
+
+            GetOutStockDetailInfo(outStockModel);
+
+//            new AlertDialog.Builder(context).setCancelable(false).setTitle("提示").setIcon(android.R.drawable.ic_dialog_info).setMessage(returnMsgModel.getMessage())
+//                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            // TODO 自动生成的方法
+//                            Intent intent = new Intent(context, TruckLoad.class);
+//                            intent.putExtra("VoucherNo", txtVoucherNo.getText().toString().trim());
+//                            startActivityLeft(intent);
+//                            closeActiviry();
+//                        }
+//                    }).show();
+
+
+
         }else
         {
            MessageBox.Show(context,returnMsgModel.getMessage());
@@ -423,7 +452,7 @@ public class ReviewScan extends BaseActivity {
     boolean checkID(StockInfo_Model stockInfoModel){
         boolean isContainID=false;
         for (OutStockDetailInfo_Model outStockDetailInfoModel: outStockDetailInfoModels){
-            if(outStockDetailInfoModel.getID()==stockInfoModel.getOutstockDetailID()){
+            if(outStockDetailInfoModel.getErpVoucherNo().equals(stockInfoModel.getErpVoucherNo())){
                 isContainID=true;
                 break;
             }

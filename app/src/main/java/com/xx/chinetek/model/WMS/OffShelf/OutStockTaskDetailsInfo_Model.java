@@ -96,6 +96,24 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
     private String PartNo;
     private String MoveType;
     private String BatchNo;
+    private int HouseProp;
+
+
+    public int getHouseProp() {
+        return HouseProp;
+    }
+
+    public void setHouseProp(int houseProp) {
+        HouseProp = houseProp;
+    }
+
+    public String getToBatchNo() {
+        return ToBatchNo;
+    }
+
+    public void setToBatchNo(String toBatchNo) {
+        ToBatchNo = toBatchNo;
+    }
 
     /// <summary>
     /// 是否指定批次
@@ -818,6 +836,7 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
         dest.writeString(this.PartNo);
         dest.writeString(this.MoveType);
         dest.writeString(this.BatchNo);
+        dest.writeInt(this.HouseProp);
         dest.writeString(this.IsSpcBatch);
         dest.writeString(this.FromBatchNo);
         dest.writeString(this.FromErpAreaNo);
@@ -899,6 +918,7 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
         this.PartNo = in.readString();
         this.MoveType = in.readString();
         this.BatchNo = in.readString();
+        this.HouseProp = in.readInt();
         this.IsSpcBatch = in.readString();
         this.FromBatchNo = in.readString();
         this.FromErpAreaNo = in.readString();

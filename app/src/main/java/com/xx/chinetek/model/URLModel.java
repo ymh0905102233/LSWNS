@@ -12,8 +12,8 @@ public class URLModel {
         return  new URLModel();
     }
 
-    public static String IPAdress="wmstest.beukay.com";//"wmstest.beukay.com";
-    public static int Port=9010;//9000;
+    public static String IPAdress="222.72.136.173";//"wmstest.beukay.com";
+    public static int Port=8018;//9000;
     public static String  LastContent="AndroidService.svc/";
     public static String PrintIP="10.2.32.192";
     public static String ElecIP="10.2.32.244";
@@ -63,7 +63,8 @@ public class URLModel {
     public String GetT_GetT_OutBarCodeInfoByBoxADF=GetWCFAdress()+"GetT_OutBarCodeInfoByBoxADF";//获取拆托条码信息
     public String GetT_PalletDetailByNoADF=GetWCFAdress()+"GetT_PalletDetailByNoADF";//获取托盘信息
     public String GetT_PalletDetailByBarCodeADF=GetWCFAdress()+"GetT_PalletDetailByBarCodeADF";//库存获取托盘信息
-    public String ScanOutStockReviewByBarCodeADF=GetWCFAdress()+"ScanOutStockReviewByBarCodeADF";//复核条码扫描
+   public String ScanOutStockReviewByBarCodeADF=GetWCFAdress()+"ScanOutStockReviewByBarCodeADF";//复核条码扫描
+public String GetReviewStockModelADF=GetWCFAdress()+"GetReviewStockModelADF";//复核条码扫描
     public String GetT_ScanInStockModelADF=GetWCFAdress()+"GetT_ScanInStockModelADF";//上架扫描条码或者托盘条码
     public String GetAreaModelADF=GetWCFAdress()+"GetAreaModelADF";//上架扫描库位
     public String GetAreaModelByMoveStockADF=GetWCFAdress()+"GetAreaModelByMoveStockADF";//移库扫描库位
@@ -180,6 +181,11 @@ public class URLModel {
     //ymh下架
     public String GetAreano =GetWCFAdress()+"GetAreaModelADF";//获取库位信息
     public String OffSerialno =GetWCFAdress()+"OffSerialno";
+    public String GetCarModelADF =GetWCFAdress()+"GetCarModelADF";//绑定小车和任务号
+
+    //ymh复核
+    public String PostReviewADF =GetWCFAdress()+"PostReviewADF";//复核过账
+
 
 
 }
