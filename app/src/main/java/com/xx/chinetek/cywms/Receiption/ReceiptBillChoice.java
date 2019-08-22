@@ -146,6 +146,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
         edtfilterContent.setText("");
         Receipt_Model receiptModel = new Receipt_Model();
         receiptModel.setStatus(1);
+        receiptModel.setStrVoucherType("采购到货");//过滤预到货单据状态
         if (businesType.equals("预收货")) {
             receiptModel.setVoucherType(22);//筛选显示采购订单
             receiptModel.setStrVoucherType("预到货");//过滤预到货单据状态
