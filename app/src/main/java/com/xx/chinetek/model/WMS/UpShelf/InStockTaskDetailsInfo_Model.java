@@ -685,7 +685,7 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
         InStockTaskDetailsInfo_Model that = (InStockTaskDetailsInfo_Model) o;
 
         // return MaterialNo.equals(that.MaterialNo) && BatchNo.equals(that.BatchNo);
-        if (that.BatchNo == null || that.BatchNo.equals("")) {
+        if (BatchNo== null || BatchNo.equals("")) {
             return MaterialNo.equals(that.MaterialNo);
         } else {
             return MaterialNo.equals(that.MaterialNo) && BatchNo.equals(that.BatchNo);
