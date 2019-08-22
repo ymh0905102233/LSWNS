@@ -1,5 +1,6 @@
 package com.xx.chinetek.model.WMS.UpShelf;
 
+import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,26 +9,30 @@ import com.xx.chinetek.model.WMS.Stock.AreaInfo_Model;
 import com.xx.chinetek.model.WMS.Stock.StockInfo_Model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
+
+
 
 
 /**
  * Created by GHOST on 2017/1/13.
  */
 
-public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelable {
-    public InStockTaskDetailsInfo_Model(){
+public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelable,Comparator<InStockTaskDetailsInfo_Model> {
+    public InStockTaskDetailsInfo_Model() {
 
     }
 
-    public InStockTaskDetailsInfo_Model(String MaterialNo,String BatchNo){
-    this.MaterialNo=MaterialNo;
-        this.BatchNo=BatchNo;
+    public InStockTaskDetailsInfo_Model(String MaterialNo, String BatchNo) {
+        this.MaterialNo = MaterialNo;
+        this.BatchNo = BatchNo;
     }
 
-    public InStockTaskDetailsInfo_Model(String MaterialNo){
-        this.MaterialNo=MaterialNo;
+    public InStockTaskDetailsInfo_Model(String MaterialNo) {
+        this.MaterialNo = MaterialNo;
     }
+
     private String MaterialNo;
     private String MaterialDesc;
     private Float TaskQty;
@@ -84,8 +89,8 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
     private int WarehouseID;
     private int HouseID;
     private int AreaID;
-    private ArrayList<AreaInfo_Model> lstArea=new ArrayList<>();
-    private ArrayList<StockInfo_Model> lstStockInfo=new ArrayList<StockInfo_Model>();
+    private ArrayList<AreaInfo_Model> lstArea = new ArrayList<>();
+    private ArrayList<StockInfo_Model> lstStockInfo = new ArrayList<StockInfo_Model>();
     private String SupCusCode;
     private String SupCusName;
     private String SaleName;
@@ -93,8 +98,8 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
     private String PartNo;
     private String FromBatchNo;
     private String BatchNo;
-    private String FromErpAreaNo ;
-    private String FromErpWarehouse ;
+    private String FromErpAreaNo;
+    private String FromErpWarehouse;
     private String ToBatchNo;
     private String ToErpAreaNo;
     private String ToErpWarehouse;
@@ -235,7 +240,6 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
     public void setCurrentRemainStockQtySAP(Float currentRemainStockQtySAP) {
         CurrentRemainStockQtySAP = currentRemainStockQtySAP;
     }
-
 
 
     public String getFromStorageLoc() {
@@ -663,6 +667,16 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
         this.lstStockInfo = lstStockInfo;
     }
 
+
+    @Override
+    public int compare(InStockTaskDetailsInfo_Model inStockTaskDetailsInfo_model, InStockTaskDetailsInfo_Model t1) {
+        if(inStockTaskDetailsInfo_model.getAreaNo().compareTo(t1.getAreaNo())>0){
+            return 1;
+        }else{
+            return -1;
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -670,10 +684,10 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
 
         InStockTaskDetailsInfo_Model that = (InStockTaskDetailsInfo_Model) o;
 
-       // return MaterialNo.equals(that.MaterialNo) && BatchNo.equals(that.BatchNo);
-        if(that.BatchNo==null||that.BatchNo.equals("")){
+        // return MaterialNo.equals(that.MaterialNo) && BatchNo.equals(that.BatchNo);
+        if (that.BatchNo == null || that.BatchNo.equals("")) {
             return MaterialNo.equals(that.MaterialNo);
-        }else{
+        } else {
             return MaterialNo.equals(that.MaterialNo) && BatchNo.equals(that.BatchNo);
         }
 
@@ -850,3 +864,4 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
         }
     };
 }
+

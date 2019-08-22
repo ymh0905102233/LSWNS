@@ -45,6 +45,7 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -240,6 +241,7 @@ public class UpShelfScanActivity extends BaseActivity {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 inStockTaskDetailsInfoModels = returnMsgModel.getModelJson();
+                Collections.sort(inStockTaskDetailsInfoModels,new InStockTaskDetailsInfo_Model());
                 BindListVIew(inStockTaskDetailsInfoModels);
 //            //自动确认扫描箱号 删除，上架需要扫描库位
 //            if(stockInfoModels!=null ) {
