@@ -83,7 +83,7 @@ public class UpShelfBillChoice extends BaseActivity implements SwipeRefreshLayou
     protected void initViews() {
         super.initViews();
         BaseApplication.context = context;
-        BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.UpShelf_title), false);
+        BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.UpShelf_title)+"-"+BaseApplication.userInfo.getWarehouseName(), false);
         x.view().inject(this);
     }
 

@@ -103,7 +103,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
     protected void initViews() {
         super.initViews();
         BaseApplication.context = context;
-        BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.receipt_subtitle), false);
+        BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.receipt_subtitle)+"-"+BaseApplication.userInfo.getWarehouseName(), false);
         x.view().inject(this);
     }
 

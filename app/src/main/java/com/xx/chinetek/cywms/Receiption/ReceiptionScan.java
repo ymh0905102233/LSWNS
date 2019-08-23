@@ -121,7 +121,7 @@ public class ReceiptionScan extends BaseActivity {
     protected void initViews() {
         super.initViews();
         BaseApplication.context = context;
-        BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.receiptscan_subtitle), true);
+        BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.receiptscan_subtitle)+"-"+BaseApplication.userInfo.getWarehouseName(), true);
         x.view().inject(this);
         BaseApplication.isCloseActivity=false;
     }
@@ -302,8 +302,8 @@ public class ReceiptionScan extends BaseActivity {
     void InitFrm(BarCodeInfo barCodeInfo){
         if(barCodeInfo!=null ){
             txtCompany.setText(barCodeInfo.getStrongHoldName());
-            txtBatch.setText(barCodeInfo.getBatchNo());
-            txtStatus.setText(barCodeInfo.getStrStatus());
+            txtBatch.setText(barCodeInfo.getMaterialNo());
+            txtStatus.setText(barCodeInfo.getBatchNo());
             txtMaterialName.setText(barCodeInfo.getMaterialDesc());
             txtEDate.setText(CommonUtil.DateToString(barCodeInfo.getEDate()));
         }

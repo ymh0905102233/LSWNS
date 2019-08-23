@@ -76,8 +76,8 @@ public class UpShelfScanDetailAdapter extends BaseAdapter {
         }
        final InStockTaskDetailsInfo_Model inStockTaskDetailsInfoModel=inStockTaskDetailsInfoModels.get(selectID);
         listItemView.txtbarcode.setText(inStockTaskDetailsInfoModel.getMaterialNo());
-        listItemView.txtScanNum.setText("扫描数："+inStockTaskDetailsInfoModel.getScanQty());
-        listItemView.txtRemainQty.setText("上架数："+inStockTaskDetailsInfoModel.getRemainQty());
+        listItemView.txtScanNum.setText("");//"扫描数："+inStockTaskDetailsInfoModel.getScanQty()
+        listItemView.txtRemainQty.setText("待上架："+inStockTaskDetailsInfoModel.getRemainQty());
         listItemView.txtreferStock.setText("推荐库位："+GetReferStock(inStockTaskDetailsInfoModel.getLstArea()));
         listItemView.txtMaterialDesc.setText(inStockTaskDetailsInfoModel.getMaterialDesc());
         if (inStockTaskDetailsInfoModel.getScanQty()!=0 &&
