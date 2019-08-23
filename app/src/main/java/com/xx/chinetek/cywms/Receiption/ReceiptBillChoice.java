@@ -244,42 +244,44 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
     private boolean onKey(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
         {
-//            if(receiptModels!=null && receiptModels.size()>0) {
+
             String code = edtfilterContent.getText().toString().trim();
 //                //扫描单据号、检查单据列表
-            receiptScanModels = new ArrayList<>();
-            for (Receipt_Model model :
-                    receiptModels) {
-                if (model.getErpVoucherNo().contains(code)) {
-                    receiptScanModels.add(model);
+            if (businesType.equals("预收货")) {
+                receiptScanModels = new ArrayList<>();
+                for (Receipt_Model model :
+                        receiptModels) {
+                    if (model.getErpVoucherNo().contains(code)) {
+                        receiptScanModels.add(model);
+                    }
                 }
+                if (receiptScanModels.size() > 0) {
+                    BindListVIew(receiptScanModels);
+                } else {
+                    MessageBox.Show(context, "没有符合条件的单据");
+                }
+            } else {
+                if (receiptModels != null && receiptModels.size() > 0) {
+                    Receipt_Model receiptModel = new Receipt_Model(code);
+                    int index = receiptModels.indexOf(receiptModel);
+                    if (index != -1) {
+                        StartScanIntent(receiptModels.get(index), null);
+                        return false;
+                    } else {
+                        //扫描箱条码
+                        final Map<String, String> params = new HashMap<String, String>();
+                        params.put("BarCode", code);
+                        params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
+                        LogUtil.WriteLog(ReceiptBillChoice.class, TAG_GetT_PalletDetailByBarCode, code);
+                        RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_PalletDetailByBarCode, getString(R.string.Msg_GetT_InStockListADF), context, mHandler, RESULT_GetT_PalletDetailByBarCode, null, URLModel.GetURL().GetT_PalletDetailByBarCodeADF, params, null);
+                        return false;
+                    }
+                }
+                StartScanIntent(null, null);
+                CommonUtil.setEditFocus(edtfilterContent);
             }
-            if(receiptScanModels.size()>0){
-                BindListVIew(receiptScanModels);
-            }else{
-                MessageBox.Show(context,"没有符合条件的单据");
-            }
 
 
-//            Receipt_Model receiptModel = new Receipt_Model(code);
-//            int index = receiptModels.indexOf(receiptModel);
-//            if (index != -1) {
-//                StartScanIntent(receiptModels.get(index), null);
-//                return false;
-//            }
-
-// else {
-            //扫描箱条码
-        /*    final Map<String, String> params = new HashMap<String, String>();
-            params.put("BarCode", code);
-            params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
-            LogUtil.WriteLog(ReceiptBillChoice.class, TAG_GetT_PalletDetailByBarCode, code);
-            RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_PalletDetailByBarCode, getString(R.string.Msg_GetT_InStockListADF), context, mHandler, RESULT_GetT_PalletDetailByBarCode, null, URLModel.GetURL().GetT_PalletDetailByBarCodeADF, params, null);
-            return false;*/
-//                }
-//            }
-            // StartScanIntent(null,null);
-//            CommonUtil.setEditFocus(edtfilterContent);
         }
         return false;
     }
@@ -296,7 +298,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
                     if (businesType.equals("预收货")) {
                         StartAdvInScanIntent(receiptModels.get(0));
                     } else {
-                        StartScanIntent(receiptModels.get(0), barCodeInfos);
+                        StartScanIntent(receiptModels.get(0), null);
                     }
                 } else {
                     BindListVIew(receiptModels);

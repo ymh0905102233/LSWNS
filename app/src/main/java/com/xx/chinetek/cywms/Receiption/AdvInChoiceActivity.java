@@ -241,6 +241,7 @@ public class AdvInChoiceActivity extends BaseActivity {
             String code = etBarcode.getText().toString().trim();
             MaterialPack_Model material = new MaterialPack_Model();
             material.setWATERCODE(code);
+            material.setSTRONGHOLDCODE(receiptModel.getStrongHoldCode());
             final Map<String, String> params = new HashMap<String, String>();
             params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
             params.put("ModelJson", GsonUtil.parseModelToJson(material));
