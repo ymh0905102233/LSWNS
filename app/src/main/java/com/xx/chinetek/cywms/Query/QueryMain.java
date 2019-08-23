@@ -47,8 +47,7 @@ public class QueryMain extends BaseActivity {
         int[] itemIcon = new int[]{ R.drawable.material,R.drawable.stock, R.drawable.batch,
                 R.drawable.supplier
         };//,"工单"
-        String[] itemNames = new String[]{"物料","库位", "批次",
-                "供应商"
+        String[] itemNames = new String[]{"物料","库位", "批次"
         };
         //cion和iconName的长度是相同的，这里任选其一都可以
         for(int i=0;i<itemIcon.length;i++){
