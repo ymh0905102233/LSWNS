@@ -427,7 +427,7 @@ public class ReceiptionScan extends BaseActivity {
     }
 
     private void BindListVIew(ArrayList<ReceiptDetail_Model> receiptDetailModels) {
-        receiptScanDetailAdapter=new ReceiptScanDetailAdapter(context,receiptDetailModels);
+        receiptScanDetailAdapter=new ReceiptScanDetailAdapter(context,"采购收货",receiptDetailModels);
         lsvReceiptScan.setAdapter(receiptScanDetailAdapter);
     }
 }

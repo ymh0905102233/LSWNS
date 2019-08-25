@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnKeyListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -150,7 +151,7 @@ public class AdvInChoiceActivity extends BaseActivity {
         BaseApplication.context = context;
         BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.advtitle), false);
         x.view().inject(this);
-        BaseApplication.isCloseActivity=false;//返回
+        BaseApplication.isCloseActivity = false;//返回
         txtCompany.setText("物料编码");
         txtStatus.setText("");
         txtBatch.setText("");
@@ -200,6 +201,9 @@ public class AdvInChoiceActivity extends BaseActivity {
             if (DoubleClickCheck.isFastDoubleClick(context)) {
                 return false;
             }
+            if (listAdvInStock == null || listAdvInStock.size() == 0) {
+                return false;
+            }
             AdvInStockInfo_Model advInStockInfo = new AdvInStockInfo_Model();
             advInStockInfo.setErpVoucherNo(receiptModel.getErpVoucherNo());
             advInStockInfo.setSupplierNo(receiptModel.getSupplierNo());
@@ -237,8 +241,12 @@ public class AdvInChoiceActivity extends BaseActivity {
     private boolean etAdvBarcode(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
         {
-            keyBoardCancle();
+
             String code = etBarcode.getText().toString().trim();
+            if (code.equals("")) {
+               CommonUtil.setEditFocus(etBarcode);
+                return true;
+            }
             MaterialPack_Model material = new MaterialPack_Model();
             material.setWATERCODE(code);
             material.setSTRONGHOLDCODE(receiptModel.getStrongHoldCode());
@@ -251,8 +259,19 @@ public class AdvInChoiceActivity extends BaseActivity {
         }
         return false;
     }
+    @Event(value = R.id.et_adv_qty,type = View.OnFocusChangeListener.class)
+    private void  onFocusChange(View v, boolean hasFocus) {
+        if (hasFocus) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            boolean isOpen = imm.isActive();//isOpen若返回true，则表示输入法打开
+            if(isOpen){
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
 
-    // @Event(value ={R.id.tb_UnboxType,R.id.tb_PalletType,R.id.tb_BoxType} ,type = CompoundButton.OnClickListener.class)
+    }
+
+        // @Event(value ={R.id.tb_UnboxType,R.id.tb_PalletType,R.id.tb_BoxType} ,type = CompoundButton.OnClickListener.class)
     // private void TBonCheckedChanged(View view) {
     //  @Event(value = {R.id.button6},type = View.OnClickListener.class)
     //  private void onClick(View view) {
@@ -264,7 +283,7 @@ public class AdvInChoiceActivity extends BaseActivity {
             return;
         }
         /**     * 年月日选择     */ //BasisTimesUtils.THEME_HOLO_DARK
-        BasisTimesUtils.showDatePickerDialog(context, 3, "请选择年月日", BasisTimesUtils.getYear()+2, BasisTimesUtils.getMonth(6), BasisTimesUtils.getDay(), new BasisTimesUtils.OnDatePickerListener() {
+        BasisTimesUtils.showDatePickerDialog(context, 3, "请选择年月日", BasisTimesUtils.getYear() + 2, BasisTimesUtils.getMonth(6), BasisTimesUtils.getDay(), new BasisTimesUtils.OnDatePickerListener() {
             @Override
             public void onConfirm(int year, int month, int dayOfMonth) {
                 eDate = year + "-" + month + "-" + dayOfMonth;
@@ -284,12 +303,12 @@ public class AdvInChoiceActivity extends BaseActivity {
     @Event(value = R.id.btn_qc_type, type = View.OnClickListener.class)
     private void onQcTypeClick(View v) {
         ArrayList<String> listString = new ArrayList<>();
-        if(listParameter==null||listParameter.size()==0){
+        if (listParameter == null || listParameter.size() == 0) {
             return;
         }
         for (Parameter_Model item :
                 listParameter) {
-            listString.add(item.getParameterid()+" "+item.getParameterName());
+            listString.add(item.getParameterid() + " " + item.getParameterName());
         }
         final String[] items = (String[]) listString.toArray(new String[listString.size()]);
         AlertDialog alertDialog3 = new AlertDialog.Builder(this)
@@ -297,20 +316,23 @@ public class AdvInChoiceActivity extends BaseActivity {
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        btnQcType.setText(listParameter.get(i).getParameterid()+" "+listParameter.get(i).getParameterName());
+                        btnQcType.setText(listParameter.get(i).getParameterid() + " " + listParameter.get(i).getParameterName());
                     }
                 }).create();
         alertDialog3.show();
     }
+
     @Event(value = R.id.et_adv_qty, type = OnKeyListener.class)
     private boolean etAdvQty(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
         {
             keyBoardCancle();
             int scanQty = 0;
-
+            if (etScanQty.getText().toString().trim().equals("")) {
+                return false;
+            }
             try {
-                scanQty = Integer.valueOf(etScanQty.getText().toString());
+                scanQty = Integer.valueOf(etScanQty.getText().toString().trim());
                 if (scanQty <= 0) {
                     MessageBox.Show(context, "请输入大于0的数量");
                     CommonUtil.setEditFocus(etScanQty);
@@ -319,23 +341,23 @@ public class AdvInChoiceActivity extends BaseActivity {
             } catch (Exception e) {
                 MessageBox.Show(context, "转换异常");
                 CommonUtil.setEditFocus(etScanQty);
-                return false;
+                return true;
             }
             if (receiptScanDetail == null) {
                 MessageBox.Show(context, "请先扫描条码信息");
                 CommonUtil.setEditFocus(etBarcode);
-                return false;
+                return true;
             }
             if (eDate.equals("")) {
                 MessageBox.Show(context, "请选择效期");
                 CommonUtil.setEditFocus(etBarcode);
-                return false;
+                return true;
             }
             Float value = receiptScanDetail.getInStockQty() - receiptScanDetail.getADVRECEIVEQTY() - receiptScanDetail.getScanQty();
             if (value < scanQty) {
                 MessageBox.Show(context, "录入数量不能大于可扫描数量 " + value);
                 CommonUtil.setEditFocus(etScanQty);
-                return false;
+                return true;
             }
             AdvInStockDetail_Model advScanValue = new AdvInStockDetail_Model();
             advScanValue.setMaterialNo(receiptScanDetail.getMaterialNo());
@@ -349,8 +371,8 @@ public class AdvInChoiceActivity extends BaseActivity {
             advScanValue.setIsDel(1);
             advScanValue.setEAN(materialPack.getWATERCODE());
             advScanValue.setErpVoucherNo(receiptScanDetail.getErpVoucherNo());
-            if(!btnQcType.getText().toString().substring(0,1).equals("选")){
-                String[] qcvalue= btnQcType.getText().toString().split(" ");
+            if (!btnQcType.getText().toString().substring(0, 1).equals("选")) {
+                String[] qcvalue = btnQcType.getText().toString().split(" ");
                 advScanValue.setQualityType(Integer.valueOf(qcvalue[0]));//质检类型
             }
 
@@ -484,7 +506,7 @@ public class AdvInChoiceActivity extends BaseActivity {
 
                     for (MaterialPack_Model pack :
                             listMaterialPacks) {
-                        listString.add(pack.getMATERIALNO()+" "+pack.getMATERIALDESC());
+                        listString.add(pack.getMATERIALNO() + " " + pack.getMATERIALDESC());
                     }
                     String[] items = (String[]) listString.toArray(new String[listString.size()]);
                     AlertDialog alertDialog3 = new AlertDialog.Builder(this)
@@ -554,7 +576,7 @@ public class AdvInChoiceActivity extends BaseActivity {
     }
 
     private void BindListVIew(ArrayList<ReceiptDetail_Model> receiptDetailModels) {
-        receiptScanDetailAdapter = new ReceiptScanDetailAdapter(context,"采购预到货", receiptDetailModels);
+        receiptScanDetailAdapter = new ReceiptScanDetailAdapter(context, "采购预到货", receiptDetailModels);
         lvOrderInfo.setAdapter(receiptScanDetailAdapter);
     }
 
