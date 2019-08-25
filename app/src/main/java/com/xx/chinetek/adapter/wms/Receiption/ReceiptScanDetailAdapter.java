@@ -21,7 +21,6 @@ public class ReceiptScanDetailAdapter extends BaseAdapter {
     private Context context; // 运行上下文
     private List<ReceiptDetail_Model> receiptDetailModels; // 信息集合
     private LayoutInflater listContainer; // 视图容器
-    private String showType ="";//显示类型
 
     public final class ListItemView { // 自定义控件集合
 
@@ -31,11 +30,10 @@ public class ReceiptScanDetailAdapter extends BaseAdapter {
         public TextView txtMaterialDesc;
     }
 
-    public ReceiptScanDetailAdapter(Context context,String showType, List<ReceiptDetail_Model> receiptDetailModels) {
+    public ReceiptScanDetailAdapter(Context context, List<ReceiptDetail_Model> receiptDetailModels) {
         this.context = context;
         listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         this.receiptDetailModels = receiptDetailModels;
-        this.showType =showType;
 
     }
 
@@ -74,7 +72,7 @@ public class ReceiptScanDetailAdapter extends BaseAdapter {
         ReceiptDetail_Model receiptDetailModel=receiptDetailModels.get(selectID);
         listItemView.txtbarcode.setText(receiptDetailModel.getMaterialNo());
         listItemView.txtScanNum.setText("已扫："+receiptDetailModel.getScanQty());
-        if(showType.equals("采购收货")){
+        if(receiptDetailModel.getVoucherType()==22){
             listItemView.txtRemainQty.setText("待收："+(receiptDetailModel.getADVRECEIVEQTY()- receiptDetailModel.getReceiveQty()));
         }else{
             listItemView.txtRemainQty.setText("待收："+receiptDetailModel.getRemainQty());
