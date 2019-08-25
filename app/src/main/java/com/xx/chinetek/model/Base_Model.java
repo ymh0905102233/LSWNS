@@ -50,7 +50,15 @@ public class Base_Model implements Parcelable {
     private String  ERPVoucherType;
     public String  ErpVoucherNo;
     private String  PrintIPAdress;
+    private String StrEDate ;
 
+    public String getStrEDate() {
+        return StrEDate;
+    }
+
+    public void setStrEDate(String strEDate) {
+        StrEDate = strEDate;
+    }
 
     public String getERPVoucherType() {
         return ERPVoucherType;
@@ -376,6 +384,7 @@ public class Base_Model implements Parcelable {
         dest.writeString(this.ERPVoucherType);
         dest.writeString(this.ErpVoucherNo);
         dest.writeString(this.PrintIPAdress);
+        dest.writeString(this.StrEDate);
         dest.writeInt(this.StockType);
     }
 
@@ -415,7 +424,19 @@ public class Base_Model implements Parcelable {
         this.ERPVoucherType = in.readString();
         this.ErpVoucherNo = in.readString();
         this.PrintIPAdress = in.readString();
+        this.StrEDate = in.readString();
         this.StockType = in.readInt();
     }
 
+    public static final Creator<Base_Model> CREATOR = new Creator<Base_Model>() {
+        @Override
+        public Base_Model createFromParcel(Parcel source) {
+            return new Base_Model(source);
+        }
+
+        @Override
+        public Base_Model[] newArray(int size) {
+            return new Base_Model[size];
+        }
+    };
 }

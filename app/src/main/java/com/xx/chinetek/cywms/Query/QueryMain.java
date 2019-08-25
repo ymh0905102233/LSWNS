@@ -44,8 +44,7 @@ public class QueryMain extends BaseActivity {
     //,R.drawable.workno
     public List<Map<String, Object>> getData(){
         List<Map<String, Object>> data_list = new ArrayList<Map<String, Object>>();
-        int[] itemIcon = new int[]{ R.drawable.material,R.drawable.stock, R.drawable.batch,
-                R.drawable.supplier
+        int[] itemIcon = new int[]{ R.drawable.material,R.drawable.stock, R.drawable.batch
         };//,"工单"
         String[] itemNames = new String[]{"物料","库位", "批次"
         };

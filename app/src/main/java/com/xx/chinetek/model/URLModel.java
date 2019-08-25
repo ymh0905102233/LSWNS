@@ -39,7 +39,7 @@ public class URLModel {
     public String GetMinDetail = GetWCFAdress()+"GetMinDetail"; //获取明盘明细
     public String GetScanInfo = GetWCFAdress()+"GetScanInfo"; //获取盘点条码信息
     public String GetMinBarocde = GetWCFAdress()+"GetMinBarocde"; //获取盘点条码信息
-    public String GetInfoBySerial = GetWCFAdress()+"GetInfoBySerial"; //获取盘点条码信息
+    public String GetInfoBySerial = GetWCFAdress()+"GetInfoBySerialymh"; //获取盘点条码信息
     public String SaveInfo = GetWCFAdress()+"SaveInfo"; //提交库存调整
     public String GetAreanobyCheckno2 = GetWCFAdress()+"GetAreanobyCheckno2"; //检查盘点库位
     public String SummitMin = GetWCFAdress()+"SummitMin"; //检查盘点库位

@@ -108,8 +108,8 @@ public class AdjustStock extends BaseActivity {
     Barcode_Model barcodeModel;
     String[] QCStatus={"待检","检验合格","检验不合格"};
     int[] QCStatusType={1,3,4};
-    String[] StrongHoldCode={"CY1","CX1","FC1"};
-    String[] StrongHoldName={"上海创元","上海创馨","上海甫成"};
+    String[] StrongHoldCode={"FY2","HM1"};
+    String[] StrongHoldName={"菲扬","禾木"};
 
 
     int mYear, mMouth,mDay;
@@ -130,6 +130,7 @@ public class AdjustStock extends BaseActivity {
         if(barcodeModel!=null) {
             LogUtil.WriteLog(AdjustStock.class, TAG_GetWareHouse, "");
             final Map<String, String> params = new HashMap<>();
+            params.put("json", BaseApplication.userInfo.getUserNo());
             try {
                 RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetWareHouse, getString(R.string.Msg_GetWareHouse), context, mHandler, RESULT_GetWareHouse, null, URLModel.GetURL().GetWareHouse, params, null);
             } catch (Exception ex) {

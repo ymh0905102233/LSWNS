@@ -102,6 +102,13 @@ public class CommonUtil {
         return Environment.getExternalStorageDirectory().getPath();
     }
 
+    //比较两个float是否相等
+    public static boolean EqualFloat(Float a, Float b) {
+        if ((a- b> -0.000001) && (a- b) < 0.000001)
+            return true;
+        else
+            return false;
+    }
     /**
      * 保存图片到本地
      *
