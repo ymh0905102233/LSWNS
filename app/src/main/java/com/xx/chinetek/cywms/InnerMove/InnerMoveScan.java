@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -83,12 +84,23 @@ public class InnerMoveScan extends BaseActivity {
   Context context=InnerMoveScan.this;
     @ViewInject(R.id.lsv_InnerMoveDetail)
     ListView lsvInnerMoveDetail;
-    @ViewInject(R.id.tb_MoveType)
-    ToggleButton TBMoveType;
-    @ViewInject(R.id.edt_MoveInStock)
-    EditText edtMoveInStock;
+
+    @ViewInject(R.id.edt_movescan_inarea)
+    EditText edtMoveInArea;
+    @ViewInject(R.id.edt_movescan_outarea)
+    EditText edtMoveOutArea;
     @ViewInject(R.id.edt_MoveScanBarcode)
     EditText edtMoveScanBarcode;
+    @ViewInject(R.id.edt_movescan_qty)
+    EditText edtMoveScanQty;
+
+    @ViewInject(R.id.cb_movescan_inlock)
+    CheckBox cbMoveInLock;
+    @ViewInject(R.id.cb_movescan_outlock)
+    CheckBox cbMoveOutLock;
+    @ViewInject(R.id.cb_movescan_box)
+    CheckBox cbMoveBox;
+
     @ViewInject(R.id.txt_Company)
     TextView txtCompany;
     @ViewInject(R.id.txt_Stock)
@@ -101,10 +113,7 @@ public class InnerMoveScan extends BaseActivity {
     TextView txtMaterialName;
     @ViewInject(R.id.txt_EDate)
     TextView txtEDate;
-    @ViewInject(R.id.txt_ReturnQty)
-    TextView txtReturnQty;
-    @ViewInject(R.id.edt_ReturnQty)
-    EditText edtReturnQty;
+
 
     List<StockInfo_Model> stockInfoModels;
     AreaInfo_Model OutAreaInfoModel=null;//扫描库位
@@ -127,16 +136,25 @@ public class InnerMoveScan extends BaseActivity {
         super.initData();
         stockInfoModels=new ArrayList<>();
         FunctionType=getIntent().getIntExtra("FunctionType",0);
+        txtStatus.setText("");
+
     }
 
-    @Event(value = R.id.edt_MoveInStock,type = View.OnKeyListener.class)
-    private  boolean edtMoveInStock(View v, int keyCode, KeyEvent event) {
+    @Event(value = R.id.edt_movescan_inarea,type = View.OnKeyListener.class)
+    private  boolean edtMoveInArea(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
         {
             keyBoardCancle();
-            String StockCode=edtMoveInStock.getText().toString().trim();
-            if(TextUtils.isEmpty(StockCode)){
-                CommonUtil.setEditFocus(edtMoveScanBarcode);
+            String StockCode=edtMoveInArea.getText().toString().trim();
+            if(!TextUtils.isEmpty(StockCode)){
+                final Map<String, String> params = new HashMap<String, String>();
+                String ModelJson = GsonUtil.parseModelToJson(currentStockInfo);
+                params.put("AreaNo", StockCode);
+                params.put("WareHouseID", BaseApplication.userInfo.getWarehouseID() + "");
+                params.put("ModelJson", ModelJson);
+                LogUtil.WriteLog(InnerMoveScan.class, TAG_GetAreaModelByMoveStockADF, StockCode + "|" + ModelJson);
+                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetAreaModelByMoveStockADF, getString(R.string.Msg_GetAreaModelADF), context, mHandler, RESULT_GetAreaModelByMoveStockADF, null, URLModel.GetURL().GetAreaModelByMoveStockADF, params, null);
+
             }
 
         }
@@ -169,16 +187,16 @@ public class InnerMoveScan extends BaseActivity {
         return true;
     }
 
-    @Event(value = R.id.edt_ReturnQty,type = View.OnKeyListener.class)
+
     private  boolean edtReturnQty(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
         {
             keyBoardCancle();
-            String  strqty=edtReturnQty.getText().toString();
+            String  strqty="";//edtReturnQty.getText().toString();
             CheckNumRefMaterial checkNumRefMaterial=CheckMaterialNumFormat(strqty,stockInfoModels.get(0).getUnitTypeCode(),stockInfoModels.get(0).getDecimalLngth());
             if(!checkNumRefMaterial.ischeck()) {
                 MessageBox.Show(context,checkNumRefMaterial.getErrMsg());
-                CommonUtil.setEditFocus(edtReturnQty);
+
                 return true;
             }
             if(currentStockInfo!=null){
@@ -188,17 +206,17 @@ public class InnerMoveScan extends BaseActivity {
                     Float scanQty=stockInfoModels.get(index).getQty();
                     if(qty>scanQty){
                         MessageBox.Show(context,getString(R.string.Error_PackageQtyBiger));
-                        CommonUtil.setEditFocus(edtReturnQty);
+
                         return true;
                     }
                     stockInfoModels.get(index).setQty(qty);
                     BindListVIew(stockInfoModels);
-                    showRetrunQty(false);
+
                     CommonUtil.setEditFocus(edtMoveScanBarcode);
                     return true;
                 }else{
                     MessageBox.Show(context,getString(R.string.Error_BarcodeScaned));
-                    edtReturnQty.setText("");
+
                     CommonUtil.setEditFocus(edtMoveScanBarcode);
                     return true;
                 }
@@ -208,7 +226,7 @@ public class InnerMoveScan extends BaseActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
         {
             keyBoardCancle();
-            showRetrunQty(false);
+
             return true;
 
         }
@@ -227,7 +245,7 @@ public class InnerMoveScan extends BaseActivity {
                         BaseApplication.userInfo.getReceiveWareHouseNo().toUpperCase().trim().equals("AD04")?"1":"2";
                 final Map<String, String> params = new HashMap<String, String>();
                 params.put("BarCode", barcode);
-                params.put("ScanType", TBMoveType.isChecked()?"1":"2");
+              //  params.put("ScanType", TBMoveType.isChecked()?"1":"2");
                 params.put("MoveType", "2"); //1：下架 2:移库
                 params.put("IsEdate",isEDate); //1：不判断有效期 2:判断有效期
                 LogUtil.WriteLog(InnerMoveScan.class, TAG_GetStockModelADF, barcode);
@@ -240,7 +258,7 @@ public class InnerMoveScan extends BaseActivity {
             OutAreaInfoModel=null;
             currentStockInfo=null;
             edtMoveScanBarcode.setText("");
-            CommonUtil.setEditFocus(edtMoveInStock);
+
             return true;
 
         }
@@ -310,7 +328,7 @@ public class InnerMoveScan extends BaseActivity {
                         CommonUtil.setEditFocus(edtMoveScanBarcode);
                         return;
                     }
-                    String StockCode = edtMoveInStock.getText().toString().trim();
+                    String StockCode = "";//edtMoveInStock.getText().toString().trim();
                         if(FunctionType == 0) {
                             final Map<String, String> params = new HashMap<String, String>();
                             String ModelJson = GsonUtil.parseModelToJson(currentStockInfo);
@@ -332,7 +350,6 @@ public class InnerMoveScan extends BaseActivity {
                             txtStock.setText(currentStockInfo.get(0).getQty().toString());
                             this.stockInfoModels.addAll(0, currentStockInfo);
                             boolean isQCStock=stockInfoModels.get(0).getAreaType()==4;
-                            showRetrunQty(isQCStock);
                             checkQty();
                             BindListVIew(ShowStock);
                         }
@@ -412,17 +429,9 @@ public class InnerMoveScan extends BaseActivity {
             txtStock.setText(currentStockInfo.get(0).getQty().toString());
             this.stockInfoModels.addAll(0, currentStockInfo);
             boolean isQCStock=stockInfoModels.get(0).getAreaType()==4;
-            showRetrunQty(isQCStock);
+
         }
     }
-
-    void showRetrunQty(boolean isQCStock){
-        txtReturnQty.setVisibility(isQCStock?View.VISIBLE:View.GONE);
-        edtReturnQty.setVisibility(isQCStock?View.VISIBLE:View.GONE);
-        if(isQCStock)edtReturnQty.setText(stockInfoModels.get(0).getQty().toString());
-        CommonUtil.setEditFocus(isQCStock?edtReturnQty:edtMoveScanBarcode);
-    }
-
 
     void checkQty(){
         if(ShowStock==null)
@@ -457,14 +466,14 @@ public class InnerMoveScan extends BaseActivity {
         txtStatus.setText("");
         txtStock.setText("");
         txtMaterialName.setText("");
-        edtMoveInStock.setText("");
+
         edtMoveScanBarcode.setText("");
         stockInfoModels=new ArrayList<>();
         ShowStock=new ArrayList<>();
         OutAreaInfoModel=null;
         currentStockInfo=null;
         BindListVIew(stockInfoModels);
-        CommonUtil.setEditFocus(edtMoveInStock);
+
     }
 
 

@@ -399,5 +399,6 @@
     <string name="advqty">预收数</string>
     <string name="advtitle">预收货</string>
     <string name="Msg_GetT_advInParameter">获取检验类型</string>
-    <string name="innermove_out_area">移出库:</string>
+    <string name="innermove_out_area">移出库：</string>
+    <string name="title_move_scanqty">数量：</string>
 </resources>
