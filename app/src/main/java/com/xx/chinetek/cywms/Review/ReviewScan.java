@@ -98,6 +98,9 @@ public class ReviewScan extends BaseActivity {
             case RESULT_DeletePalletByErpVoucherNo:
                 AnalysisDeletePalletByErpVoucherNoJson((String) msg.obj);
                 break;
+            case RESULT_PostReviewADF:
+            AnalysisPostReviewJson((String) msg.obj);
+            break;
             case NetworkError.NET_ERROR_CUSTOM:
                 ToastUtil.show("获取请求失败_____"+ msg.obj);
                 CommonUtil.setEditFocus(edtReviewScanBarcode);
@@ -163,15 +166,28 @@ public class ReviewScan extends BaseActivity {
             if (DoubleClickCheck.isFastDoubleClick(context)) {
                 return false;
             }
+            Boolean ispost=false;
             if(outStockDetailInfoModels==null||outStockDetailInfoModels.size()==0){
-                String userJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
-                final Map<String, String> params = new HashMap<String, String>();
-                params.put("UserJson", userJson);
-                params.put("ModelJson", outStockModel.getErpVoucherNo());
-                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_PostReviewADF, getString(R.string.Msg_SaveT_OutStockReviewDetailADF), context, mHandler, RESULT_PostReviewADF, null, URLModel.GetURL().PostReviewADF, params, null);
-            }else{
-                MessageBox.Show(context,"必须整单提交数据！");
+                ispost=true;
             }
+            if (!ispost){
+                new AlertDialog.Builder(context).setCancelable(false).setTitle("提示").setIcon(android.R.drawable.ic_dialog_info).setMessage("没有复核完全，是否直接提交？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO 自动生成的方法
+                                String userJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
+                                final Map<String, String> params = new HashMap<String, String>();
+                                params.put("UserJson", userJson);
+                                params.put("ErpVoucherNo", outStockModel.getErpVoucherNo());
+                                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_PostReviewADF, getString(R.string.Msg_SaveT_OutStockReviewDetailADF), context, mHandler, RESULT_PostReviewADF, null, URLModel.GetURL().PostT_OutStockReviewDetailADF, params, null);
+                            }
+                        }).show();
+            }
+
+
+
+
 //            Boolean isFinishReceipt = true;
 //            for (OutStockDetailInfo_Model outStockDetailInfoModel : outStockDetailInfoModels) {
 //                if (outStockDetailInfoModel.getScanQty().compareTo(outStockDetailInfoModel.getOutStockQty()) != 0) {
@@ -317,6 +333,26 @@ public class ReviewScan extends BaseActivity {
         LogUtil.WriteLog(ReviewScan.class, TAG_DeletePalletByErpVoucherNo, result);
        // ReturnMsgModel<PalletDetail_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<PalletDetail_Model>>() {}.getType());
     }
+
+    void AnalysisPostReviewJson(String result){
+        LogUtil.WriteLog(ReviewScan.class, TAG_PostReviewADF,result);
+        ReturnMsgModel<String> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<String>>() {}.getType());
+        if(returnMsgModel.getHeaderStatus().equals("S")){
+            new AlertDialog.Builder(context).setCancelable(false).setTitle("提示").setIcon(android.R.drawable.ic_dialog_info).setMessage(returnMsgModel.getMessage())
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            closeActiviry();
+                        }
+                    }).show();
+
+        }else
+        {
+            MessageBox.Show(context,returnMsgModel.getMessage());
+        }
+        CommonUtil.setEditFocus(edtReviewScanBarcode);
+    }
+
 
     /*
  处理下架复核明细

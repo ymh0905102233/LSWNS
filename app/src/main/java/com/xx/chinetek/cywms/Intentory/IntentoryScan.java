@@ -266,6 +266,7 @@ public class IntentoryScan extends BaseActivity {
     int BatchType=-1;
     @Event(value = R.id.txt_getbatch,type =View.OnClickListener.class )
     private void txtgetbatch(View view){
+        if ( Batchs==null||Batchs.length<=1){return;}
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("选择批次和物料");
         builder.setItems(Batchs, new DialogInterface.OnClickListener()
@@ -273,7 +274,7 @@ public class IntentoryScan extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
-                String getbatch =Batchs[1].toString();
+                String getbatch =Batchs[0].toString();
                  getbatch =Batchs[which].toString();
                 txtgetbatch.setText(getbatch);
                 BatchType=which;
@@ -338,7 +339,7 @@ public class IntentoryScan extends BaseActivity {
                     barcodeModels.get(i).setAREAID(checkAreaModel.getID());//盘点库位
                     packageNum= ArithUtil.add(packageNum, barcodeModels.get(i).getQty());
                 }
-                edtInvNum.setText(packageNum+"");
+                //edtInvNum.setText(packageNum+"");
 
                 inventoryScanItemAdapter=new InventoryScanItemAdapter(context,model,barcodeModels);
                 lsvIntentoryScan.setAdapter(inventoryScanItemAdapter);
@@ -372,6 +373,21 @@ public class IntentoryScan extends BaseActivity {
         LogUtil.WriteLog(IntentoryScan.class, TAG_CheckGetBatchnoAndMaterialno,result);
         ReturnMsgModelList<String> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<String>>() {}.getType());
         if(returnMsgModel.getHeaderStatus().equals("S")){
+            if(returnMsgModel.getModelJson().size()==1){
+                txtgetbatch.setText(returnMsgModel.getModelJson().get(0));
+                //根据选择的信息获取serialno
+                if(checkAreaModel!=null&&!edtInvScanBarcode.getText().equals("")&&!txtgetbatch.getText().equals("")){
+                    final Map<String, String> params = new HashMap<String, String>();
+                    params.put("EAN", edtInvScanBarcode.getText()+"");
+                    params.put("areaid", checkAreaModel.getID()+"");
+                    params.put("batchno", txtgetbatch.getText().toString().split(",")[0]);
+                    params.put("materialno", txtgetbatch.getText().toString().split(",")[1]);
+                    String para = (new JSONObject(params)).toString();
+                    LogUtil.WriteLog(IntentoryScan.class, TAG_CheckSerialno, para);
+                    RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_CheckSerialno, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_Msg_GetScanInfo, null, URLModel.GetURL().CheckSerialno, params, null);
+                }
+                return;
+            }
             Batchs = new String[returnMsgModel.getModelJson().size()];
             for (int i=0;i<returnMsgModel.getModelJson().size();i++){
                 Batchs[i]=returnMsgModel.getModelJson().get(i);

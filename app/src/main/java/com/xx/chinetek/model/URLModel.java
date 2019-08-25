@@ -184,7 +184,7 @@ public String GetReviewStockModelADF=GetWCFAdress()+"GetReviewStockModelADF";//�
     public String GetCarModelADF =GetWCFAdress()+"GetCarModelADF";//绑定小车和任务号
 
     //ymh复核
-    public String PostReviewADF =GetWCFAdress()+"PostReviewADF";//复核过账
+    public String PostT_OutStockReviewDetailADF =GetWCFAdress()+"PostT_OutStockReviewDetailADF";//复核过账
 
 
 

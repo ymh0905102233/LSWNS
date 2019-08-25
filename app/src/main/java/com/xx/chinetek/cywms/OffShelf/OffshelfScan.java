@@ -54,6 +54,7 @@ import com.xx.chinetek.util.function.GsonUtil;
 import com.xx.chinetek.util.log.LogUtil;
 
 import org.json.JSONObject;
+import org.w3c.dom.Comment;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -281,6 +282,9 @@ public class OffshelfScan extends PrintConnectActivity {
                         stockInfoModels.get(0).setHouseProp(HouseProp);
                         stockInfoModels.get(0).setTaskDetailesID(Float.parseFloat(TaskDetailesID+""));
                         String strOldBarCode = GsonUtil.parseModelToJson(stockInfoModels.get(0));
+                        if (!edtOffShelfScanbarcode.getText().toString().contains("@")){
+                            stockInfoModels.get(0).setBarcode(edtOffShelfScanbarcode.getText().toString());
+                        }
                         final Map<String, String> params = new HashMap<String, String>();
                         params.put("UserJson", userJson);
                         params.put("strOldBarCode", strOldBarCode);
@@ -315,6 +319,7 @@ public class OffshelfScan extends PrintConnectActivity {
             String code=edtOffShelfScanbarcode.getText().toString().trim();
             final Map<String, String> params = new HashMap<String, String>();
             StockInfo_Model model = new StockInfo_Model();
+            model.setHouseProp(outStockTaskDetailsInfoModels.get(0).getHouseProp());
             if (!code.contains("@")){
                 if(AreaModel==null){
                     MessageBox.Show(context,getString(R.string.Error_StockInCorrect));
@@ -458,6 +463,14 @@ public class OffshelfScan extends PrintConnectActivity {
                 }
                 currentPickMaterialIndex = FindFirstCanPickMaterial(); //查找需要拣货物料行
                 ShowPickMaterialInfo();//显示需要拣货物料
+
+                //光标定位
+                if (outStockTaskDetailsInfoModels.get(0).getHouseProp()==2){
+                    CommonUtil.setEditFocus(edtcar);
+                }else{
+                    CommonUtil.setEditFocus(edtOffShelfScanbarcode);
+                }
+
             } else {
                 MessageBox.Show(context, returnMsgModel.getMessage());
             }
@@ -481,10 +494,19 @@ public class OffshelfScan extends PrintConnectActivity {
                     if (edtOffShelfScanbarcode.getText().toString().trim().contains("@")){
                         insertStockInfo();
                     }else{
-                        Batchs = new String[stockInfoModels.size()];
-                        for (int i=0;i<stockInfoModels.size();i++){
-                            Batchs[i]=stockInfoModels.get(i).getBatchNo()+","+stockInfoModels.get(i).getMaterialNo();
+                        if (stockInfoModels.size()>1){
+                            Batchs = new String[stockInfoModels.size()];
+                            for (int i=0;i<stockInfoModels.size();i++){
+                                Batchs[i]=stockInfoModels.get(i).getBatchNo()+","+stockInfoModels.get(i).getMaterialNo();
+                            }
+                        }else{
+                            txtgetbatch.setText(stockInfoModels.get(0).getBatchNo()+","+stockInfoModels.get(0).getMaterialNo());
+                            //直接调用
+                            insertStockInfo();
                         }
+
+
+
                     }
 
 
@@ -654,6 +676,7 @@ AreaInfo_Model AreaModel;
         ReturnMsgModel<AreaInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<AreaInfo_Model>>() {}.getType());
         if(returnMsgModel.getHeaderStatus().equals("S")){
             AreaModel=returnMsgModel.getModelJson();
+            CommonUtil.setEditFocus(edtOffShelfScanbarcode);
         }else{
             MessageBox.Show(context,returnMsgModel.getMessage());
         }
@@ -664,7 +687,7 @@ AreaInfo_Model AreaModel;
         LogUtil.WriteLog(OffshelfScan.class, TAG_GetCar,result);
         ReturnMsgModel<OutStockTaskDetailsInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<OutStockTaskDetailsInfo_Model>>() {}.getType());
         if(returnMsgModel.getHeaderStatus().equals("S")){
-            CommonUtil.setEditFocus(edtOffShelfScanbarcode);
+            CommonUtil.setEditFocus(edtStockScan);
         }else{
             MessageBox.Show(context,returnMsgModel.getMessage());
         }
@@ -672,6 +695,7 @@ AreaInfo_Model AreaModel;
 
     String[] Batchs;
     int BatchType=-1;
+    List<StockInfo_Model> stockInfoModelsnew =new ArrayList<>();
     @Event(value = R.id.txt_getbatch,type =View.OnClickListener.class )
     private void txtgetbatch(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -686,11 +710,14 @@ AreaInfo_Model AreaModel;
                 txtgetbatch.setText(getbatch);
                 BatchType=which;
 
+
                 //扫描69码得到的实体类
+               stockInfoModelsnew =stockInfoModels;
                 StockInfo_Model stockInfoModel= stockInfoModels.get(which);
                 stockInfoModels = new ArrayList<>();
                 stockInfoModels.add(stockInfoModel);
                 insertStockInfo();
+                stockInfoModels = stockInfoModelsnew;
             }
         });
         builder.show();
@@ -834,7 +861,7 @@ AreaInfo_Model AreaModel;
 //                Float scanQty = stockInfoModels.get(0).getQty();
 //                checkQTY(scanQty, false);
 //                CommonUtil.setEditFocus(tbUnboxType.isChecked() ? edtUnboxing : edtOffShelfScanbarcode);
-                edtUnboxing.setText(stockInfoModels.get(0).getQty()+"");
+//                edtUnboxing.setText(stockInfoModels.get(0).getQty()+"");
             }
         } else {
             MessageBox.Show(context, getString(R.string.Error_NotPickMaterial));
@@ -899,8 +926,8 @@ AreaInfo_Model AreaModel;
     }
 
     void clearFrm(){
-        outStockTaskInfoModels=new ArrayList<>();
-        outStockTaskDetailsInfoModels=new ArrayList<>();
+//        outStockTaskInfoModels=new ArrayList<>();
+//        outStockTaskDetailsInfoModels=new ArrayList<>();
         stockInfoModels=new ArrayList<>();
         SumReaminQty=0f; //当前拣货物料剩余拣货数量合计
         currentPickMaterialIndex=-1;
@@ -951,7 +978,7 @@ AreaInfo_Model AreaModel;
             SameLineoutStockTaskDetailsInfoModels.get(i)
                     .setScanQty(ArithUtil.add( SameLineoutStockTaskDetailsInfoModels.get(i).getScanQty(),addQty));
 
-            SameLineoutStockTaskDetailsInfoModels.get(i).setVoucherType(9996);
+            SameLineoutStockTaskDetailsInfoModels.get(i).setVoucherType(99961);
             SameLineoutStockTaskDetailsInfoModels.get(i).setFromErpAreaNo( stockInfoModels.get(0).getAreaNo());
             SameLineoutStockTaskDetailsInfoModels.get(i).setFromErpWarehouse( stockInfoModels.get(0).getWarehouseNo());
             SameLineoutStockTaskDetailsInfoModels.get(i).setFromBatchNo( stockInfoModels.get(0).getBatchNo());
