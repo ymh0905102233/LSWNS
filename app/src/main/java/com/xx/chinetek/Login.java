@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.google.gson.reflect.TypeToken;
@@ -44,10 +45,12 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.example.mylibrary.LPK130;
 
 
 @ContentView(R.layout.activity_login)
@@ -87,6 +90,8 @@ public class Login extends BaseActivity{
 
     Context context = Login.this;
     List<WareHouseInfo> lstWarehouse;
+
+
 //
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +133,7 @@ public class Login extends BaseActivity{
 
     @Event(R.id.btn_Login)
     private void btnLoginClick(View view) {
+
         if (TextUtils.isEmpty(URLModel.PrintIP)) {
             MessageBox.Show(context, getString(R.string.Error_PrintIPNotSet));
             return;

@@ -808,6 +808,10 @@ AreaInfo_Model AreaModel;
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 StockInfo_Model stockInfoModel = returnMsgModel.getModelJson();
+                //打印拆零标签
+                if (edtOffShelfScanbarcode.getText().toString().contains("@")){
+                    LPK130DEMO(stockInfoModel,"Jian");
+                }
                 stockInfoModels = new ArrayList<>();
                 stockInfoModels.add(stockInfoModel);
                 currentPickMaterialIndex = FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getStrongHoldCode());

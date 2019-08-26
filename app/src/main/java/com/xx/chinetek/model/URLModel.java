@@ -19,6 +19,7 @@ public class URLModel {
     public static String ElecIP="10.2.32.244";
     public static Boolean isWMS=true;
     public static boolean isSupplier=false;
+    public static String MacAdress="";
     String  GetWCFAdress(){
         return  "http://"+IPAdress+":"+Port+"/"+LastContent;
     }

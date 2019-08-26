@@ -1,10 +1,12 @@
 package com.xx.chinetek;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,12 +14,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
+import com.example.mylibrary.LPK130;
 import com.xx.chinetek.base.BaseActivity;
 import com.xx.chinetek.base.BaseApplication;
 import com.xx.chinetek.base.ToolBarTitle;
 import com.xx.chinetek.cywms.R;
 import com.xx.chinetek.model.URLModel;
+import com.xx.chinetek.model.WMS.Stock.StockInfo_Model;
 import com.xx.chinetek.util.Network.RequestHandler;
 import com.xx.chinetek.util.SharePreferUtil;
 import com.xx.chinetek.util.dialog.LoadingDialog;
@@ -34,6 +39,7 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -51,6 +57,7 @@ public class Setting extends BaseActivity {
     EditText    edtPort;
     @ViewInject(R.id.edt_TimeOut)
     EditText    edtTimeOut;
+
 //    @ViewInject(R.id.rb_WMS)
 //    RadioButton rbWMS;
 //    @ViewInject(R.id.rb_Product)
@@ -86,7 +93,6 @@ public class Setting extends BaseActivity {
         SharePreferUtil.ReadShare(context);
         edtIPAdress.setText(URLModel.IPAdress);
         edtPort.setText(URLModel.Port+"");
-
 //        edtIPAdress.setEnabled(false);
 //        edtPort.setEnabled(false);
 //        if(URLModel.isWMS) rbWMS.setChecked(true); else rbProduct.setChecked(true);
@@ -174,18 +180,23 @@ public class Setting extends BaseActivity {
 
     }
 
-//    @Event(R.id.supplier_checkBox)
-//    private void btnSupplierCheckBox(View view){
-//       if (mCheckBox.isChecked()){
-//           mTestBluetoothButton.setVisibility(View.VISIBLE);
-//           SharePreferUtil.SetSupplierShare(context,true);
-//       }else {
-//           mTestBluetoothButton.setVisibility(View.GONE);
-//           SharePreferUtil.SetSupplierShare(context,false);
-//       }
-//    }
-//    @Event(R.id.testBluetooth)
-//    private void btnTestBluetooth(View view){
-//        startActivityLeft(new Intent(context, ConnectivityDemo.class));
-//    }
+    @Event(R.id.btn_SaveMac)
+    private void btnTestBluetooth(View view){
+        Intent serverIntent = new Intent(this, DeviceListActivity.class);
+        startActivityForResult(serverIntent, 1);
+    }
+
+    @Event(R.id.btn_Test)
+    private void btnTest(View view){
+        try{
+            StockInfo_Model model = new StockInfo_Model();
+            LPK130DEMO(model,"");
+        }catch(Exception ex){
+            MessageBox.Show(context, ex.toString());
+        }
+
+    }
+
+
+
 }
