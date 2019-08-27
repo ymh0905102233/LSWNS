@@ -16,6 +16,7 @@ public class AreaInfo_Model implements Parcelable {
     private int HouseID;
     private int ID;
     private int IsQuality;
+    private String HouseProp;//1 整箱  2零散区
 
     public int getIsQuality() {
         return IsQuality;
@@ -113,4 +114,12 @@ public class AreaInfo_Model implements Parcelable {
             return new AreaInfo_Model[size];
         }
     };
+
+    public String getHouseProp() {
+        return HouseProp;
+    }
+
+    public void setHouseProp(String houseProp) {
+        HouseProp = houseProp;
+    }
 }

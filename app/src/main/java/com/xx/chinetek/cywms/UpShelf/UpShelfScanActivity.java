@@ -2,6 +2,7 @@ package com.xx.chinetek.cywms.UpShelf;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -311,6 +312,32 @@ public class UpShelfScanActivity extends BaseActivity {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 inStockTaskDetailsInfoModels = returnMsgModel.getModelJson();
+                boolean isUpFull =true;
+                for (InStockTaskDetailsInfo_Model model:
+                        inStockTaskDetailsInfoModels) {
+                    if(model.getRemainQty()>0){
+                        isUpFull =false;
+                        break;
+                    }
+                }
+                if(isUpFull){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("提示");
+                    builder.setMessage("当前任务已全部上架完成");
+                    builder.setPositiveButton("返回重选任务", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            closeActiviry();
+                        }
+                    });
+                    builder.setPositiveButton("留在本任务", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                }
+
                 Collections.sort(inStockTaskDetailsInfoModels, new InStockTaskDetailsInfo_Model());
                 BindListVIew(inStockTaskDetailsInfoModels);
 //            //自动确认扫描箱号 删除，上架需要扫描库位
@@ -490,9 +517,12 @@ public class UpShelfScanActivity extends BaseActivity {
                     Float qty = ArithUtil.add(inStockTaskDetailsInfoModels.get(index).getScanQty(), upQty);
                     if (qty <= inStockTaskDetailsInfoModels.get(index).getRemainQty()) {
                         if (inStockTaskDetailsInfoModels.get(index).getFromErpWarehouse().equals(inStockTaskDetailsInfoModels.get(index).getToErpWarehouse())) {//不同仓库需要触发调拨业务员
-                            inStockTaskDetailsInfoModels.get(index).setVoucherType(9999);//不生成调拨
+                            inStockTaskDetailsInfoModels.get(index).setVoucherType(999);//不生成调拨
                         } else {
                             inStockTaskDetailsInfoModels.get(index).setVoucherType(9996);//生成调拨单   9996
+                            inStockTaskDetailsInfoModels.get(index).setErpVoucherType("DB6");
+                            inStockTaskDetailsInfoModels.get(index).setFromErpAreaNo("");
+                            inStockTaskDetailsInfoModels.get(index).setToErpAreaNo("");
                         }
 
                         inStockTaskDetailsInfoModels.get(index).setScanQty(qty);

@@ -561,7 +561,7 @@ public class AdvInChoiceActivity extends BaseActivity {
         } else {
             txtOrderQty.setText("订单数 " + receiptScanDetail.getInStockQty() + "可入数 " + (receiptScanDetail.getInStockQty() - receiptScanDetail.getADVRECEIVEQTY() - receiptScanDetail.getScanQty()) + "已扫" + receiptScanDetail.getScanQty());
             etScanQty.setText("");
-            CommonUtil.setEditFocus(etScanQty);
+            onClick(null);
         }
     }
 
