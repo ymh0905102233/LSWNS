@@ -185,7 +185,7 @@ public class InnerMoveScan extends BaseActivity {
             }
             try {
                 float scanqty = Float.valueOf(edtMoveScanQty.getText().toString().trim());
-                if (scanqty <= 0||scanqty>moveStockInfo.getQty()) {
+                if (scanqty <= 0 || scanqty > moveStockInfo.getQty()) {
                     MessageBox.Show(context, "请输入正确的数量");
                     CommonUtil.setEditFocus(edtMoveScanQty);
                     return true;
@@ -252,7 +252,6 @@ public class InnerMoveScan extends BaseActivity {
     }
 
 
-
     @Event(value = R.id.edt_MoveScanBarcode, type = View.OnKeyListener.class)
     private boolean edtMoveScanBarcode(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
@@ -273,7 +272,7 @@ public class InnerMoveScan extends BaseActivity {
                     stock = new StockInfo_Model();
                     if (barcode.split("@").length > 2) {
                         stock.setBarcode(barcode);
-                        stock.setSerialNo(barcode.split("@")[barcode.split("@").length-1]);
+                        stock.setSerialNo(barcode.split("@")[barcode.split("@").length - 1]);
                     } else {
                         stock.setEAN(barcode);
                     }
@@ -445,18 +444,19 @@ public class InnerMoveScan extends BaseActivity {
     void AnalysisSaveT_StockADFJson(String result) {
         try {
             LogUtil.WriteLog(InnerMoveScan.class, TAG_SaveT_StockADF, result);
-            ReturnMsgModel<AreaInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<AreaInfo_Model>>() {
+            ReturnMsgModel<StockInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<StockInfo_Model>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 if (!InAreaInfoModel.getHouseProp().equals("2")) {
-                    if (!returnMsgModel.getMessage().equals("")) {
+
+                    if (returnMsgModel.getModelJson()!=null) {
                         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
                         builder.setTitle("提示");
                         builder.setMessage("移库过程中产生了新标签是否打印？");
                         builder.setPositiveButton("现在打印", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                              
+
                             }
                         });
                         builder.setPositiveButton("暂时不打印", new DialogInterface.OnClickListener() {
@@ -479,6 +479,7 @@ public class InnerMoveScan extends BaseActivity {
         }
 
     }
+
 
     void saveMoveBarcode() {
         if (InAreaInfoModel == null) {
@@ -513,16 +514,17 @@ public class InnerMoveScan extends BaseActivity {
             builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-
                     submit();
                 }
             });
-        }else{
+            builder.show();
+        } else {
             submit();
         }
 
     }
-    void submit(){
+
+    void submit() {
         final Map<String, String> params = new HashMap<String, String>();
         String ModelJson = GsonUtil.parseModelToJson(moveStockInfo);
         params.put("StockJson", ModelJson);
@@ -549,6 +551,7 @@ public class InnerMoveScan extends BaseActivity {
         txtStock.setText("");
         txtMaterialName.setText("");
 
+
         if (ShowStock == null) {
             ShowStock = new ArrayList<>();
         }
@@ -563,12 +566,12 @@ public class InnerMoveScan extends BaseActivity {
         currentStockInfo = null;
         moveStockInfo = null;
         edtMoveScanBarcode.setText("");
-
+        edtMoveScanQty.setText("");
         if (!cbMoveOutLock.isChecked()) {
             OutAreaInfoModel = null;
             edtMoveOutArea.setText("");
             CommonUtil.setEditFocus(edtMoveOutArea);
-        }else{
+        } else {
             CommonUtil.setEditFocus(edtMoveScanBarcode);
         }
     }
