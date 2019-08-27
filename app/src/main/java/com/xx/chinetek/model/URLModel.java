@@ -19,6 +19,7 @@ public class URLModel {
     public static String ElecIP="10.2.32.244";
     public static Boolean isWMS=true;
     public static boolean isSupplier=false;
+    public static String MacAdress="";
     String  GetWCFAdress(){
         return  "http://"+IPAdress+":"+Port+"/"+LastContent;
     }
@@ -39,7 +40,7 @@ public class URLModel {
     public String GetMinDetail = GetWCFAdress()+"GetMinDetail"; //获取明盘明细
     public String GetScanInfo = GetWCFAdress()+"GetScanInfo"; //获取盘点条码信息
     public String GetMinBarocde = GetWCFAdress()+"GetMinBarocde"; //获取盘点条码信息
-    public String GetInfoBySerial = GetWCFAdress()+"GetInfoBySerial"; //获取盘点条码信息
+    public String GetInfoBySerial = GetWCFAdress()+"GetInfoBySerialymh"; //获取盘点条码信息
     public String SaveInfo = GetWCFAdress()+"SaveInfo"; //提交库存调整
     public String GetAreanobyCheckno2 = GetWCFAdress()+"GetAreanobyCheckno2"; //检查盘点库位
     public String SummitMin = GetWCFAdress()+"SummitMin"; //检查盘点库位
@@ -93,6 +94,8 @@ public String GetReviewStockModelADF=GetWCFAdress()+"GetReviewStockModelADF";//�
     public String GetT_QualityDetailListByHeaderIDADF=GetWCFAdress()+"GetT_QualityDetailListByHeaderIDADF";//获取质检表体信息
     public String GetT_OutBarCodeInfoForQuanADF=GetWCFAdress()+"GetT_OutBarCodeInfoForQuanADF";//获取质检扫描条码信息
     public String GetStockModelADF=GetWCFAdress()+"GetStockModelADF";//获取下架和仓库内移库条码信息
+    public String GetStockmodelForPDAADF=GetWCFAdress()+"GetStockmodelForPDAADF";//获取下架和仓库内移库条码信息
+
     public String SaveT_QuanlitySampADF=GetWCFAdress()+"SaveT_QuanlitySampADF";//提交质检明细
     public String CreateQualityForStock=GetWCFAdress()+"CreateQualityForStock";//提交在库检明细
     public String SaveT_OutStockTaskDetailADF=GetWCFAdress()+"SaveT_OutStockTaskDetailADF";//提交下架明细

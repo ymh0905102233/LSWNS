@@ -15,6 +15,7 @@
         android:theme="@style/AppTheme">
         <activity android:name="com.xx.chinetek.MainActivity" />
         <activity android:name="com.xx.chinetek.Setting" />
+        <activity android:name="com.xx.chinetek.DeviceListActivity" />
         <activity android:name=".Receiption.ReceiptBillChoice" />
         <activity android:name=".Receiption.SupplierFilterActivity" />
         <activity android:name=".Receiption.ReceiptionScan" />

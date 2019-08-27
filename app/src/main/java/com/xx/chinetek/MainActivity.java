@@ -128,6 +128,8 @@ public class MainActivity extends BaseActivity {
             intent.setClass(context, LineStockOutReturnBillChoice.class);
         else if(textView.getText().toString().equals("装车扫描"))
             intent.setClass(context, LineStockOutProduct.class);
+        else if(textView.getText().toString().equals("卸车扫描"))
+            intent.setClass(context, LineStockOutProduct.class);
         else if(textView.getText().toString().equals("领料出库")) {
             BaseApplication.toolBarTitle=new ToolBarTitle(getString(R.string.LineStockOutMaterial),true);
             intent.setClass(context, WoBillChoice.class);
@@ -200,8 +202,8 @@ public class MainActivity extends BaseActivity {
                     case 7:
                         itemIconList.add(R.drawable.inventory);
                         itemNamesList.add("盘点");
-                        itemIconList.add(R.drawable.intentoryfinc);
-                        itemNamesList.add("财务盘点");
+//                        itemIconList.add(R.drawable.intentoryfinc);
+//                        itemNamesList.add("财务盘点");
                         break;
                     case 8:
                         itemIconList.add(R.drawable.query);
@@ -278,6 +280,10 @@ public class MainActivity extends BaseActivity {
                     case 33:
                         itemIconList.add(R.drawable.innermove);
                         itemNamesList.add("第三方移库");
+                        break;
+                    case 34:
+                        itemIconList.add(R.drawable.deliveryproduct);
+                        itemNamesList.add("卸车扫描");
                         break;
                 }
             }
