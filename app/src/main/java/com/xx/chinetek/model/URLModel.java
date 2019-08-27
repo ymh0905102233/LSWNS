@@ -94,6 +94,8 @@ public String GetReviewStockModelADF=GetWCFAdress()+"GetReviewStockModelADF";//�
     public String GetT_QualityDetailListByHeaderIDADF=GetWCFAdress()+"GetT_QualityDetailListByHeaderIDADF";//获取质检表体信息
     public String GetT_OutBarCodeInfoForQuanADF=GetWCFAdress()+"GetT_OutBarCodeInfoForQuanADF";//获取质检扫描条码信息
     public String GetStockModelADF=GetWCFAdress()+"GetStockModelADF";//获取下架和仓库内移库条码信息
+    public String GetStockmodelForPDAADF=GetWCFAdress()+"GetStockmodelForPDAADF";//获取下架和仓库内移库条码信息
+
     public String SaveT_QuanlitySampADF=GetWCFAdress()+"SaveT_QuanlitySampADF";//提交质检明细
     public String CreateQualityForStock=GetWCFAdress()+"CreateQualityForStock";//提交在库检明细
     public String SaveT_OutStockTaskDetailADF=GetWCFAdress()+"SaveT_OutStockTaskDetailADF";//提交下架明细

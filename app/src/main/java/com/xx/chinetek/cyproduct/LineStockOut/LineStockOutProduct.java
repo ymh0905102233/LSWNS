@@ -90,6 +90,9 @@ public class LineStockOutProduct extends BaseActivity {
     TextView txtLineOutStockNum;
     @ViewInject(R.id.edt_LineStockOutScanBarcode)
     EditText edtLineStockOutScanBarcode;
+    @ViewInject(R.id.edt_car)
+    EditText edtcar;
+
 
     ArrayList<BarCodeInfo> SumbitbarCodeInfos=new ArrayList<>();
     PalletItemAdapter palletItemAdapter;
@@ -101,6 +104,21 @@ public class LineStockOutProduct extends BaseActivity {
         BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.Product_ProductStockout_subtitleYMH), true);
         x.view().inject(this);
         BaseApplication.isCloseActivity=false;
+
+    }
+
+    String carno="";
+    @Event(value =R.id.edt_car,type = View.OnKeyListener.class)
+    private  boolean edtcarClick(View v, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
+        {
+            carno = edtcar.getText().toString().trim();
+            if (TextUtils.isEmpty(carno)) {
+                MessageBox.Show(context,"车牌号不能为空！");
+                return true;
+            }
+        }
+        return false;
     }
 
 

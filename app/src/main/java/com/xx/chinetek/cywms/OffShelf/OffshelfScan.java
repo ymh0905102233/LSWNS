@@ -187,7 +187,10 @@ public class OffshelfScan extends PrintConnectActivity {
     EditText edtStockScan;
     @ViewInject(R.id.txt_getbatch)
     TextView txtgetbatch;
-
+    @ViewInject(R.id.textView133)
+    TextView textView133;
+    @ViewInject(R.id.txterpvoucherno)
+    TextView txterpvoucherno;
 
     ArrayList<OutStockTaskInfo_Model> outStockTaskInfoModels;
     ArrayList<OutStockTaskDetailsInfo_Model> outStockTaskDetailsInfoModels;
@@ -220,6 +223,7 @@ public class OffshelfScan extends PrintConnectActivity {
         Headerid=outStockTaskInfoModels.get(0).getHeaderID();
         TaskNo=outStockTaskInfoModels.get(0).getTaskNo();
         GetT_OutTaskDetailListByHeaderIDADF(outStockTaskInfoModels);
+        txterpvoucherno.setText(Erpvoucherno);
 //        String UserJson=GsonUtil.parseModelToJson(BaseApplication.userInfo);
     }
 
@@ -519,6 +523,8 @@ public class OffshelfScan extends PrintConnectActivity {
                 if (outStockTaskDetailsInfoModels.get(0).getHouseProp()==2){
                     CommonUtil.setEditFocus(edtcar);
                 }else{
+                    edtcar.setVisibility(View.INVISIBLE);
+                    textView133.setVisibility(View.INVISIBLE);
                     CommonUtil.setEditFocus(edtOffShelfScanbarcode);
                 }
 
