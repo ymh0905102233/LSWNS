@@ -194,6 +194,10 @@ public String GetReviewStockModelADF=GetWCFAdress()+"GetReviewStockModelADF";//�
     //ymh复核
     public String PostT_OutStockReviewDetailADF =GetWCFAdress()+"PostT_OutStockReviewDetailADF";//复核过账
 
+    //装车卸车
+    public String GetPalletInfoByPalletNo =GetWCFAdress()+"GetPalletInfoByPalletNo";//获取物流标签
+    public String GetTransportSupplierDetailListADF =GetWCFAdress()+"GetTransportSupplierDetailListADF";//装车信息
+
 
 
 }
