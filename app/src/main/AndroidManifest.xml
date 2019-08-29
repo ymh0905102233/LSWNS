@@ -102,7 +102,7 @@
         <activity android:name="com.xx.chinetek.cyproduct.LineStockOut.LineStockOutMaterial" />
         <activity android:name="com.xx.chinetek.cyproduct.LineStockOut.Zcj" />
         <activity android:name=".Intentory.IntentoryFinc" />
-
+        <activity android:name=".Query.AddProductActivity"></activity>
     </application>
 
 </manifest>

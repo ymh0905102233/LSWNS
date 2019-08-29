@@ -142,6 +142,7 @@ public class MaterialPack_Model  implements Parcelable {
     private Object ERPVoucherType;
     private Object StrModifyer;
     private Object OperUserNo;
+    private float UNITNUM;
 
     public int getID() {
         return ID;
@@ -671,5 +672,13 @@ public class MaterialPack_Model  implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
 
+    }
+
+    public float getUNITNUM() {
+        return UNITNUM;
+    }
+
+    public void setUNITNUM(float UNITNUM) {
+        this.UNITNUM = UNITNUM;
     }
 }

@@ -297,6 +297,7 @@ public class InnerMoveScan extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_receiptbilldetail, menu);
+        menu.findItem(R.id.action_filter).setVisible(false);
         return true;
     }
 
@@ -444,12 +445,13 @@ public class InnerMoveScan extends BaseActivity {
     void AnalysisSaveT_StockADFJson(String result) {
         try {
             LogUtil.WriteLog(InnerMoveScan.class, TAG_SaveT_StockADF, result);
-            ReturnMsgModel<StockInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<StockInfo_Model>>() {
+            ReturnMsgModel<List<StockInfo_Model>> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<List<StockInfo_Model>>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 if (!InAreaInfoModel.getHouseProp().equals("2")) {
+                    List<StockInfo_Model> listStock =returnMsgModel.getModelJson();
+                    if (listStock!=null&&listStock.size()>0) {
 
-                    if (returnMsgModel.getModelJson()!=null) {
                         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
                         builder.setTitle("提示");
                         builder.setMessage("移库过程中产生了新标签是否打印？");
@@ -459,7 +461,7 @@ public class InnerMoveScan extends BaseActivity {
 
                             }
                         });
-                        builder.setPositiveButton("暂时不打印", new DialogInterface.OnClickListener() {
+                        builder.setNeutralButton("不打印", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -555,6 +557,8 @@ public class InnerMoveScan extends BaseActivity {
         if (ShowStock == null) {
             ShowStock = new ArrayList<>();
         }
+        moveStockInfo.setToErpAreaNo(InAreaInfoModel.getAreaNo());
+        moveStockInfo.setToErpWarehouse(InAreaInfoModel.getWarehouseNo());
         ShowStock.add(moveStockInfo);
         BindListVIew(ShowStock);
 

@@ -290,6 +290,7 @@ public class AdvInChoiceActivity extends BaseActivity {
                 btnDate.setText(eDate);
                 String bdate = BasisTimesUtils.getDateStr(eDate, materialPack.getQUALITYDAY());
                 etBatch.setText(bdate);
+                CommonUtil.setEditFocus(etScanQty);
             }
 
             @Override
@@ -541,7 +542,7 @@ public class AdvInChoiceActivity extends BaseActivity {
 
         txtCompany.setText(materialPackMdl.getMATERIALNO());
         txtBatch.setText("");
-        txtStatus.setText("");
+        txtStatus.setText(String.valueOf(materialPackMdl.getUNITNUM()));
         txtMaterialName.setText(materialPackMdl.getMATERIALDESC());
         txtEDate.setText(String.valueOf(materialPackMdl.getQUALITYDAY()));
 

@@ -218,10 +218,15 @@ public class UpShelfScanActivity extends BaseActivity {
                 }
 
                 Float scanQty = Float.valueOf(edtUpScanQty.getText().toString());
+                if(scanQty<=0){
+                    MessageBox.Show(context, "请输入正确的数量信息");
+                    CommonUtil.setEditFocus(edtUpScanQty);
+                    return true;
+                }
                 if (barcodeQty < scanQty) {
                     MessageBox.Show(context, "上架数量不能大于条码剩余数量");
                     CommonUtil.setEditFocus(edtUpScanQty);
-                    return false;
+                    return true;
                 }
                 if (stockInfoModels != null && stockInfoModels.size() != 0) {
                     for (StockInfo_Model stockInfoModel : stockInfoModels) {
@@ -330,12 +335,13 @@ public class UpShelfScanActivity extends BaseActivity {
                             closeActiviry();
                         }
                     });
-                    builder.setPositiveButton("留在本任务", new DialogInterface.OnClickListener() {
+                    builder.setNeutralButton("留在本任务", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
 
                         }
                     });
+                    builder.show();
                 }
 
                 Collections.sort(inStockTaskDetailsInfoModels, new InStockTaskDetailsInfo_Model());
@@ -509,6 +515,7 @@ public class UpShelfScanActivity extends BaseActivity {
                     inStockTaskDetailsInfoModels.get(index).setHouseID(areaInfoModel.getHouseID());
                     inStockTaskDetailsInfoModels.get(index).setWarehouseID(areaInfoModel.getWarehouseID());
                     inStockTaskDetailsInfoModels.get(index).setToErpAreaNo(areaInfoModel.getAreaNo());
+                    inStockTaskDetailsInfoModels.get(index).setAreaNo(areaInfoModel.getAreaNo());
                     inStockTaskDetailsInfoModels.get(index).setToErpWarehouse(areaInfoModel.getWarehouseNo());
                 }
                 if (inStockTaskDetailsInfoModels.get(index).getLstStockInfo() == null)

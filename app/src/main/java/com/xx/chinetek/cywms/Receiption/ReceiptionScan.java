@@ -301,7 +301,7 @@ public class ReceiptionScan extends BaseActivity {
 
     void InitFrm(BarCodeInfo barCodeInfo){
         if(barCodeInfo!=null ){
-            txtCompany.setText(barCodeInfo.getStrongHoldName());
+            txtCompany.setText(barCodeInfo.getStrongHoldCode());
             txtBatch.setText(barCodeInfo.getMaterialNo());
             txtStatus.setText(barCodeInfo.getBatchNo());
             txtMaterialName.setText(barCodeInfo.getMaterialDesc());
