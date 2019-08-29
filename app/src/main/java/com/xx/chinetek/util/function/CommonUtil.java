@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -45,6 +46,20 @@ public class CommonUtil {
         return pattern.matcher(str).matches();
     }
 
+    public static float convertToFloat(String number, float defaultValue)
+    {
+        if (TextUtils.isEmpty(number))
+        {
+            return defaultValue;
+        }
+        try {
+            return Float.parseFloat(number);
+        }
+        catch (Exception e)
+        {
+            return defaultValue;
+        }
+    }
 
 
     /**

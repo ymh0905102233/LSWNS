@@ -154,60 +154,60 @@ public class ReviewScan extends BaseActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_receiptbilldetail, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_receiptbilldetail, menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_filter) {
-            if (DoubleClickCheck.isFastDoubleClick(context)) {
-                return false;
-            }
-            Boolean ispost=false;
-            if(outStockDetailInfoModels==null||outStockDetailInfoModels.size()==0){
-                ispost=true;
-            }
-            if (!ispost){
-                new AlertDialog.Builder(context).setCancelable(false).setTitle("提示").setIcon(android.R.drawable.ic_dialog_info).setMessage("没有复核完全，是否直接提交？")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO 自动生成的方法
-                                String userJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
-                                final Map<String, String> params = new HashMap<String, String>();
-                                params.put("UserJson", userJson);
-                                params.put("ErpVoucherNo", outStockModel.getErpVoucherNo());
-                                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_PostReviewADF, getString(R.string.Msg_SaveT_OutStockReviewDetailADF), context, mHandler, RESULT_PostReviewADF, null, URLModel.GetURL().PostT_OutStockReviewDetailADF, params, null);
-                            }
-                        }).show();
-            }
-
-
-
-
-//            Boolean isFinishReceipt = true;
-//            for (OutStockDetailInfo_Model outStockDetailInfoModel : outStockDetailInfoModels) {
-//                if (outStockDetailInfoModel.getScanQty().compareTo(outStockDetailInfoModel.getOutStockQty()) != 0) {
-//                    MessageBox.Show(context, getString(R.string.Error_CannotReview));
-//                    isFinishReceipt = false;
-//                    break;
-//                }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == R.id.action_filter) {
+//            if (DoubleClickCheck.isFastDoubleClick(context)) {
+//                return false;
 //            }
-//            if (isFinishReceipt) {
-//                String userJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
-//                String modelJson = GsonUtil.parseModelToJson(outStockDetailInfoModels);
-//                final Map<String, String> params = new HashMap<String, String>();
-//                params.put("UserJson", userJson);
-//                params.put("ModelJson", modelJson);
-//                LogUtil.WriteLog(ReviewScan.class, TAG_SaveT_OutStockReviewDetailADF, modelJson);
-//                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_OutStockReviewDetailADF, getString(R.string.Msg_SaveT_OutStockReviewDetailADF), context, mHandler, RESULT_SaveT_OutStockReviewDetailADF, null, URLModel.GetURL().SaveT_OutStockReviewDetailADF, params, null);
+//            Boolean ispost=false;
+//            if(outStockDetailInfoModels==null||outStockDetailInfoModels.size()==0){
+//                ispost=true;
 //            }
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//            if (!ispost){
+//                new AlertDialog.Builder(context).setCancelable(false).setTitle("提示").setIcon(android.R.drawable.ic_dialog_info).setMessage("没有复核完全，是否直接提交？")
+//                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                // TODO 自动生成的方法
+//                                String userJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
+//                                final Map<String, String> params = new HashMap<String, String>();
+//                                params.put("UserJson", userJson);
+//                                params.put("ErpVoucherNo", outStockModel.getErpVoucherNo());
+//                                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_PostReviewADF, getString(R.string.Msg_SaveT_OutStockReviewDetailADF), context, mHandler, RESULT_PostReviewADF, null, URLModel.GetURL().PostT_OutStockReviewDetailADF, params, null);
+//                            }
+//                        }).show();
+//            }
+//
+//
+//
+//
+////            Boolean isFinishReceipt = true;
+////            for (OutStockDetailInfo_Model outStockDetailInfoModel : outStockDetailInfoModels) {
+////                if (outStockDetailInfoModel.getScanQty().compareTo(outStockDetailInfoModel.getOutStockQty()) != 0) {
+////                    MessageBox.Show(context, getString(R.string.Error_CannotReview));
+////                    isFinishReceipt = false;
+////                    break;
+////                }
+////            }
+////            if (isFinishReceipt) {
+////                String userJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
+////                String modelJson = GsonUtil.parseModelToJson(outStockDetailInfoModels);
+////                final Map<String, String> params = new HashMap<String, String>();
+////                params.put("UserJson", userJson);
+////                params.put("ModelJson", modelJson);
+////                LogUtil.WriteLog(ReviewScan.class, TAG_SaveT_OutStockReviewDetailADF, modelJson);
+////                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_OutStockReviewDetailADF, getString(R.string.Msg_SaveT_OutStockReviewDetailADF), context, mHandler, RESULT_SaveT_OutStockReviewDetailADF, null, URLModel.GetURL().SaveT_OutStockReviewDetailADF, params, null);
+////            }
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Event(value =R.id.lsv_Reviewscan,type =AdapterView.OnItemClickListener.class )
     private void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -26,6 +26,8 @@ import com.xx.chinetek.cyproduct.LineStockOut.LineStockOutReturnBillChoice;
 import com.xx.chinetek.cyproduct.LineStockOut.Zcj;
 import com.xx.chinetek.cyproduct.Manage.LineManage;
 import com.xx.chinetek.cyproduct.WoBillChoice;
+import com.xx.chinetek.cywms.Car.CarIn;
+import com.xx.chinetek.cywms.Car.CarOut;
 import com.xx.chinetek.cywms.InnerMove.InnerMoveScan;
 import com.xx.chinetek.cywms.Intentory.InventoryBillChoice;
 import com.xx.chinetek.cywms.MaterialChange.MaterialChangeReceiptBillChoice;
@@ -127,9 +129,9 @@ public class MainActivity extends BaseActivity {
         else if(textView.getText().toString().equals("退料出库"))
             intent.setClass(context, LineStockOutReturnBillChoice.class);
         else if(textView.getText().toString().equals("装车扫描"))
-            intent.setClass(context, LineStockOutProduct.class);
-        else if(textView.getText().toString().equals("卸车扫描"))
-            intent.setClass(context, LineStockOutProduct.class);
+            intent.setClass(context, CarOut.class);
+        else if(textView.getText().toString().equals("物流扫描"))
+            intent.setClass(context, CarIn.class);
         else if(textView.getText().toString().equals("领料出库")) {
             BaseApplication.toolBarTitle=new ToolBarTitle(getString(R.string.LineStockOutMaterial),true);
             intent.setClass(context, WoBillChoice.class);
@@ -283,7 +285,7 @@ public class MainActivity extends BaseActivity {
                         break;
                     case 34:
                         itemIconList.add(R.drawable.deliveryproduct);
-                        itemNamesList.add("卸车扫描");
+                        itemNamesList.add("物流扫描");
                         break;
                 }
             }

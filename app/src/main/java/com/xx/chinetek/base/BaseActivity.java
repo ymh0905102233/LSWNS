@@ -374,7 +374,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
 
 
                     lpk130.NFCP_printStr("产品名称：");
-                    lpk130.NFCP_printStrLine("00000000000000000000000000000000000000000000000000000000000000000000000000000000");
+                    lpk130.NFCP_printStrLine("1@FY2@10014597@8809208054738@2021-05-23@20210523@40@20190828000479");
                     lpk130.NFCP_feed(16);
 
 
@@ -391,7 +391,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
                     lpk130.NFCP_printStrLine("00000000");
                     lpk130.NFCP_feed(16);
 
-                    lpk130.NFCP_printQRcode(5, 2, "00000000000000000000000000000000000000000000000");
+                    lpk130.NFCP_printQRcode(6, 2, "1@FY2@10014597@8809208054738@2021-05-23@20210523@40@20190828000479");
                     lpk130.NFCP_feed(16);
 
                     lpk130.NFCP_feed(183);

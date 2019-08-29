@@ -60,6 +60,7 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
     private int WareHouseID;
     private int HouseID;
     private int AreaID;
+    private String PalletNo;
     private String Palletno;
     private Float PalletQty;
     private int PalletType;
@@ -70,6 +71,22 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
     private String LabelMark; //标记
 
     private  String EAN;//ENA码
+
+    public String getPalletNo() {
+        return PalletNo;
+    }
+
+    public void setPalletNo(String palletNo) {
+        PalletNo = palletNo;
+    }
+
+    public String getPalletno() {
+        return Palletno;
+    }
+
+    public void setPalletno(String palletno) {
+        Palletno = palletno;
+    }
 
     public String getRelaWeight() {
         return RelaWeight;
@@ -161,14 +178,6 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
 
     public void setAreaID(int areaID) {
         AreaID = areaID;
-    }
-
-    public String getPalletno() {
-        return Palletno;
-    }
-
-    public void setPalletno(String palletno) {
-        Palletno = palletno;
     }
 
     public Float getPalletQty() {
@@ -449,6 +458,14 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
 
     }
 
+    public String getEAN() {
+        return EAN;
+    }
+
+    public void setEAN(String EAN) {
+        this.EAN = EAN;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -495,9 +512,14 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
         dest.writeInt(this.WareHouseID);
         dest.writeInt(this.HouseID);
         dest.writeInt(this.AreaID);
+        dest.writeString(this.PalletNo);
         dest.writeString(this.Palletno);
         dest.writeValue(this.PalletQty);
         dest.writeInt(this.PalletType);
+        dest.writeString(this.Unit);
+        dest.writeString(this.ProductClass);
+        dest.writeString(this.RelaWeight);
+        dest.writeString(this.LabelMark);
         dest.writeString(this.EAN);
     }
 
@@ -543,9 +565,14 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
         this.WareHouseID = in.readInt();
         this.HouseID = in.readInt();
         this.AreaID = in.readInt();
+        this.PalletNo = in.readString();
         this.Palletno = in.readString();
         this.PalletQty = (Float) in.readValue(Float.class.getClassLoader());
         this.PalletType = in.readInt();
+        this.Unit = in.readString();
+        this.ProductClass = in.readString();
+        this.RelaWeight = in.readString();
+        this.LabelMark = in.readString();
         this.EAN = in.readString();
     }
 
@@ -560,12 +587,4 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
             return new BarCodeInfo[size];
         }
     };
-
-    public String getEAN() {
-        return EAN;
-    }
-
-    public void setEAN(String EAN) {
-        this.EAN = EAN;
-    }
 }

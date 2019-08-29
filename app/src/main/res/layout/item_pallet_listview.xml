@@ -8,9 +8,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.5">
+
                 <TextView
                     android:id="@+id/item_Barcode"
-                    android:layout_width="0dp"
+                    android:layout_width="47dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.6"
                     android:maxLines="1"

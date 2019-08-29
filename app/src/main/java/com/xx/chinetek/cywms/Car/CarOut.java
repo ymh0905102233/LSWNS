@@ -1,7 +1,8 @@
-package com.xx.chinetek.cyproduct.LineStockOut;
+package com.xx.chinetek.cywms.Car;
 
 import android.content.Context;
 import android.os.Message;
+import android.os.Parcel;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.google.gson.reflect.TypeToken;
+import com.xx.chinetek.adapter.wms.CarList.CarListAdapter;
 import com.xx.chinetek.adapter.wms.Pallet.PalletItemAdapter;
 import com.xx.chinetek.base.BaseActivity;
 import com.xx.chinetek.base.BaseApplication;
@@ -20,7 +22,9 @@ import com.xx.chinetek.base.ToolBarTitle;
 import com.xx.chinetek.cyproduct.LineStockIn.LineStockInProduct;
 import com.xx.chinetek.cywms.R;
 import com.xx.chinetek.cywms.Receiption.ReceiptionScan;
+import com.xx.chinetek.model.Car.TransportSupplier;
 import com.xx.chinetek.model.Material.BarCodeInfo;
+import com.xx.chinetek.model.ReturnMsgModel;
 import com.xx.chinetek.model.ReturnMsgModelList;
 import com.xx.chinetek.model.URLModel;
 import com.xx.chinetek.util.Network.NetworkError;
@@ -32,7 +36,6 @@ import com.xx.chinetek.util.function.CommonUtil;
 import com.xx.chinetek.util.function.DoubleClickCheck;
 import com.xx.chinetek.util.function.GsonUtil;
 import com.xx.chinetek.util.log.LogUtil;
-import com.xx.chinetek.model.WMS.Stock.AreaInfo_Model;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -44,7 +47,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ContentView(R.layout.activity_line_stock_out_product)
-public class LineStockOutProduct extends BaseActivity {
+public class CarOut extends BaseActivity {
 
     String TAG_GetT_PalletDetailByBarCodeADF="LineStockOutProduct_GetT_ScanInStockModelADF";
     private final int RESULT_Msg_GetT_PalletDetailByBarCode=102;
@@ -72,20 +75,10 @@ public class LineStockOutProduct extends BaseActivity {
     }
 
 
-    Context context=LineStockOutProduct.this;
+    Context context=CarOut.this;
 
     @ViewInject(R.id.lsv_LineStockOutProduct)
     ListView lsvLineStockOutProduct;
-    @ViewInject(R.id.txt_Company)
-    TextView txtCompany;
-    @ViewInject(R.id.txt_Batch)
-    TextView txtBatch;
-    @ViewInject(R.id.txt_Status)
-    TextView txtStatus;
-    @ViewInject(R.id.txt_EDate)
-    TextView txtEDate;
-    @ViewInject(R.id.txt_MaterialName)
-    TextView txtMaterialName;
     @ViewInject(R.id.edt_LineOutStockNum)
     TextView edtLineOutStockNum;
     @ViewInject(R.id.edt_LineStockOutScanBarcode)
@@ -94,8 +87,10 @@ public class LineStockOutProduct extends BaseActivity {
     EditText edtcar;
 
 
-    ArrayList<BarCodeInfo> SumbitbarCodeInfos=new ArrayList<>();
-    PalletItemAdapter palletItemAdapter;
+//    ArrayList<BarCodeInfo> SumbitbarCodeInfos=new ArrayList<>();
+    CarListAdapter carListAdapter;
+    String carno="";
+    String palletno="";
 
     @Override
     protected void initViews() {
@@ -104,10 +99,10 @@ public class LineStockOutProduct extends BaseActivity {
         BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.Product_ProductStockout_subtitleYMH), true);
         x.view().inject(this);
         BaseApplication.isCloseActivity=false;
-
+        CommonUtil.setEditFocus(edtcar);
     }
 
-    String carno="";
+
     @Event(value =R.id.edt_car,type = View.OnKeyListener.class)
     private  boolean edtcarClick(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
@@ -127,18 +122,54 @@ public class LineStockOutProduct extends BaseActivity {
     private  boolean edtLineStockOutScanBarcodeClick(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
         {
+            carno = edtcar.getText().toString().trim();
+            if (TextUtils.isEmpty(carno)) {
+                MessageBox.Show(context,"车牌号不能为空！");
+                return true;
+            }
+
             String code = edtLineStockOutScanBarcode.getText().toString().trim();
             if (TextUtils.isEmpty(code)) {
                 CommonUtil.setEditFocus(edtLineStockOutScanBarcode);
                 return true;
             }
             final Map<String, String> params = new HashMap<String, String>();
-            params.put("BarCode", code);
+            params.put("PalletNo", code);
             LogUtil.WriteLog(ReceiptionScan.class, TAG_GetT_PalletDetailByBarCodeADF, code);
-            RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_PalletDetailByBarCodeADF, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_Msg_GetT_PalletDetailByBarCode, null,  URLModel.GetURL().GetPalletDetailByBarCodeForStockOut, params, null);
+            RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_PalletDetailByBarCodeADF, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_Msg_GetT_PalletDetailByBarCode, null,  URLModel.GetURL().GetPalletInfoByPalletNo, params, null);
         }
         return false;
     }
+
+    @Event(value =R.id.edt_LineOutStockNum,type = View.OnKeyListener.class)
+    private  boolean edt_LineOutStockNumClick(View v, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
+        {
+            try{
+                String code = edtLineOutStockNum.getText().toString().trim();
+                if (TextUtils.isEmpty(code)) {
+                    CommonUtil.setEditFocus(edtLineStockOutScanBarcode);
+                    return true;
+                }
+                if (SumbittransportSuppliers==null||palletno.equals("")){
+                    MessageBox.Show(context,"先扫描物流标签！");
+                    return true;
+                }
+                for (int i=0;i<SumbittransportSuppliers.size();i++){
+                    if (SumbittransportSuppliers.get(i).getPalletNo().equals(palletno)){
+                        SumbittransportSuppliers.get(i).setBoxcount(edtLineOutStockNum.getText().toString());
+                    }
+                }
+                BindListVIew(SumbittransportSuppliers);
+            }catch (Exception ex){
+                MessageBox.Show(context,ex.toString());
+            }
+
+        }
+        return false;
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -153,15 +184,14 @@ public class LineStockOutProduct extends BaseActivity {
                 return false;
             }
             //提交
-            if(SumbitbarCodeInfos!=null && SumbitbarCodeInfos.size()!=0){
+            if(SumbittransportSuppliers!=null && SumbittransportSuppliers.size()!=0){
                 final Map<String, String> params = new HashMap<String, String>();
-                params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
-                params.put("ModelJson", GsonUtil.parseModelToJson(SumbitbarCodeInfos));
+                params.put("ModelJson", GsonUtil.parseModelToJson(SumbittransportSuppliers));
                 RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_SaveBarCodeADF, getString(R.string.Msg_GetT_SaveStouckOutADF),
-                        context, mHandler, RESULT_Msg_GetT_SaveBarCode, null,  URLModel.GetURL().Save_StockOutADF, params, null);
+                        context, mHandler, RESULT_Msg_GetT_SaveBarCode, null,  URLModel.GetURL().SaveTransportSupplierListADF, params, null);
 
             }else{
-                MessageBox.Show(context,"没有需要出库的成品条码！");
+                MessageBox.Show(context,"没有需要装车的信息！");
             }
         }
         return super.onOptionsItemSelected(item);
@@ -169,7 +199,7 @@ public class LineStockOutProduct extends BaseActivity {
 
 
     void AnalysisetT_SaveBarCodeJson(String result){
-        LogUtil.WriteLog(LineStockInProduct.class, TAG_GetT_SaveBarCodeADF,result);
+        LogUtil.WriteLog(CarOut.class, TAG_GetT_SaveBarCodeADF,result);
         ReturnMsgModelList<String> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<String>>() {}.getType());
         try {
             if (returnMsgModel.getHeaderStatus().equals("S")) {
@@ -196,7 +226,7 @@ public class LineStockOutProduct extends BaseActivity {
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 ArrayList<BarCodeInfo> barCodeInfos = returnMsgModel.getModelJson();
                 Bindbarcode(barCodeInfos);
-
+                palletno=edtLineStockOutScanBarcode.getText().toString();
             } else {
                 MessageBox.Show(context,returnMsgModel.getMessage());
             }
@@ -206,25 +236,47 @@ public class LineStockOutProduct extends BaseActivity {
         CommonUtil.setEditFocus(edtLineStockOutScanBarcode);
     }
 
+    ArrayList<TransportSupplier> SumbittransportSuppliers=new ArrayList<>();
     void Bindbarcode(final ArrayList<BarCodeInfo> barCodeInfos){
         if (barCodeInfos != null && barCodeInfos.size() != 0) {
-
             try {
-                if(SumbitbarCodeInfos.indexOf(barCodeInfos.get(0))!=-1){
-                    MessageBox.Show(context,getString(R.string.Error_Barcode_hasScan));
-                    return;
+                //barcode转TransportSupplier
+                ArrayList<TransportSupplier> transportSuppliers=new ArrayList<>();
+                for (int i=0;i<barCodeInfos.size();i++){
+                    TransportSupplier transportSupplier = new TransportSupplier();
+                    transportSupplier.setPlatenumber(carno);
+                    transportSupplier.setRemark(barCodeInfos.get(i).getPalletno());
+                    transportSupplier.setErpvoucherno(barCodeInfos.get(i).getErpVoucherNo());
+                    transportSupplier.setCustomername(barCodeInfos.get(i).getSupName());
+                    transportSupplier.setBoxcount(barCodeInfos.get(i).getOutCount()+"");
+                    transportSupplier.setType("1");
+                    transportSupplier.setPalletNo(barCodeInfos.get(i).getPalletNo());
+                    transportSupplier.setCreater(BaseApplication.userInfo.getUserNo());
+                    transportSuppliers.add(transportSupplier);
+
                 }
-                float sumAll=0;
-                for (BarCodeInfo barCodeInfo : barCodeInfos) {
-                    SumbitbarCodeInfos.add(0,barCodeInfo);
+
+//                if(SumbittransportSuppliers.indexOf(transportSuppliers.get(0))!=-1){
+//                    MessageBox.Show(context,"该箱码已被扫描");
+//                    return;
+//                }
+                for (int j=0;j<SumbittransportSuppliers.size();j++){
+                    if(SumbittransportSuppliers.get(j).getPalletNo().equals(barCodeInfos.get(0).getPalletNo())){
+                        MessageBox.Show(context,"该箱码已被扫描");
+                        return;
+                    }
                 }
-                for (BarCodeInfo barCodeInfo : SumbitbarCodeInfos) {
-                    sumAll= ArithUtil.add(sumAll,barCodeInfo.getQty());
+
+                int sumAll=0;
+                for (TransportSupplier model : transportSuppliers) {
+                    SumbittransportSuppliers.add(0,model);
+                    sumAll=sumAll+ Integer.parseInt(model.getBoxcount());
                 }
                 edtLineOutStockNum.setText(String.valueOf(sumAll));
-                InitFrm(barCodeInfos.get(0));
-                BaseApplication.userInfo.setEmail(barCodeInfos.get(0).getErpVoucherNo());//ymh 加字段
-                BindListVIew(SumbitbarCodeInfos);
+                for (int j=0;j<SumbittransportSuppliers.size();j++){
+                    SumbittransportSuppliers.get(j).setBoxcount(sumAll+"");
+                }
+                BindListVIew(SumbittransportSuppliers);
             }catch (Exception ex){
                 MessageBox.Show(context,ex.getMessage());
                 CommonUtil.setEditFocus(edtLineStockOutScanBarcode);
@@ -233,38 +285,21 @@ public class LineStockOutProduct extends BaseActivity {
         }
     }
 
-    void InitFrm(BarCodeInfo barCodeInfo){
-        try {
-            if (barCodeInfo != null) {
-                txtCompany.setText(barCodeInfo.getStrongHoldName());
-                txtBatch.setText(barCodeInfo.getBatchNo());
-                txtStatus.setText("");
-                txtMaterialName.setText(barCodeInfo.getMaterialDesc());
-                txtEDate.setText(CommonUtil.DateToString(barCodeInfo.getEDate()));
-            }
-        }catch (Exception ex){
-            MessageBox.Show(context,ex.getMessage());
-            CommonUtil.setEditFocus(edtLineStockOutScanBarcode);
-        }
-    }
-
-    private void BindListVIew(ArrayList<BarCodeInfo> barCodeInfos) {
-        palletItemAdapter=new PalletItemAdapter(context,barCodeInfos);
-        lsvLineStockOutProduct.setAdapter(palletItemAdapter);
+    private void BindListVIew(ArrayList<TransportSupplier> transportSupplier) {
+        carListAdapter=new CarListAdapter(context,transportSupplier);
+        lsvLineStockOutProduct.setAdapter(carListAdapter);
     }
 
 
 
     void ClearFrm(){
-        SumbitbarCodeInfos = new ArrayList<>();
+        carno="";
+        palletno="";
+        SumbittransportSuppliers = new ArrayList<>();
         edtLineStockOutScanBarcode.setText("");
         edtLineOutStockNum.setText("");
-        txtCompany.setText("");
-        txtBatch.setText("");
-        txtEDate.setText("");
-        txtStatus.setText("");
-        txtMaterialName.setText("");
-        BindListVIew(SumbitbarCodeInfos);
+        edtcar.setText("");
+        BindListVIew(SumbittransportSuppliers);
     }
 
 }

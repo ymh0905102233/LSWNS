@@ -49,6 +49,9 @@
         <activity android:name=".MaterialChange.MaterialChangeReviewBillChoice" />
         <activity android:name=".Truck.TruckLoad" />
         <activity android:name=".Qc.QCMaterialChoice" />
+        <activity android:name=".Car.CarIn" />
+        <activity android:name=".Car.CarOut" />
+
         <activity android:name="com.xx.chinetek.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
