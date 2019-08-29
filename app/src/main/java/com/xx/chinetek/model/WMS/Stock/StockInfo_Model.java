@@ -81,7 +81,7 @@ public class StockInfo_Model extends Base_Model implements Parcelable,Cloneable 
     private Date SupPrdDate;
     private int HouseProp;
     private String EAN;
-    public int ScanType;
+    private int ScanType;
 
     public int getHouseProp() {
         return HouseProp;
@@ -679,6 +679,7 @@ public class StockInfo_Model extends Base_Model implements Parcelable,Cloneable 
         dest.writeInt(this.HouseProp);
         dest.writeString(this.EAN);
         dest.writeInt(this.ScanType);
+
     }
 
     protected StockInfo_Model(Parcel in) {
@@ -747,6 +748,7 @@ public class StockInfo_Model extends Base_Model implements Parcelable,Cloneable 
         this.HouseProp = in.readInt();
         this.EAN = in.readString();
         this.ScanType = in.readInt();
+
     }
 
     public static final Creator<StockInfo_Model> CREATOR = new Creator<StockInfo_Model>() {
@@ -760,4 +762,6 @@ public class StockInfo_Model extends Base_Model implements Parcelable,Cloneable 
             return new StockInfo_Model[size];
         }
     };
+
+
 }

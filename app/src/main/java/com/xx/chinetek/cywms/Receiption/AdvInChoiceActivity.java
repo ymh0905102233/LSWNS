@@ -290,6 +290,7 @@ public class AdvInChoiceActivity extends BaseActivity {
                 btnDate.setText(eDate);
                 String bdate = BasisTimesUtils.getDateStr(eDate, materialPack.getQUALITYDAY());
                 etBatch.setText(bdate);
+                CommonUtil.setEditFocus(etScanQty);
             }
 
             @Override
@@ -541,7 +542,7 @@ public class AdvInChoiceActivity extends BaseActivity {
 
         txtCompany.setText(materialPackMdl.getMATERIALNO());
         txtBatch.setText("");
-        txtStatus.setText("");
+        txtStatus.setText(String.valueOf(materialPackMdl.getUNITNUM()));
         txtMaterialName.setText(materialPackMdl.getMATERIALDESC());
         txtEDate.setText(String.valueOf(materialPackMdl.getQUALITYDAY()));
 
@@ -561,7 +562,7 @@ public class AdvInChoiceActivity extends BaseActivity {
         } else {
             txtOrderQty.setText("订单数 " + receiptScanDetail.getInStockQty() + "可入数 " + (receiptScanDetail.getInStockQty() - receiptScanDetail.getADVRECEIVEQTY() - receiptScanDetail.getScanQty()) + "已扫" + receiptScanDetail.getScanQty());
             etScanQty.setText("");
-            CommonUtil.setEditFocus(etScanQty);
+            onClick(null);
         }
     }
 

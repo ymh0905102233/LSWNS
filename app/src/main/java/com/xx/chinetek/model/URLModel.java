@@ -176,6 +176,11 @@ public String GetReviewStockModelADF=GetWCFAdress()+"GetReviewStockModelADF";//�
     public String Post_SaveAdvInStock =GetWCFAdress()+"Post_SaveAdvInStock";//保存预到货信息
     public String Get_AdvInParameter =GetWCFAdress()+"Get_AdvInParameter";//获得预收货检验类型
 
+    public String GetT_AreaInfoADF = GetWCFAdress()+"GetT_AreaInfoADF";//获取货位信息
+    public String GetT_StockInfoADF = GetWCFAdress()+"GetT_StockInfoADF";//获取库存信息
+    public String GetT_AreaNOInfoADF =GetWCFAdress() +"GetT_AreaNOInfoADF";//获取库位信息
+    public String Save_MoveInfoADF = GetWCFAdress()+"Save_MoveInfoADF";//保存移库信息
+
 
     //ymh盘点
     public String CheckGetBatchnoAndMaterialno =GetWCFAdress()+"CheckGetBatchnoAndMaterialno";//根据EAN，areaid获取batch
