@@ -37,6 +37,7 @@
     <string name="query_Bathtitle">批次</string>
     <string name="query_Suppliertitle">供应商</string>
     <string name="query_WorkNotitle">工单</string>
+    <string name="query_EAN">EAN</string>
     <string name="OffShelf_title">下架</string>
     <string name="OffShelf_subtitle">下架扫描</string>
     <string name="LineStockOutReturnBillChoice">退料出库</string>

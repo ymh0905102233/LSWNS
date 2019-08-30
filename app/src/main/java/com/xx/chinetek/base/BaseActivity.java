@@ -287,7 +287,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
 
 
                     lpk130.NFCP_printStr("有效期：");
-                    lpk130.NFCP_printStrLine(model.getEDate()==null?"":model.getEDate().toString());
+                    lpk130.NFCP_printStrLine(model.getEDate()==null?"":model.getStrEDate().toString());
                     lpk130.NFCP_feed(14);
 
                     lpk130.NFCP_printStr("批次号：");
@@ -299,7 +299,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
                     lpk130.NFCP_printStrLine(model.getQty()==null?"":model.getQty().toString());
                     lpk130.NFCP_feed(14);
 
-                    lpk130.NFCP_printQRcode(5, 2,model.getBarcode()==null?"":model.getBarcode().toString());
+                    lpk130.NFCP_printQRcode(6, 2,model.getBarcode()==null?"":model.getBarcode().toString());
                     lpk130.NFCP_feed(14);
 
                     lpk130.NFCP_feed(102);
@@ -345,7 +345,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
                     lpk130.NFCP_printStrLine(BaseApplication.userInfo.getUserNo());
                     lpk130.NFCP_feed(16);
 
-                    lpk130.NFCP_printQRcode(5, 2, model.getBarcode());
+                    lpk130.NFCP_printQRcode(6, 2, model.getBarcode());
                     lpk130.NFCP_feed(16);
 
                     lpk130.NFCP_feed(183);

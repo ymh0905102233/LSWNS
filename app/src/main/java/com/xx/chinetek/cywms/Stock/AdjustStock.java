@@ -26,6 +26,7 @@ import com.xx.chinetek.model.User.WareHouseInfo;
 import com.xx.chinetek.model.WMS.Inventory.Barcode_Model;
 import com.xx.chinetek.util.Network.NetworkError;
 import com.xx.chinetek.util.Network.RequestHandler;
+import com.xx.chinetek.util.dialog.BasisTimesUtils;
 import com.xx.chinetek.util.dialog.MessageBox;
 import com.xx.chinetek.util.dialog.ToastUtil;
 import com.xx.chinetek.util.function.CommonUtil;
@@ -194,32 +195,49 @@ public class AdjustStock extends BaseActivity {
         }
     }
 
+    String eDate="";
     @Event(value = R.id.txt_changeEData,type = View.OnClickListener.class )
     private void txtProductStartTimeClick(View view){
         if(barcodeModel!=null) {
-            if (barcodeModel.getEds() == null || barcodeModel.getEds().equals("")) {
-                final Calendar ca = Calendar.getInstance();
-                mYear =ca.get(Calendar.YEAR);
-                mMouth =ca.get(Calendar.MONTH);
-                mDay = ca.get(Calendar.DAY_OF_MONTH);
-            } else {
-                String[] date = barcodeModel.getEds().split("/");
-                if (date.length >= 3) {
-                    mYear = Integer.parseInt(date[0]);
-                    mMouth = Integer.parseInt(date[1]) - 1;
-                    mDay = Integer.parseInt(date[2]);
-                }
-            }
-            new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+
+            /**     * 年月日选择     */ //BasisTimesUtils.THEME_HOLO_DARK
+            BasisTimesUtils.showDatePickerDialog(context, 3, "请选择年月日", BasisTimesUtils.getYear() + 2, BasisTimesUtils.getMonth(6), BasisTimesUtils.getDay(), new BasisTimesUtils.OnDatePickerListener() {
                 @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    mYear = year;
-                    mMouth = month + 1;
-                    mDay = dayOfMonth;
-                    txtchangeEData.setText(display());
-                    barcodeModel.setEds(display1());
+                public void onConfirm(int year, int month, int dayOfMonth) {
+                    eDate = year + "-" + month + "-" + dayOfMonth;
+                    txtchangeEData.setText(eDate);
                 }
-            }, mYear, mMouth, mDay).show();
+
+                @Override
+                public void onCancel() {
+                    eDate = "";
+                }
+            });
+
+
+//            if (barcodeModel.getEds() == null || barcodeModel.getEds().equals("")) {
+//                final Calendar ca = Calendar.getInstance();
+//                mYear =ca.get(Calendar.YEAR);
+//                mMouth =ca.get(Calendar.MONTH);
+//                mDay = ca.get(Calendar.DAY_OF_MONTH);
+//            } else {
+//                String[] date = barcodeModel.getEds().split("/");
+//                if (date.length >= 3) {
+//                    mYear = Integer.parseInt(date[0]);
+//                    mMouth = Integer.parseInt(date[1]) - 1;
+//                    mDay = Integer.parseInt(date[2]);
+//                }
+//            }
+//            new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+//                @Override
+//                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                    mYear = year;
+//                    mMouth = month + 1;
+//                    mDay = dayOfMonth;
+//                    txtchangeEData.setText(display());
+//                    barcodeModel.setEds(display1());
+//                }
+//            }, mYear, mMouth, mDay).show();
 
         }
     }

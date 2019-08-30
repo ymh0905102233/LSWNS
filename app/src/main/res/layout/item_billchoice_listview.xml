@@ -16,7 +16,7 @@
                     android:layout_weight="0.7"
                     android:maxLines="1"
                     android:textColor="@color/blueviolet"
-                    android:textSize="21sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/txtStrVoucherType"

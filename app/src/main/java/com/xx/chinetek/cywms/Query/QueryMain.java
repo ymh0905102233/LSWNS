@@ -44,9 +44,9 @@ public class QueryMain extends BaseActivity {
     //,R.drawable.workno
     public List<Map<String, Object>> getData(){
         List<Map<String, Object>> data_list = new ArrayList<Map<String, Object>>();
-        int[] itemIcon = new int[]{ R.drawable.material,R.drawable.stock, R.drawable.batch,R.drawable.offshelf
+        int[] itemIcon = new int[]{ R.drawable.material,R.drawable.stock, R.drawable.batch,R.drawable.offshelf,R.drawable.query
         };//,"工单"
-        String[] itemNames = new String[]{"物料","库位", "批次","补货"
+        String[] itemNames = new String[]{"物料","库位", "批次","补货","EAN"
         };
         //cion和iconName的长度是相同的，这里任选其一都可以
         for(int i=0;i<itemIcon.length;i++){
@@ -80,7 +80,8 @@ public class QueryMain extends BaseActivity {
                 intent.setClass(context, AddProductActivity.class);
                 break;
             case 4:
-                BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.query_WorkNotitle), true);
+                BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.query_EAN), true);
+                intent.putExtra("Type",5);
                 break;
         }
             startActivityLeft(intent);

@@ -8,6 +8,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/txtAreaNo"
                     android:layout_width="0dp"
@@ -15,7 +16,7 @@
                     android:layout_weight="0.6"
                     android:maxLines="1"
                     android:textColor="@color/blue"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/txtQty"
@@ -24,7 +25,22 @@
                     android:layout_weight="0.4"
                     android:maxLines="1"
                     android:textColor="@color/green"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/txtEAN"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:maxLines="1"
+                    android:textSize="18sp" />
+
         </LinearLayout>
 
 
@@ -32,14 +48,15 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/txtMaterialNo"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
-                    android:textColor="@color/darkorchid"
                     android:maxLines="1"
-                           android:textSize="18sp"/>
+                    android:textColor="@color/darkorchid"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/txtBatchNo"

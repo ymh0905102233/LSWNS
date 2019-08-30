@@ -517,11 +517,11 @@ public class ReviewScan extends BaseActivity {
           //  Boolean isReviewFinish=true;
             for (int i = 0; i < size; i++) {
                 //制定批次
-                if(outStockDetailInfoModels.get(i).getIsSpcBatch().equals("Y")){
-                    if(!outStockDetailInfoModels.get(i).getFromBatchNo().equals(StockInfo_Model.getBatchNo())){
-                        continue;
-                    }
-                }
+//                if(outStockDetailInfoModels.get(i).getIsSpcBatch().equals("Y")){
+//                    if(!outStockDetailInfoModels.get(i).getFromBatchNo().equals(StockInfo_Model.getBatchNo())){
+//                        continue;
+//                    }
+//                }
                 if(Qty<=0) break;
                 if (outStockDetailInfoModels.get(i).getMaterialNo().equals(StockInfo_Model.getMaterialNo())
                         && outStockDetailInfoModels.get(i).getStrongHoldCode().equals(StockInfo_Model.getStrongHoldCode())) {
