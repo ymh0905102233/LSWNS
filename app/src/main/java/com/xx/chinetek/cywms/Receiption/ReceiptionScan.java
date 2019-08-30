@@ -242,18 +242,26 @@ public class ReceiptionScan extends BaseActivity {
                 receiptDetailModels = returnMsgModel.getModelJson();
 
                 if (receiptDetailModels != null && receiptDetailModels.size() > 0) {
-                    if (receiptModel.getVoucherType() != 22 && (!receiptDetailModels.get(0).getFromErpWarehouse().equals(BaseApplication.userInfo.getWarehouseCode()))) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle("提示");
-                        builder.setMessage("当前单据仓库与登陆仓库不符，是否继续进行收货?");
-                        builder.setPositiveButton("返回", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                closeActiviry();
+                    if(receiptModel.getVoucherType() != 22){
+                        if ( (!receiptDetailModels.get(0).getFromErpWarehouse().equals(BaseApplication.userInfo.getWarehouseCode()))) {
+                            if(receiptDetailModels.get(0).getERPVoucherType().equals("DB6")&&receiptDetailModels.get(0).getToErpWarehouse().equals(BaseApplication.userInfo.getWarehouseCode())){
+
+                            }else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                builder.setTitle("提示");
+                                builder.setMessage("当前单据仓库与登陆仓库不符，是否继续进行收货?");
+                                builder.setPositiveButton("返回", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        closeActiviry();
+                                    }
+                                });
+                                builder.show();
                             }
-                        });
-                        builder.show();
+
+                        }
                     }
+
 
                     //自动确认扫描箱号
                     BindListVIew(receiptDetailModels);

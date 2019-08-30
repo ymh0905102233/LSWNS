@@ -485,10 +485,13 @@ public class UpShelfScanActivity extends BaseActivity {
 //                } else {
                 GetInStockTaskDetail(inStockTaskInfoModel);
                 // }
+            }else{
+                ClearFrm();
             }
 
         } catch (Exception ex) {
             MessageBox.Show(context, ex.getMessage());
+
         }
     }
 
