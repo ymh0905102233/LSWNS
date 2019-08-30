@@ -36,8 +36,12 @@ public class ReceiptionBillDetail extends BaseActivity {
         BaseApplication.context = context;
         BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.receiptscan_billdetail), true);
         x.view().inject(this);
-        receiptDetailModel=getIntent().getParcelableExtra("receiptDetailModel");
-        bindListview();
+        try {
+            receiptDetailModel=getIntent().getParcelableExtra("receiptDetailModel");
+            bindListview();
+        } catch (Exception e) {
+           closeActiviry();
+        }
     }
 
 //    @Event(value = R.id.edt_DelBarcode,type = View.OnKeyListener.class)

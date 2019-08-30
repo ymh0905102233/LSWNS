@@ -158,12 +158,16 @@ public class ReceiptionScan extends BaseActivity {
     private boolean lsv_ReceiptScanItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (id >= 0) {
             ReceiptDetail_Model receiptDetailModel = receiptDetailModels.get(position);
-            if (receiptDetailModel.getLstBarCode() != null && receiptDetailModel.getLstBarCode().size() != 0) {
-                Intent intent = new Intent(context, ReceiptionBillDetail.class);
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("receiptDetailModel", receiptDetailModel);
-                intent.putExtras(bundle);
-                startActivityLeft(intent);
+            try {
+                if (receiptDetailModel.getLstBarCode() != null && receiptDetailModel.getLstBarCode().size() != 0) {
+                    Intent intent = new Intent(context, ReceiptionBillDetail.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("receiptDetailModel", receiptDetailModel);
+                    intent.putExtras(bundle);
+                    startActivityLeft(intent);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return true;
@@ -211,19 +215,7 @@ public class ReceiptionScan extends BaseActivity {
     获取收货明细
      */
     void GetReceiptDetail(final Receipt_Model receiptModel) {
-        if (receiptModel != null) {
-            if (receiptModel.getVoucherType()!=22 &&(receiptModel.getWareHouseID() != BaseApplication.userInfo.getWarehouseID())) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("提示");
-                builder.setMessage("当前单据仓库与登陆仓库不符，是否继续进行收货?");
-                builder.setPositiveButton("返回", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        closeActiviry();
-                    }
-                });
-                builder.show();
-            }
+
             txtVoucherNo.setText(receiptModel.getErpVoucherNo());
             final ReceiptDetail_Model receiptDetailModel = new ReceiptDetail_Model();
             receiptDetailModel.setHeaderID(receiptModel.getID());
@@ -235,7 +227,7 @@ public class ReceiptionScan extends BaseActivity {
             LogUtil.WriteLog(ReceiptionScan.class, TAG_GetT_InStockDetailListByHeaderIDADF, para);
             RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_InStockDetailListByHeaderIDADF, getString(R.string.Msg_GetT_InStockDetailListByHeaderIDADF), context, mHandler, RESULT_Msg_GetT_InStockDetailListByHeaderIDADF, null, URLModel.GetURL().GetT_InStockDetailListByHeaderIDADF, params, null);
 
-        }
+
     }
 
     /*
@@ -248,14 +240,30 @@ public class ReceiptionScan extends BaseActivity {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 receiptDetailModels = returnMsgModel.getModelJson();
-                //自动确认扫描箱号
-                BindListVIew(receiptDetailModels);
-                if (barCodeInfos != null) {
-                    isDel = false;
-                    Bindbarcode(barCodeInfos);
+
+                if (receiptDetailModels != null && receiptDetailModels.size() > 0) {
+                    if (receiptModel.getVoucherType() != 22 && (!receiptDetailModels.get(0).getFromErpWarehouse().equals(BaseApplication.userInfo.getWarehouseCode()))) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("提示");
+                        builder.setMessage("当前单据仓库与登陆仓库不符，是否继续进行收货?");
+                        builder.setPositiveButton("返回", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                closeActiviry();
+                            }
+                        });
+                        builder.show();
+                    }
+
+                    //自动确认扫描箱号
+                    BindListVIew(receiptDetailModels);
+                    if (barCodeInfos != null) {
+                        isDel = false;
+                        Bindbarcode(barCodeInfos);
+                    }
+                } else {
+                    MessageBox.Show(context, returnMsgModel.getMessage());
                 }
-            } else {
-                MessageBox.Show(context, returnMsgModel.getMessage());
             }
         } catch (Exception ex) {
             MessageBox.Show(context, ex.getMessage());
@@ -399,10 +407,10 @@ public class ReceiptionScan extends BaseActivity {
         }
 
         if (receiptDetailModels.get(index).getLstBarCode().size() != 0) {
-            if (!barCodeInfo.getBatchNo().equals(receiptDetailModels.get(index).getLstBarCode().get(0).getBatchNo())) {
-                MessageBox.Show(context, getString(R.string.Error_ReceivebatchError) + "|" + barCodeInfo.getSerialNo());
-                return false;
-            }
+//            if (!barCodeInfo.getBatchNo().equals(receiptDetailModels.get(index).getLstBarCode().get(0).getBatchNo())) {
+//                MessageBox.Show(context, getString(R.string.Error_ReceivebatchError) + "|" + barCodeInfo.getSerialNo());
+//                return false;
+//            }
             if (!barCodeInfo.getSupPrdBatch().equals(receiptDetailModels.get(index).getLstBarCode().get(0).getSupPrdBatch())) {
                 MessageBox.Show(context, getString(R.string.Error_ProductbatchError) + "|" + barCodeInfo.getSerialNo());
                 return false;

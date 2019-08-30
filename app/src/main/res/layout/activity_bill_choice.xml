@@ -24,8 +24,8 @@
         android:visibility="visible"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/txt_billchoice_sumrow" />
 
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -52,7 +52,14 @@
             tools:layout_editor_absoluteY="217dp" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-
+    <TextView
+        android:id="@+id/txt_billchoice_sumrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:text="合计"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edt_filterContent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

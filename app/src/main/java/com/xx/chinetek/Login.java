@@ -198,6 +198,14 @@ public class Login extends BaseActivity{
             if (lstWarehouse != null && lstWarehouse.size() != 0)
                 BaseApplication.userInfo.setLstWarehouse(lstWarehouse);
             BaseApplication.userInfo.setWarehouseName(txtWareHousName.getText().toString());
+            for (WareHouseInfo wareHouse :
+                    lstWarehouse) {
+                if (wareHouse.getWareHouseName().equals(txtWareHousName.getText().toString()))
+                {
+                    BaseApplication.userInfo.setWarehouseCode(wareHouse.getWareHouseNo());
+                }
+            }
+
             if (BaseApplication.userInfo.getReceiveAreaID() <= 0) {
                 MessageBox.Show(context, getResources().getString(R.string.Message_No_ReceiveAreaID));
             } else if (BaseApplication.userInfo.getPickAreaID() <= 0 && URLModel.isWMS) {
@@ -252,9 +260,9 @@ public class Login extends BaseActivity{
         lstWarehouse = BaseApplication.userInfo.getLstWarehouse();
         if (BaseApplication.userInfo.getLstWarehouse().size() > 1) {
             for (WareHouseInfo warehouse : BaseApplication.userInfo.getLstWarehouse()) {
-                if (warehouse.getWareHouseName() != null && !warehouse.getWareHouseName().equals("")) {
-                    wareHouses.add(warehouse.getWareHouseName());
-                }
+                    if (warehouse.getWareHouseName() != null && !warehouse.getWareHouseName().equals("")) {
+                        wareHouses.add(warehouse.getWareHouseName());
+                    }
             }
             final String[] items = wareHouses.toArray(new String[0]);
             new AlertDialog.Builder(context).setTitle(getResources().getString(R.string.activity_login_WareHousChoice))// 设置对话框标题
@@ -269,12 +277,14 @@ public class Login extends BaseActivity{
                             txtWareHousName.setText(select_item);
                             BaseApplication.userInfo.setWarehouseID(SelectWareHouseID);
                             BaseApplication.userInfo.setWarehouseName(select_item);
+                            BaseApplication.userInfo.setWarehouseCode( BaseApplication.userInfo.getLstWarehouse().get(which).getWareHouseNo());
                             dialog.dismiss();
                         }
                     }).show();
         } else {
             SelectWareHouseID = BaseApplication.userInfo.getLstWarehouse().get(0).getID();
             txtWareHousName.setText(BaseApplication.userInfo.getLstWarehouse().get(0).getWareHouseName());
+            BaseApplication.userInfo.setWarehouseCode( BaseApplication.userInfo.getLstWarehouse().get(0).getWareHouseNo());
             BaseApplication.userInfo.setWarehouseID(SelectWareHouseID);
             BaseApplication.userInfo.setWarehouseName(txtWareHousName.getText().toString());
         }

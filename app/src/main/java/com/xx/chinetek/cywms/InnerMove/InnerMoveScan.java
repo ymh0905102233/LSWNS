@@ -347,7 +347,7 @@ public class InnerMoveScan extends BaseActivity {
                         ArrayList<String> listString = new ArrayList<>();
                         for (StockInfo_Model model :
                                 currentStockInfo) {
-                            listString.add(model.getStrongHoldCode() + " " + model.getBatchNo() + " " + model.getEDate().toString());
+                            listString.add(model.getStrongHoldCode() + "  " + model.getBatchNo() + "  " + model.getStrEDate());//.getEDate().toString()
                         }
                         String[] items = (String[]) listString.toArray(new String[listString.size()]);
                         AlertDialog alertDialog3 = new AlertDialog.Builder(this)

@@ -90,6 +90,8 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
     TextView txtSuppliername;
     MenuItem gMenuItem = null;
 
+    @ViewInject(R.id.txt_receipt_sumrow)
+    TextView tvSumrwo;
 
     ArrayList<Receipt_Model> receiptModels;//单据信息
     List<Map<String, String>> SupplierList = new ArrayList<Map<String, String>>();//供应商列表
@@ -103,7 +105,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
     protected void initViews() {
         super.initViews();
         BaseApplication.context = context;
-        BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.receipt_subtitle)+"-"+BaseApplication.userInfo.getWarehouseName(), false);
+        BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.receipt_subtitle) + "-" + BaseApplication.userInfo.getWarehouseName(), false);
         x.view().inject(this);
     }
 
@@ -232,10 +234,23 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
     @Event(value = R.id.lsvChoiceReceipt, type = AdapterView.OnItemClickListener.class)
     private void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Receipt_Model receiptModel = (Receipt_Model) receiptBillChioceItemAdapter.getItem(position);
-        if (businesType.equals("预收货")) {
-            StartAdvInScanIntent(receiptModel);
-        } else {
-            StartScanIntent(receiptModel, null);
+
+        try {
+            if (receiptModel.getVoucherType() == 22 && receiptModel.getErpVoucherNo().contains("CG1") && BaseApplication.userInfo.getWarehouseCode().equals("MS002")) {
+                MessageBox.Show(context, "CG1 类型单据不允许入库至" + BaseApplication.userInfo.getWarehouseCode() + " " + BaseApplication.userInfo.getWarehouseName());
+                return;
+            }
+            if (receiptModel.getVoucherType() == 22 && receiptModel.getErpVoucherNo().contains("CG5") && BaseApplication.userInfo.getWarehouseCode().equals("MS006")) {
+                MessageBox.Show(context,   "CG5 类型单据不允许入库至" + BaseApplication.userInfo.getWarehouseCode() + " " + BaseApplication.userInfo.getWarehouseName());
+                return;
+            }
+            if (businesType.equals("预收货")) {
+                StartAdvInScanIntent(receiptModel);
+            } else {
+                StartScanIntent(receiptModel, null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
@@ -246,6 +261,9 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
         {
 
             String code = edtfilterContent.getText().toString().trim();
+            if (code.equals("")) {
+                return true;
+            }
 //                //扫描单据号、检查单据列表
             if (businesType.equals("预收货")) {
                 receiptScanModels = new ArrayList<>();
@@ -258,7 +276,13 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
                 if (receiptScanModels.size() > 0) {
                     BindListVIew(receiptScanModels);
                 } else {
-                    MessageBox.Show(context, "没有符合条件的单据");
+                    Receipt_Model receiptModel = new Receipt_Model();
+                    receiptModel.setStatus(1);
+                    receiptModel.setVoucherType(22);//筛选显示采购订单
+                    receiptModel.setStrVoucherType("预到货");//过滤预到货单据状态
+                    receiptModel.setErpVoucherNo(code);
+                    GetT_InStockList(receiptModel);
+                    // MessageBox.Show(context, "没有符合条件的单据");
                 }
             } else {
                 if (receiptModels != null && receiptModels.size() > 0) {
@@ -301,6 +325,7 @@ public class ReceiptBillChoice extends BaseActivity implements SwipeRefreshLayou
                         StartScanIntent(receiptModels.get(0), null);
                     }
                 } else {
+                    tvSumrwo.setText("合计:" + receiptModels.size());
                     BindListVIew(receiptModels);
                 }
 
