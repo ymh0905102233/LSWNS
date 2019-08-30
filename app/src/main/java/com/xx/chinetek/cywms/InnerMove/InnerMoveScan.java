@@ -513,7 +513,7 @@ public class InnerMoveScan extends BaseActivity {
                     CommonUtil.setEditFocus(edtMoveInArea);
                 }
             });
-            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            builder.setNeutralButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     submit();

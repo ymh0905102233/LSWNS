@@ -181,6 +181,9 @@ public class URLModel {
     public String GetT_AreaNOInfoADF =GetWCFAdress() +"GetT_AreaNOInfoADF";//获取库位信息
     public String Save_MoveInfoADF = GetWCFAdress()+"Save_MoveInfoADF";//保存移库信息
 
+    public String GetT_MoveTaskInfo =GetWCFAdress()+"GetT_MoveTaskInfo";//获取补货列表
+    public String Save_MoveTask =GetWCFAdress()+"Save_MoveTask";//保存生成补货任务
+
 
     //ymh盘点
     public String CheckGetBatchnoAndMaterialno =GetWCFAdress()+"CheckGetBatchnoAndMaterialno";//根据EAN，areaid获取batch

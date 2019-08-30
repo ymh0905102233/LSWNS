@@ -30,6 +30,7 @@ import com.xx.chinetek.model.Receiption.Receipt_Model;
 import com.xx.chinetek.model.ReturnMsgModel;
 import com.xx.chinetek.model.ReturnMsgModelList;
 import com.xx.chinetek.model.URLModel;
+import com.xx.chinetek.model.User.User;
 import com.xx.chinetek.util.Network.NetworkError;
 import com.xx.chinetek.util.Network.RequestHandler;
 import com.xx.chinetek.util.dialog.MessageBox;
@@ -48,6 +49,7 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static com.xx.chinetek.cywms.R.id.lsv_ReceiptScan;
 import static com.xx.chinetek.util.dialog.ToastUtil.show;
@@ -57,13 +59,13 @@ import static com.xx.chinetek.util.function.GsonUtil.parseModelToJson;
 @ContentView(R.layout.activity_receiption_scan)
 public class ReceiptionScan extends BaseActivity {
 
-    String TAG_GetT_InStockDetailListByHeaderIDADF="ReceiptionScan_GetT_InStockDetailListByHeaderIDADF";
-    String TAG_GetT_PalletDetailByBarCodeADF="ReceiptionScan_GetT_PalletDetailByBarCodeADF";
-    String TAG_SaveT_InStockDetailADF="ReceiptionScan_SaveT_InStockDetailADF";
+    String TAG_GetT_InStockDetailListByHeaderIDADF = "ReceiptionScan_GetT_InStockDetailListByHeaderIDADF";
+    String TAG_GetT_PalletDetailByBarCodeADF = "ReceiptionScan_GetT_PalletDetailByBarCodeADF";
+    String TAG_SaveT_InStockDetailADF = "ReceiptionScan_SaveT_InStockDetailADF";
 
-    private final int RESULT_Msg_GetT_InStockDetailListByHeaderIDADF=101;
-    private final int RESULT_Msg_GetT_PalletDetailByBarCode=102;
-    private final int RESULT_Msg_SaveT_InStockDetailADF=103;
+    private final int RESULT_Msg_GetT_InStockDetailListByHeaderIDADF = 101;
+    private final int RESULT_Msg_GetT_PalletDetailByBarCode = 102;
+    private final int RESULT_Msg_SaveT_InStockDetailADF = 103;
 
     @Override
     public void onHandleMessage(Message msg) {
@@ -78,7 +80,7 @@ public class ReceiptionScan extends BaseActivity {
                 AnalysisSaveT_InStockDetailADFJson((String) msg.obj);
                 break;
             case NetworkError.NET_ERROR_CUSTOM:
-                show("获取请求失败_____"+ msg.obj);
+                show("获取请求失败_____" + msg.obj);
                 CommonUtil.setEditFocus(edtRecScanBarcode);
                 break;
         }
@@ -113,49 +115,50 @@ public class ReceiptionScan extends BaseActivity {
 
     ReceiptScanDetailAdapter receiptScanDetailAdapter;
     ArrayList<ReceiptDetail_Model> receiptDetailModels;
-    ArrayList<BarCodeInfo> barCodeInfos=null;
-    Receipt_Model receiptModel=null;
-  //  boolean isDel=false;//删除已扫条码
+    ArrayList<BarCodeInfo> barCodeInfos = null;
+    Receipt_Model receiptModel = null;
+    UUID uuid = null;
+    //  boolean isDel=false;//删除已扫条码
 
     @Override
     protected void initViews() {
         super.initViews();
         BaseApplication.context = context;
-        BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.receiptscan_subtitle)+"-"+BaseApplication.userInfo.getWarehouseName(), true);
+        BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.receiptscan_subtitle) + "-" + BaseApplication.userInfo.getWarehouseName(), true);
         x.view().inject(this);
-        BaseApplication.isCloseActivity=false;
+        BaseApplication.isCloseActivity = false;
     }
 
     @Override
     protected void initData() {
         super.initData();
-        receiptModel=getIntent().getParcelableExtra("receiptModel");
-        this.barCodeInfos=getIntent().getParcelableArrayListExtra("barCodeInfo");
+        receiptModel = getIntent().getParcelableExtra("receiptModel");
+        this.barCodeInfos = getIntent().getParcelableArrayListExtra("barCodeInfo");
         GetReceiptDetail(receiptModel);
-
+        uuid = UUID.randomUUID();
     }
 
 
-    @Event(value = R.id.edt_RecScanBarcode,type = View.OnKeyListener.class)
-    private  boolean edtRecScanBarcode(View v, int keyCode, KeyEvent event) {
+    @Event(value = R.id.edt_RecScanBarcode, type = View.OnKeyListener.class)
+    private boolean edtRecScanBarcode(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
         {
             keyBoardCancle();
-            String code=edtRecScanBarcode.getText().toString().trim();
+            String code = edtRecScanBarcode.getText().toString().trim();
             final Map<String, String> params = new HashMap<String, String>();
             params.put("BarCode", code);
             params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
             LogUtil.WriteLog(ReceiptionScan.class, TAG_GetT_PalletDetailByBarCodeADF, code);
-            RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_PalletDetailByBarCodeADF, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_Msg_GetT_PalletDetailByBarCode, null,  URLModel.GetURL().GetT_PalletDetailByBarCodeADF, params, null);
+            RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_PalletDetailByBarCodeADF, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_Msg_GetT_PalletDetailByBarCode, null, URLModel.GetURL().GetT_PalletDetailByBarCodeADF, params, null);
         }
         return false;
     }
 
-    @Event(value = lsv_ReceiptScan,type =  AdapterView.OnItemClickListener.class)
-    private  boolean lsv_ReceiptScanItemClick(AdapterView<?> parent, View view, int position, long id){
-        if(id>=0) {
-            ReceiptDetail_Model receiptDetailModel=receiptDetailModels.get(position);
-            if(receiptDetailModel.getLstBarCode()!=null && receiptDetailModel.getLstBarCode().size()!=0) {
+    @Event(value = lsv_ReceiptScan, type = AdapterView.OnItemClickListener.class)
+    private boolean lsv_ReceiptScanItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (id >= 0) {
+            ReceiptDetail_Model receiptDetailModel = receiptDetailModels.get(position);
+            if (receiptDetailModel.getLstBarCode() != null && receiptDetailModel.getLstBarCode().size() != 0) {
                 Intent intent = new Intent(context, ReceiptionBillDetail.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("receiptDetailModel", receiptDetailModel);
@@ -179,18 +182,19 @@ public class ReceiptionScan extends BaseActivity {
             if (DoubleClickCheck.isFastDoubleClick(context)) {
                 return false;
             }
-            Boolean isFinishReceipt=true;
+            Boolean isFinishReceipt = true;
             //非采购订单不能多次收货
-            if(receiptDetailModels!=null && receiptDetailModels.get(0).getVoucherType()!=22) {
+            if (receiptDetailModels != null && receiptDetailModels.get(0).getVoucherType() != 22) {
                 for (ReceiptDetail_Model receiptDetail : receiptDetailModels) {
+                    receiptDetail.setGUID(uuid.toString());
                     if (receiptDetail.getScanQty().compareTo(receiptDetail.getRemainQty()) != 0) {
                         MessageBox.Show(context, getString(R.string.Error_CannotReceipt));
-                        isFinishReceipt=false;
+                        isFinishReceipt = false;
                         break;
                     }
                 }
             }
-            if(isFinishReceipt) {
+            if (isFinishReceipt) {
                 final Map<String, String> params = new HashMap<String, String>();
                 String ModelJson = GsonUtil.parseModelToJson(receiptDetailModels);
                 String UserJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
@@ -206,8 +210,20 @@ public class ReceiptionScan extends BaseActivity {
     /*
     获取收货明细
      */
-    void GetReceiptDetail(Receipt_Model receiptModel){
-        if(receiptModel!=null) {
+    void GetReceiptDetail(final Receipt_Model receiptModel) {
+        if (receiptModel != null) {
+            if (receiptModel.getVoucherType()!=22 &&(receiptModel.getWareHouseID() != BaseApplication.userInfo.getWarehouseID())) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("提示");
+                builder.setMessage("当前单据仓库与登陆仓库不符，是否继续进行收货?");
+                builder.setPositiveButton("返回", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        closeActiviry();
+                    }
+                });
+                builder.show();
+            }
             txtVoucherNo.setText(receiptModel.getErpVoucherNo());
             final ReceiptDetail_Model receiptDetailModel = new ReceiptDetail_Model();
             receiptDetailModel.setHeaderID(receiptModel.getID());
@@ -217,31 +233,32 @@ public class ReceiptionScan extends BaseActivity {
             params.put("ModelDetailJson", parseModelToJson(receiptDetailModel));
             String para = (new JSONObject(params)).toString();
             LogUtil.WriteLog(ReceiptionScan.class, TAG_GetT_InStockDetailListByHeaderIDADF, para);
-            RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_InStockDetailListByHeaderIDADF, getString(R.string.Msg_GetT_InStockDetailListByHeaderIDADF), context, mHandler, RESULT_Msg_GetT_InStockDetailListByHeaderIDADF, null,  URLModel.GetURL().GetT_InStockDetailListByHeaderIDADF, params, null);
+            RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_InStockDetailListByHeaderIDADF, getString(R.string.Msg_GetT_InStockDetailListByHeaderIDADF), context, mHandler, RESULT_Msg_GetT_InStockDetailListByHeaderIDADF, null, URLModel.GetURL().GetT_InStockDetailListByHeaderIDADF, params, null);
+
         }
     }
 
     /*
     处理收货明细
      */
-    void AnalysisGetT_InStockDetailListJson(String result){
-        LogUtil.WriteLog(ReceiptionScan.class, TAG_GetT_InStockDetailListByHeaderIDADF,result);
+    void AnalysisGetT_InStockDetailListJson(String result) {
+        LogUtil.WriteLog(ReceiptionScan.class, TAG_GetT_InStockDetailListByHeaderIDADF, result);
         try {
             ReturnMsgModelList<ReceiptDetail_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<ReceiptDetail_Model>>() {
             }.getType());
-                if (returnMsgModel.getHeaderStatus().equals("S")) {
+            if (returnMsgModel.getHeaderStatus().equals("S")) {
                 receiptDetailModels = returnMsgModel.getModelJson();
                 //自动确认扫描箱号
                 BindListVIew(receiptDetailModels);
                 if (barCodeInfos != null) {
-                    isDel=false;
+                    isDel = false;
                     Bindbarcode(barCodeInfos);
                 }
             } else {
-                MessageBox.Show(context,returnMsgModel.getMessage());
+                MessageBox.Show(context, returnMsgModel.getMessage());
             }
-        }catch (Exception ex) {
-            MessageBox.Show(context,ex.getMessage());
+        } catch (Exception ex) {
+            MessageBox.Show(context, ex.getMessage());
         }
         CommonUtil.setEditFocus(edtRecScanBarcode);
     }
@@ -249,20 +266,20 @@ public class ReceiptionScan extends BaseActivity {
     /*
     扫描条码
      */
-    void AnalysisGetT_PalletDetailByNoADF(String result){
-        LogUtil.WriteLog(ReceiptionScan.class, TAG_GetT_PalletDetailByBarCodeADF,result);
+    void AnalysisGetT_PalletDetailByNoADF(String result) {
+        LogUtil.WriteLog(ReceiptionScan.class, TAG_GetT_PalletDetailByBarCodeADF, result);
         try {
             ReturnMsgModelList<BarCodeInfo> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<BarCodeInfo>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 ArrayList<BarCodeInfo> barCodeInfos = returnMsgModel.getModelJson();
-                isDel=false;
+                isDel = false;
                 Bindbarcode(barCodeInfos);
             } else {
-                MessageBox.Show(context,returnMsgModel.getMessage());
+                MessageBox.Show(context, returnMsgModel.getMessage());
             }
-        }catch (Exception ex){
-            MessageBox.Show(context,ex.toString());
+        } catch (Exception ex) {
+            MessageBox.Show(context, ex.toString());
         }
         CommonUtil.setEditFocus(edtRecScanBarcode);
     }
@@ -270,27 +287,27 @@ public class ReceiptionScan extends BaseActivity {
     /*
     提交收货
      */
-    void AnalysisSaveT_InStockDetailADFJson(String result){
+    void AnalysisSaveT_InStockDetailADFJson(String result) {
         try {
-            LogUtil.WriteLog(ReceiptionScan.class, TAG_SaveT_InStockDetailADF,result);
-            final ReturnMsgModel<Base_Model> returnMsgModel =  GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<Base_Model>>() {
+            LogUtil.WriteLog(ReceiptionScan.class, TAG_SaveT_InStockDetailADF, result);
+            final ReturnMsgModel<Base_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<Base_Model>>() {
             }.getType());
-            if(returnMsgModel.getHeaderStatus().equals("S")){
+            if (returnMsgModel.getHeaderStatus().equals("S")) {
                 new AlertDialog.Builder(context).setTitle("提示").setCancelable(false).setIcon(android.R.drawable.ic_dialog_info).setMessage(returnMsgModel.getMessage())
-                                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                // TODO 自动生成的方法
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO 自动生成的方法
 //                                                if (receiptDetailModels.get(0).getVoucherType() == 22) {
 //                                                    Intent intent = new Intent(context, QCMaterialChoice.class);
 //                                                    String ErpVourcherNo = returnMsgModel.getMaterialDoc();
 //                                                    intent.putExtra("ErpVourcherNo", ErpVourcherNo);
 //                                                    startActivityLeft(intent);
 //                                                }
-                                                closeActiviry();
-                                            }
-                                        }).show();
-            }else {
+                                closeActiviry();
+                            }
+                        }).show();
+            } else {
                 MessageBox.Show(context, returnMsgModel.getMessage());
             }
         } catch (Exception ex) {
@@ -299,8 +316,8 @@ public class ReceiptionScan extends BaseActivity {
     }
 
 
-    void InitFrm(BarCodeInfo barCodeInfo){
-        if(barCodeInfo!=null ){
+    void InitFrm(BarCodeInfo barCodeInfo) {
+        if (barCodeInfo != null) {
             txtCompany.setText(barCodeInfo.getStrongHoldCode());
             txtBatch.setText(barCodeInfo.getMaterialNo());
             txtStatus.setText(barCodeInfo.getBatchNo());
@@ -310,8 +327,9 @@ public class ReceiptionScan extends BaseActivity {
         CommonUtil.setEditFocus(edtRecScanBarcode);
     }
 
-    boolean isDel=false;
-    void Bindbarcode(final ArrayList<BarCodeInfo> barCodeInfos){
+    boolean isDel = false;
+
+    void Bindbarcode(final ArrayList<BarCodeInfo> barCodeInfos) {
         if (barCodeInfos != null && barCodeInfos.size() != 0) {
             try {
                 for (BarCodeInfo barCodeInfo : barCodeInfos) {
@@ -319,8 +337,8 @@ public class ReceiptionScan extends BaseActivity {
                         ReceiptDetail_Model receiptDetailModel = new ReceiptDetail_Model(barCodeInfo.getMaterialNo(), barCodeInfo.getRowNo(), barCodeInfo.getRowNoDel());
                         final int index = receiptDetailModels.indexOf(receiptDetailModel);
                         if (index != -1) {
-                            if(!barCodeInfo.getErpVoucherNo().equals(receiptDetailModels.get(index).getErpVoucherNo())){
-                                MessageBox.Show(context,getString(R.string.Error_ErpvoucherNoMatch) + "|" + barCodeInfo.getSerialNo());
+                            if (!barCodeInfo.getErpVoucherNo().equals(receiptDetailModels.get(index).getErpVoucherNo())) {
+                                MessageBox.Show(context, getString(R.string.Error_ErpvoucherNoMatch) + "|" + barCodeInfo.getSerialNo());
                                 break;
                             }
 
@@ -364,8 +382,8 @@ public class ReceiptionScan extends BaseActivity {
 
                 }
                 InitFrm(barCodeInfos.get(0));
-            }catch (Exception ex){
-                MessageBox.Show(context,ex.getMessage());
+            } catch (Exception ex) {
+                MessageBox.Show(context, ex.getMessage());
                 CommonUtil.setEditFocus(edtRecScanBarcode);
             }
 
@@ -373,7 +391,7 @@ public class ReceiptionScan extends BaseActivity {
     }
 
 
-    boolean CheckBarcode(BarCodeInfo barCodeInfo,int index) {
+    boolean CheckBarcode(BarCodeInfo barCodeInfo, int index) {
         boolean isChecked = false;
         if (receiptDetailModels.get(index).getRemainQty() == 0) {
             MessageBox.Show(context, getString(R.string.Error_ReceiveFinish));
@@ -390,35 +408,35 @@ public class ReceiptionScan extends BaseActivity {
                 return false;
             }
         }
-        isChecked =Addbarcode(index, barCodeInfo);
+        isChecked = Addbarcode(index, barCodeInfo);
         return isChecked;
     }
 
 
-    boolean RemoveBarcode(final  int index, final int barIndex){
-        float qty=ArithUtil.sub(receiptDetailModels.get(index).getScanQty(),receiptDetailModels.get(index).getLstBarCode().get(barIndex).getQty());
-                //receiptDetailModels.get(index).getScanQty()-receiptDetailModels.get(index).getLstBarCode().get(barIndex).getQty();
+    boolean RemoveBarcode(final int index, final int barIndex) {
+        float qty = ArithUtil.sub(receiptDetailModels.get(index).getScanQty(), receiptDetailModels.get(index).getLstBarCode().get(barIndex).getQty());
+        //receiptDetailModels.get(index).getScanQty()-receiptDetailModels.get(index).getLstBarCode().get(barIndex).getQty();
         receiptDetailModels.get(index).getLstBarCode().remove(barIndex);
         receiptDetailModels.get(index).setScanQty(qty);
         return true;
     }
 
-    boolean Addbarcode(int index,BarCodeInfo barCodeInfo){
-        float qty= ArithUtil.add(receiptDetailModels.get(index).getScanQty(),barCodeInfo.getQty());
-                //receiptDetailModels.get(index).getScanQty()+barCodeInfo.getQty();
+    boolean Addbarcode(int index, BarCodeInfo barCodeInfo) {
+        float qty = ArithUtil.add(receiptDetailModels.get(index).getScanQty(), barCodeInfo.getQty());
+        //receiptDetailModels.get(index).getScanQty()+barCodeInfo.getQty();
 
-          if(qty<=receiptDetailModels.get(index).getRemainQty()) {
+        if (qty <= receiptDetailModels.get(index).getRemainQty()) {
             receiptDetailModels.get(index).getLstBarCode().add(0, barCodeInfo);
             receiptDetailModels.get(index).setBatchNo(barCodeInfo.getBatchNo());
             receiptDetailModels.get(index).setScanQty(qty);
             return true;
-        }else{
+        } else {
             MessageBox.Show(context, getString(R.string.Error_ReceiveOver));
         }
         return false;
     }
 
-    void RefeshFrm(int index){
+    void RefeshFrm(int index) {
         txtInStockQty.setText(receiptDetailModels.get(index).getInStockQty() + "");
         txtReceiveQty.setText(receiptDetailModels.get(index).getReceiveQty() + "");
         txtRemainQty.setText(receiptDetailModels.get(index).getRemainQty() + "");
@@ -427,7 +445,7 @@ public class ReceiptionScan extends BaseActivity {
     }
 
     private void BindListVIew(ArrayList<ReceiptDetail_Model> receiptDetailModels) {
-        receiptScanDetailAdapter=new ReceiptScanDetailAdapter(context,"采购收货",receiptDetailModels);
+        receiptScanDetailAdapter = new ReceiptScanDetailAdapter(context, "采购收货", receiptDetailModels);
         lsvReceiptScan.setAdapter(receiptScanDetailAdapter);
     }
 }

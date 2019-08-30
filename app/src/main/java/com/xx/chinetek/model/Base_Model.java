@@ -51,6 +51,7 @@ public class Base_Model implements Parcelable {
     public String  ErpVoucherNo;
     private String  PrintIPAdress;
     private String StrEDate ;
+    private String GUID;
 
     public String getStrEDate() {
         return StrEDate;
@@ -428,4 +429,11 @@ public class Base_Model implements Parcelable {
         this.StockType = in.readInt();
     }
 
+    public String getGUID() {
+        return GUID;
+    }
+
+    public void setGUID(String GUID) {
+        this.GUID = GUID;
+    }
 }

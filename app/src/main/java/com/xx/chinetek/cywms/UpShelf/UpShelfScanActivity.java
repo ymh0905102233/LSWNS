@@ -1,6 +1,7 @@
 package com.xx.chinetek.cywms.UpShelf;
 
 import android.app.AlertDialog;
+import android.app.Notification;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Message;
@@ -218,7 +219,7 @@ public class UpShelfScanActivity extends BaseActivity {
                 }
 
                 Float scanQty = Float.valueOf(edtUpScanQty.getText().toString());
-                if(scanQty<=0){
+                if (scanQty <= 0) {
                     MessageBox.Show(context, "请输入正确的数量信息");
                     CommonUtil.setEditFocus(edtUpScanQty);
                     return true;
@@ -317,15 +318,15 @@ public class UpShelfScanActivity extends BaseActivity {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 inStockTaskDetailsInfoModels = returnMsgModel.getModelJson();
-                boolean isUpFull =true;
-                for (InStockTaskDetailsInfo_Model model:
+                boolean isUpFull = true;
+                for (InStockTaskDetailsInfo_Model model :
                         inStockTaskDetailsInfoModels) {
-                    if(model.getRemainQty()>0){
-                        isUpFull =false;
+                    if (model.getRemainQty() > 0) {
+                        isUpFull = false;
                         break;
                     }
                 }
-                if(isUpFull){
+                if (isUpFull) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle("提示");
                     builder.setMessage("当前任务已全部上架完成");
@@ -411,8 +412,16 @@ public class UpShelfScanActivity extends BaseActivity {
                 txtBatch.setText(stockInfoModels.get(0).getBatchNo());
                 txtEDate.setText(CommonUtil.DateToString(stockInfoModels.get(0).getEDate()));
                 txtMaterialName.setText(stockInfoModels.get(0).getMaterialDesc());
+                if (areaInfoModel.getHouseProp().equals("2")) {
+                    CommonUtil.setEditFocus(edtUpScanQty);
+                } else {
+//                   private boolean edtUpScanQtyClick(View v, int keyCode, KeyEvent event) {
+//                       if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER);
+                    //KeyEvent.changeAction(key, KeyEvent.ACTION_UP);
+                    edtUpScanQtyClick(null, KeyEvent.KEYCODE_ENTER, key);
+                }
 
-                CommonUtil.setEditFocus(edtUpScanQty);
 
             } else {
                 MessageBox.Show(context, "未获取到条码信息");
@@ -435,11 +444,12 @@ public class UpShelfScanActivity extends BaseActivity {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 areaInfoModel = returnMsgModel.getModelJson();
-                if (!TextUtils.isEmpty(edtUpShelfScanBarcode.getText().toString().trim())) {
-                    String code = edtUpShelfScanBarcode.getText().toString().trim();
-                    String StockCode = edtStockScan.getText().toString().trim();
-                    ScanBarcode(code, StockCode);
-                }
+//                if (!TextUtils.isEmpty(edtUpShelfScanBarcode.getText().toString().trim())) {
+//                    String code = edtUpShelfScanBarcode.getText().toString().trim();
+//                    String StockCode = edtStockScan.getText().toString().trim();
+//                    ScanBarcode(code, StockCode);
+//                }
+                edtUpShelfScanBarcode.setText("");
                 CommonUtil.setEditFocus(edtUpShelfScanBarcode);
             } else {
                 MessageBox.Show(context, returnMsgModel.getMessage());
@@ -585,8 +595,8 @@ public class UpShelfScanActivity extends BaseActivity {
         areaInfoModel = null;
         edtStockScan.setText("");
         edtUpShelfScanBarcode.setText("");
-       // txtUpShelfScanNum.setText("");
-       // txtUpShelfScanNum.setText("");
+        // txtUpShelfScanNum.setText("");
+        // txtUpShelfScanNum.setText("");
 
         edtUpScanQty.setText("");
         barcodeQty = 0;
