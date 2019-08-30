@@ -29,6 +29,8 @@ import com.xx.chinetek.util.hander.MyHandler;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import static com.xx.chinetek.base.BaseApplication.context;
 
@@ -248,6 +250,22 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
     };
 
 
+    //检查蓝牙打印机是否连上
+    public boolean CheckBluetoothBase(){
+        try{
+            LPK130 lpk130 = new LPK130();
+            lpk130.closeDevice();
+            if (lpk130.openDevice(URLModel.MacAdress) >= 0) {
+                return true;
+            }else{
+                return false;
+            }
+        }catch(Exception ex){
+            return false;
+        }
+    }
+
+
     public void LPK130DEMO(StockInfo_Model model,String flag) {
         LPK130 lpk130 = new LPK130();
         lpk130.closeDevice();
@@ -260,49 +278,58 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
                     lpk130.NFCP_setFontBold((byte) 1);
                     lpk130.NFCP_fontSize((byte) 2, (byte) 2);
                     lpk130.NFCP_printStrLine("拣货标签");
-                    lpk130.NFCP_feed(1);
-
-                    lpk130.NFCP_printStrLine("");
-                    lpk130.NFCP_feed(0);
+                    lpk130.NFCP_feed(5);
 
                     lpk130.NFCP_fontSize((byte) 1, (byte) 1);
                     lpk130.NFCP_setSnapMode((byte) 0);
                     lpk130.NFCP_printStr("产品编号：");
                     lpk130.NFCP_printStrLine(model.getMaterialNo()==null?"":model.getMaterialNo().toString());
-                    lpk130.NFCP_feed(14);
+                    lpk130.NFCP_feed(5);
 
                     lpk130.NFCP_printStr("产品名称：");
                     lpk130.NFCP_printStrLine(model.getMaterialDesc()==null?"":model.getMaterialDesc().toString());
-                    lpk130.NFCP_feed(14);
+                    lpk130.NFCP_feed(5);
 
 
                     lpk130.NFCP_printStr("EAN码：");
                     lpk130.NFCP_printStrLine(model.getEAN()==null?"":model.getEAN().toString());
-                    lpk130.NFCP_feed(14);
+                    lpk130.NFCP_feed(5);
 
 
-                    lpk130.NFCP_printStr("采购订单：");
-                    lpk130.NFCP_printStrLine(model.getErpVoucherNo()==null?"":model.getErpVoucherNo().toString());
-                    lpk130.NFCP_feed(14);
-
+                    lpk130.NFCP_printStr("出库单号：");
+                    lpk130.NFCP_printStrLine(model.getSN()==null?"":model.getSN().toString());
+                    lpk130.NFCP_feed(5);
 
                     lpk130.NFCP_printStr("有效期：");
                     lpk130.NFCP_printStrLine(model.getEDate()==null?"":model.getStrEDate().toString());
-                    lpk130.NFCP_feed(14);
+                    lpk130.NFCP_feed(5);
 
                     lpk130.NFCP_printStr("批次号：");
                     lpk130.NFCP_printStrLine(model.getBatchNo()==null?"":model.getBatchNo().toString());
                     lpk130.NFCP_feed(14);
 
-
-                    lpk130.NFCP_printStr("标准装箱量：");
+                    lpk130.NFCP_printStr("拣货数量：");
                     lpk130.NFCP_printStrLine(model.getQty()==null?"":model.getQty().toString());
-                    lpk130.NFCP_feed(14);
+//                    lpk130.NFCP_printStrLine("箱规：");
+//                    lpk130.NFCP_printStrLine();
+//                    lpk130.NFCP_printStrLine("箱数：");
+//                    lpk130.NFCP_printStrLine();
+                    lpk130.NFCP_feed(5);
+
+                    lpk130.NFCP_printStr("拣货人：");
+                    lpk130.NFCP_printStrLine(BaseApplication.userInfo.getUserName());
+                    lpk130.NFCP_feed(5);
+
+                    lpk130.NFCP_printStr("拣货时间：");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日HH时");
+                    Date date = new Date(System.currentTimeMillis());
+                    lpk130.NFCP_printStrLine(simpleDateFormat.format(date));
+                    lpk130.NFCP_feed(5);
 
                     lpk130.NFCP_printQRcode(6, 2,model.getBarcode()==null?"":model.getBarcode().toString());
-                    lpk130.NFCP_feed(14);
 
-                    lpk130.NFCP_feed(102);
+
+                    lpk130.NFCP_feed(120);
                 }else if (flag=="Bu"){
                     lpk130.NFCP_feed(3);
                     lpk130.NFCP_setLeftMargin((byte) 12);
@@ -350,51 +377,63 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
 
                     lpk130.NFCP_feed(183);
                 }else{
-                    lpk130.NFCP_feed(3);
                     lpk130.NFCP_setLeftMargin((byte) 12);
                     lpk130.NFCP_setSnapMode((byte) 1);
                     lpk130.NFCP_setLineSpace(40);
                     lpk130.NFCP_setFontBold((byte) 1);
                     lpk130.NFCP_fontSize((byte) 2, (byte) 2);
-                    lpk130.NFCP_printStrLine("补货标签");
-                    lpk130.NFCP_feed(1);
-
-                    lpk130.NFCP_printStrLine("");
-                    lpk130.NFCP_feed(14);
+                    lpk130.NFCP_printStrLine("测试标签");
+                    lpk130.NFCP_feed(4);
 
                     lpk130.NFCP_fontSize((byte) 1, (byte) 1);
                     lpk130.NFCP_setSnapMode((byte) 0);
-                    lpk130.NFCP_printStr("补货任务单号：");
-                    lpk130.NFCP_printStrLine("00000000");
-                    lpk130.NFCP_feed(16);
-
                     lpk130.NFCP_printStr("产品编号：");
-                    lpk130.NFCP_printStrLine("00000000");
-                    lpk130.NFCP_feed(16);
-
+                    lpk130.NFCP_printStrLine("0000000000000000");
+                    lpk130.NFCP_feed(5);
 
                     lpk130.NFCP_printStr("产品名称：");
-                    lpk130.NFCP_printStrLine("1@FY2@10014597@8809208054738@2021-05-23@20210523@40@20190828000479");
-                    lpk130.NFCP_feed(16);
+                    lpk130.NFCP_printStrLine("000000000000000");
+                    lpk130.NFCP_feed(5);
 
 
-//                    lpk130.NFCP_printStr("补货下架库位：");
-//                    lpk130.NFCP_printStrLine(model.getAreaNo());
-//                    lpk130.NFCP_feed(16);
+                    lpk130.NFCP_printStr("EAN码：");
+                    lpk130.NFCP_printStrLine("0000000000000");
+                    lpk130.NFCP_feed(4);
 
 
-                    lpk130.NFCP_printStr("数量：");
+                    lpk130.NFCP_printStr("出库单号：");
+                    lpk130.NFCP_printStrLine("00000000000000000");
+                    lpk130.NFCP_feed(5);
+
+                    lpk130.NFCP_printStr("有效期：");
+                    lpk130.NFCP_printStrLine("0000000000000");
+                    lpk130.NFCP_feed(5);
+
+                    lpk130.NFCP_printStr("批次号：");
+                    lpk130.NFCP_printStrLine("0000000000");
+                    lpk130.NFCP_feed(5);
+
+                    lpk130.NFCP_printStr("拣货数量：");
+                    lpk130.NFCP_printStrLine("000000000000");
+//                    lpk130.NFCP_printStrLine("箱规：");
+//                    lpk130.NFCP_printStrLine();
+//                    lpk130.NFCP_printStrLine("箱数：");
+//                    lpk130.NFCP_printStrLine();
+                    lpk130.NFCP_feed(5);
+
+                    lpk130.NFCP_printStr("拣货人：");
                     lpk130.NFCP_printStrLine("00000000");
-                    lpk130.NFCP_feed(16);
+                    lpk130.NFCP_feed(5);
 
-                    lpk130.NFCP_printStr("补货人：");
-                    lpk130.NFCP_printStrLine("00000000");
-                    lpk130.NFCP_feed(16);
+                    lpk130.NFCP_printStr("拣货时间：");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日HH时");
+                    Date date = new Date(System.currentTimeMillis());
+                    lpk130.NFCP_printStrLine(simpleDateFormat.format(date));
+                    lpk130.NFCP_feed(5);
 
-                    lpk130.NFCP_printQRcode(6, 2, "1@FY2@10014597@8809208054738@2021-05-23@20210523@40@20190828000479");
-                    lpk130.NFCP_feed(16);
+                    lpk130.NFCP_printQRcode(6, 2,"00000000000000000000000000000000");
 
-                    lpk130.NFCP_feed(183);
+                    lpk130.NFCP_feed(120);
 
                 }
 

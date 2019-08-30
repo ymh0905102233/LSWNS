@@ -71,7 +71,7 @@ import static com.xx.chinetek.util.function.GsonUtil.parseModelToJson;
 
 
 @ContentView(R.layout.activity_offshelf_scan)
-public class OffshelfScan extends PrintConnectActivity {
+public class OffshelfScan extends BaseActivity {
 
     String TAG_GetT_OutTaskDetailListByHeaderIDADF="OffshelfScan_Single_GetT_OutTaskDetailListByHeaderIDADF";
     String TAG_GetStockModelADF="OffshelfScan_Single_GetStockModelADF";
@@ -318,6 +318,14 @@ public class OffshelfScan extends PrintConnectActivity {
                         return true;
                     }
                     if (currentPickMaterialIndex != -1) {
+                        //检查蓝牙打印机是否连上
+                        if (edtOffShelfScanbarcode.getText().toString().contains("@")){
+                            if(!CheckBluetooth()){
+                                MessageBox.Show(context, "蓝牙打印机连接失败");
+                                return true;
+                            }
+                        }
+
 //                    Float remainqty = ArithUtil.sub(outStockTaskDetailsInfoModels.get(currentPickMaterialIndex).getRePickQty(),
 //                            outStockTaskDetailsInfoModels.get(currentPickMaterialIndex).getScanQty());
                         if (SumReaminQty < qty) {//qty > remainqty ||
@@ -359,12 +367,24 @@ public class OffshelfScan extends PrintConnectActivity {
                 }
 
             }catch(Exception ex){
+                MessageBox.Show(context, ex.toString());
                 return false;
             }
         }
         return false;
 
     }
+
+    private boolean CheckBluetooth(){
+        try{
+            boolean flag=CheckBluetoothBase();
+            return flag;
+        }catch(Exception ex){
+            return false;
+        }
+
+    }
+
 
     @Event(value =R.id.edt_OffShelfScanbarcode,type = View.OnKeyListener.class)
     private  boolean edtOffShelfScanbarcodeClick(View v, int keyCode, KeyEvent event) {
