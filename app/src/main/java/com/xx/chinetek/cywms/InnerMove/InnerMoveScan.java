@@ -107,6 +107,8 @@ public class InnerMoveScan extends BaseActivity {
     CheckBox cbMoveOutLock;
     @ViewInject(R.id.cb_movescan_box)
     CheckBox cbMoveBox;
+    @ViewInject(R.id.cb_movescan_area)
+    CheckBox cbMoveArea;
 
     @ViewInject(R.id.txt_Company)
     TextView txtCompany;
@@ -135,7 +137,7 @@ public class InnerMoveScan extends BaseActivity {
     protected void initViews() {
         super.initViews();
         BaseApplication.context = context;
-        BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.InnerMove_subtitle), true);
+        BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.InnerMove_subtitle) + "-" + BaseApplication.userInfo.getWarehouseName(), true);
         x.view().inject(this);
         BaseApplication.isCloseActivity = false;
     }
@@ -223,6 +225,16 @@ public class InnerMoveScan extends BaseActivity {
             }
         }
         return false;
+    }
+
+    @Event(value = R.id.cb_movescan_area, type = View.OnClickListener.class)
+    private void cbMoveAreaClick(View view) {
+
+        if (cbMoveArea.isChecked()) {
+            cbMoveBox.setChecked(false);
+            cbMoveInLock.setChecked(false);
+            cbMoveOutLock.setChecked(false);
+        }
     }
 
     @Event(value = R.id.lsv_InnerMoveDetail, type = AdapterView.OnItemClickListener.class)
@@ -407,7 +419,13 @@ public class InnerMoveScan extends BaseActivity {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 OutAreaInfoModel = returnMsgModel.getModelJson();
-                CommonUtil.setEditFocus(edtMoveScanBarcode);
+                if (cbMoveArea.isChecked()) {
+                    CommonUtil.setEditFocus(edtMoveInArea);
+                } else {
+                    CommonUtil.setEditFocus(edtMoveScanBarcode);
+                }
+
+
             } else {
                 MessageBox.Show(context, returnMsgModel.getMessage());
                 CommonUtil.setEditFocus(edtMoveOutArea);
@@ -449,8 +467,8 @@ public class InnerMoveScan extends BaseActivity {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 if (!InAreaInfoModel.getHouseProp().equals("2")) {
-                    List<StockInfo_Model> listStock =returnMsgModel.getModelJson();
-                    if (listStock!=null&&listStock.size()>0) {
+                    List<StockInfo_Model> listStock = returnMsgModel.getModelJson();
+                    if (listStock != null && listStock.size() > 0) {
 
                         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
                         builder.setTitle("提示");
@@ -488,41 +506,74 @@ public class InnerMoveScan extends BaseActivity {
             MessageBox.Show(context, "请确定移入库位信息");
             CommonUtil.setEditFocus(edtMoveInArea);
         }
-        if (moveStockInfo == null) {
-            MessageBox.Show(context, "请扫描条码信息");
-            CommonUtil.setEditFocus(edtMoveScanBarcode);
-            return;
+
+        if (OutAreaInfoModel == null) {
+            MessageBox.Show(context, "请确定移出库位信息");
+            CommonUtil.setEditFocus(edtMoveInArea);
         }
-        if (moveStockInfo.getAmountQty() == 0) {
-            if (cbMoveBox.isChecked()) {
-                moveStockInfo.setAmountQty(moveStockInfo.getQty());
-            } else {
-                MessageBox.Show(context, "请确认移库数量");
+
+        if (!cbMoveArea.isChecked()) {
+            if (moveStockInfo == null) {
+                MessageBox.Show(context, "请扫描条码信息");
                 CommonUtil.setEditFocus(edtMoveScanBarcode);
                 return;
             }
-        }
-        if (!moveStockInfo.getWarehouseNo().equals(InAreaInfoModel.getWarehouseNo())) {
-            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
-            builder.setTitle("提示");
-            builder.setMessage("库存当前仓库" + moveStockInfo.getWarehouseNo() + " 与移入仓库" + InAreaInfoModel.getWarehouseNo() + " 不符，确定要移库并生成调拨业务?");
-            builder.setPositiveButton("返回重扫库位", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    InAreaInfoModel = null;
-                    CommonUtil.setEditFocus(edtMoveInArea);
+
+            if (moveStockInfo.getAmountQty() == 0) {
+                if (cbMoveBox.isChecked()) {
+                    moveStockInfo.setAmountQty(moveStockInfo.getQty());
+                } else {
+                    MessageBox.Show(context, "请确认移库数量");
+                    CommonUtil.setEditFocus(edtMoveScanBarcode);
+                    return;
                 }
-            });
-            builder.setNeutralButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    submit();
-                }
-            });
-            builder.show();
-        } else {
+            }
+
+            if (!moveStockInfo.getWarehouseNo().equals(InAreaInfoModel.getWarehouseNo())) {
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
+                builder.setTitle("提示");
+                builder.setMessage("库存当前仓库" + moveStockInfo.getWarehouseNo() + " 与移入仓库" + InAreaInfoModel.getWarehouseNo() + " 不符，确定要移库并生成调拨业务?");
+                builder.setPositiveButton("返回重扫库位", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        InAreaInfoModel = null;
+                        CommonUtil.setEditFocus(edtMoveInArea);
+                    }
+                });
+                builder.setNeutralButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        submit();
+                    }
+                });
+                builder.show();
+            } else {
+                submit();
+            }
+        }else{
+            if(OutAreaInfoModel.getWarehouseID()!=InAreaInfoModel.getWarehouseID()){
+                MessageBox.Show(context,"不同仓库不允许整库转移");
+                return;
+            }
+            if(OutAreaInfoModel.getHouseProp().equals("2")||InAreaInfoModel.equals("2")){
+                MessageBox.Show(context,"零箱区不允许整库转移");
+                return;
+            }
+            if(!OutAreaInfoModel.getHouseProp().equals(InAreaInfoModel.getHouseProp())){
+                MessageBox.Show(context,"转入转出库位库区属性不一致");
+                return;
+            }
+
+            moveStockInfo =new StockInfo_Model();
+            moveStockInfo.setAreaID(OutAreaInfoModel.getID());
+            moveStockInfo.setAreaNo(OutAreaInfoModel.getAreaNo());
+            moveStockInfo.setFromAreaNo(OutAreaInfoModel.getAreaNo());
+            moveStockInfo.setHouseID(OutAreaInfoModel.getHouseID());
+            moveStockInfo.setWarehouseNo(OutAreaInfoModel.getWarehouseNo());
+            moveStockInfo.setWareHouseID(OutAreaInfoModel.getWarehouseID());
             submit();
         }
+
 
     }
 

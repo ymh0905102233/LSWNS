@@ -76,8 +76,13 @@ public class InnerMoveAdapter extends BaseAdapter {
         listItemView.list_OutLoacl.setText("移出:"+stockInfoModel.getWarehouseNo()+"-"+stockInfoModel.getFromAreaNo());
         listItemView.list_SerialNo.setText("移入:"+stockInfoModel.getToErpWarehouse()+"-"+stockInfoModel.getToErpAreaNo());
         listItemView.list_MaterialDesc.setText(stockInfoModel.getMaterialDesc()==null || stockInfoModel.getMaterialDesc().equals("")?stockInfoModel.getMaterialNo():stockInfoModel.getMaterialDesc());
-        listItemView.list_MaterialNo.setText(stockInfoModel.getMaterialNo());
-        listItemView.list_qty.setText(stockInfoModel.getAmountQty().toString());
+       if(stockInfoModel.getSerialNo()==null||stockInfoModel.getSerialNo().equals("")){
+           listItemView.list_MaterialNo.setText("整库位转移");
+           listItemView.list_qty.setText("");
+       }else{
+           listItemView.list_MaterialNo.setText(stockInfoModel.getMaterialNo());
+           listItemView.list_qty.setText(stockInfoModel.getAmountQty().toString());
+       }
         return convertView;
     }
 }

@@ -144,16 +144,25 @@
         android:text="移出锁定"
         app:layout_constraintBaseline_toBaselineOf="@+id/cb_movescan_inlock"
         app:layout_constraintLeft_toRightOf="@+id/cb_movescan_inlock"
-        android:layout_marginLeft="25dp" />
+        android:layout_marginLeft="16dp" />
 
     <CheckBox
         android:id="@+id/cb_movescan_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="16dp"
         android:text="整 箱"
         app:layout_constraintBaseline_toBaselineOf="@+id/cb_movescan_outlock"
         app:layout_constraintLeft_toRightOf="@+id/cb_movescan_outlock" />
+
+    <CheckBox
+        android:id="@+id/cb_movescan_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:text="整库"
+        app:layout_constraintBaseline_toBaselineOf="@+id/cb_movescan_box"
+        app:layout_constraintLeft_toRightOf="@+id/cb_movescan_box" />
 
     <ListView
         android:id="@+id/lsv_InnerMoveDetail"
