@@ -368,6 +368,15 @@ public class ReviewScan extends BaseActivity {
                     CheckBarcode(stockInfoModel);
                     InitFrm(stockInfoModel);
                 }
+                //扫描完成提交触发
+                String userJson = GsonUtil.parseModelToJson(BaseApplication.userInfo);
+                String modelJson = GsonUtil.parseModelToJson(outStockDetailInfoModels);
+                final Map<String, String> params = new HashMap<String, String>();
+                params.put("UserJson", userJson);
+                params.put("ModelJson", modelJson);
+                LogUtil.WriteLog(ReviewScan.class, TAG_SaveT_OutStockReviewDetailADF, modelJson);
+                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveT_OutStockReviewDetailADF, getString(R.string.Msg_SaveT_OutStockReviewDetailADF), context, mHandler, RESULT_SaveT_OutStockReviewDetailADF, null, URLModel.GetURL().SaveT_OutStockReviewDetailADF, params, null);
+
             }
             BindListVIew(outStockDetailInfoModels);
         }else
@@ -451,8 +460,8 @@ public class ReviewScan extends BaseActivity {
     void AnalysisSaveT_OutStockReviewDetailADFJson(String result){
         LogUtil.WriteLog(ReviewScan.class, TAG_SaveT_OutStockReviewDetailADF,result);
         ReturnMsgModelList<OutStock_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<OutStock_Model>>() {}.getType());
+        stockInfoModels=new ArrayList<>();//提交完成清空数据
         if(returnMsgModel.getHeaderStatus().equals("S")) {
-
             GetOutStockDetailInfo(outStockModel);
 
 //            new AlertDialog.Builder(context).setCancelable(false).setTitle("提示").setIcon(android.R.drawable.ic_dialog_info).setMessage(returnMsgModel.getMessage())
@@ -472,6 +481,7 @@ public class ReviewScan extends BaseActivity {
         }else
         {
            MessageBox.Show(context,returnMsgModel.getMessage());
+            GetOutStockDetailInfo(outStockModel);
         }
     }
 
