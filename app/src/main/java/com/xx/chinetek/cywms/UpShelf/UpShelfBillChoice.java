@@ -49,6 +49,7 @@ public class UpShelfBillChoice extends BaseActivity implements SwipeRefreshLayou
     String TAG_GetT_ScanInStockModelADF = "UpShelfBillChoice_GetT_ScanInStockModelADF";
     private final int RESULT_GetT_InTaskListADF = 101;
     private final int RESULT_GetT_ScanInStockModelADF = 102;
+    boolean isScanOrder = false;
 
     @Override
     public void onHandleMessage(Message msg) {
@@ -140,6 +141,7 @@ public class UpShelfBillChoice extends BaseActivity implements SwipeRefreshLayou
                     params.put("TaskNo", "");
                     params.put("AreaNo", "");
                     params.put("WareHouseID", BaseApplication.userInfo.getWarehouseID() + "");
+                    isScanOrder = true;
                     LogUtil.WriteLog(UpShelfBillChoice.class, TAG_GetT_ScanInStockModelADF, code);
                     RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_ScanInStockModelADF, getString(R.string.Msg_GetT_InStockListADF), context, mHandler, RESULT_GetT_ScanInStockModelADF, null, URLModel.GetURL().GetT_ScanInStockModelADF, params, null);
                     return false;
@@ -185,11 +187,16 @@ public class UpShelfBillChoice extends BaseActivity implements SwipeRefreshLayou
         }.getType());
         if (returnMsgModel.getHeaderStatus().equals("S")) {
             inStockTaskInfoModels = returnMsgModel.getModelJson();
-            if (inStockTaskInfoModels != null && inStockTaskInfoModels.size() == 1 && stockInfoModels != null && stockInfoModels.size() != 0)
-                StartScanIntent(inStockTaskInfoModels.get(0), stockInfoModels);
-            else
+            if (inStockTaskInfoModels != null && inStockTaskInfoModels.size() == 1 && stockInfoModels != null && stockInfoModels.size() != 0) {
+                if (isScanOrder) {
+                    isScanOrder = false;
+                    StartScanIntent(inStockTaskInfoModels.get(0), stockInfoModels);
+                }
+            } else {
                 txtChoiceSumRow.setText("合计:" + inStockTaskInfoModels.size());
-            BindListVIew(inStockTaskInfoModels);
+                BindListVIew(inStockTaskInfoModels);
+            }
+
         } else {
             MessageBox.Show(context, returnMsgModel.getMessage());
             CommonUtil.setEditFocus(edtfilterContent);
