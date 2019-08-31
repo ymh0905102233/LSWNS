@@ -131,10 +131,23 @@ public class ReviewBillChoice extends BaseActivity implements SwipeRefreshLayout
                 } else {
                     //扫描箱条码
                     final Map<String, String> params = new HashMap<String, String>();
-                    params.put("BarCode", code);
+                    StockInfo_Model model = new StockInfo_Model();
+                    model.setBarcode(code);
+                    model.setScanType(2);
+                    String ModelJson = GsonUtil.parseModelToJson(model);
+                    params.put("ModelStockJson", ModelJson);
                     LogUtil.WriteLog(ReviewBillChoice.class, TAG_ScanOutStockReviewByBarCodeADF, code);
-                    RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_ScanOutStockReviewByBarCodeADF, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_ScanOutStockReviewByBarCodeADF, null,  URLModel.GetURL().ScanOutStockReviewByBarCodeADF, params, null);
+                    RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_ScanOutStockReviewByBarCodeADF, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_ScanOutStockReviewByBarCodeADF, null,  URLModel.GetURL().GetReviewStockModelADF, params, null);
                     return false;
+
+
+
+//                    final Map<String, String> params = new HashMap<String, String>();
+//                    params.put("BarCode", code);
+//
+//                    LogUtil.WriteLog(ReviewBillChoice.class, TAG_ScanOutStockReviewByBarCodeADF, code);
+//                    RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_ScanOutStockReviewByBarCodeADF, getString(R.string.Msg_GetT_SerialNoByPalletADF), context, mHandler, RESULT_ScanOutStockReviewByBarCodeADF, null,  URLModel.GetURL().ScanOutStockReviewByBarCodeADF, params, null);
+//                    return false;
                 }
             }
            // StartScanIntent(null,null);

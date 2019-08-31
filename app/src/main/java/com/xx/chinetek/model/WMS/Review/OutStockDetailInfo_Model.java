@@ -60,6 +60,48 @@ public class OutStockDetailInfo_Model extends Base_Model implements Parcelable{
     private  Boolean IsReviewFinish=false; //行是否复核完毕
     private int OustockStatus=0;//：0：StockInfo_Model不存在未组托条码  1：StockInfo_Model存在未组托条码
 
+    public Float UnShelveQty ;//拣货数量
+    public Float UnReviewQty ;//未复核数量
+    public Float ReviewQty ;//复核数量
+    public Float PickQty ;//拣货数量
+
+
+    public Float getUnShelveQty() {
+        return UnShelveQty;
+    }
+
+    public void setUnShelveQty(Float unShelveQty) {
+        UnShelveQty = unShelveQty;
+    }
+
+    public Float getUnReviewQty() {
+        return UnReviewQty;
+    }
+
+    public void setUnReviewQty(Float unReviewQty) {
+        UnReviewQty = unReviewQty;
+    }
+
+    public Float getReviewQty() {
+        return ReviewQty;
+    }
+
+    public void setReviewQty(Float reviewQty) {
+        ReviewQty = reviewQty;
+    }
+
+    public Float getPickQty() {
+        return PickQty;
+    }
+
+    public void setPickQty(Float pickQty) {
+        PickQty = pickQty;
+    }
+
+    public static Creator<OutStockDetailInfo_Model> getCREATOR() {
+        return CREATOR;
+    }
+
     public String getFromErpAreaNo() {
         return FromErpAreaNo;
     }
@@ -487,6 +529,10 @@ public class OutStockDetailInfo_Model extends Base_Model implements Parcelable{
         dest.writeString(this.IsSpcBatch);
         dest.writeValue(this.IsReviewFinish);
         dest.writeInt(this.OustockStatus);
+        dest.writeValue(this.UnShelveQty);
+        dest.writeValue(this.UnReviewQty);
+        dest.writeValue(this.ReviewQty);
+        dest.writeValue(this.PickQty);
     }
 
     protected OutStockDetailInfo_Model(Parcel in) {
@@ -535,6 +581,10 @@ public class OutStockDetailInfo_Model extends Base_Model implements Parcelable{
         this.IsSpcBatch = in.readString();
         this.IsReviewFinish = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.OustockStatus = in.readInt();
+        this.UnShelveQty = (Float) in.readValue(Float.class.getClassLoader());
+        this.UnReviewQty = (Float) in.readValue(Float.class.getClassLoader());
+        this.ReviewQty = (Float) in.readValue(Float.class.getClassLoader());
+        this.PickQty = (Float) in.readValue(Float.class.getClassLoader());
     }
 
     public static final Creator<OutStockDetailInfo_Model> CREATOR = new Creator<OutStockDetailInfo_Model>() {

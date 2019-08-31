@@ -72,18 +72,26 @@ public class ReviewScanDetailAdapter extends BaseAdapter {
         }
         OutStockDetailInfo_Model outStockDetailInfoModel=outStockDetailInfoModels.get(selectID);
         listItemView.txtbarcode.setText(outStockDetailInfoModel.getMaterialNo());
-        listItemView.txtScanNum.setText("扫描数："+outStockDetailInfoModel.getScanQty());
-        listItemView.txtRemainQty.setText("复核数："+outStockDetailInfoModel.getOutStockQty());
+        listItemView.txtScanNum.setText("拣货数："+outStockDetailInfoModel.getPickQty());
+        listItemView.txtRemainQty.setText("未复核数："+outStockDetailInfoModel.getUnReviewQty());
         listItemView.txtMaterialDesc.setText(outStockDetailInfoModel.getMaterialDesc());
-        if (outStockDetailInfoModel.getScanQty()!=0 &&
-                outStockDetailInfoModel.getScanQty().compareTo(outStockDetailInfoModel.getOutStockQty())<0) {
-            convertView.setBackgroundResource(R.color.khaki);
-        }
-        else if (outStockDetailInfoModel.getScanQty().compareTo(outStockDetailInfoModel.getOutStockQty())==0) {
+       if (outStockDetailInfoModel.getUnReviewQty()==0) {
             convertView.setBackgroundResource(R.color.springgreen);
         }else{
             convertView.setBackgroundResource(R.color.trans);
         }
+
+
+
+//        if (outStockDetailInfoModel.getScanQty()!=0 &&
+//                outStockDetailInfoModel.getScanQty().compareTo(outStockDetailInfoModel.getOutStockQty())<0) {
+//            convertView.setBackgroundResource(R.color.khaki);
+//        }
+//        else if (outStockDetailInfoModel.getScanQty().compareTo(outStockDetailInfoModel.getOutStockQty())==0) {
+//            convertView.setBackgroundResource(R.color.springgreen);
+//        }else{
+//            convertView.setBackgroundResource(R.color.trans);
+//        }
         return convertView;
     }
 

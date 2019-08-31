@@ -121,7 +121,7 @@ public class OffSehlfBillChoiceItemAdapter extends BaseAdapter {
         listItemView.txtCompany.setText("据点："+outStockTaskInfoModel.getStrongHoldName());
         listItemView.txtdepartment.setText("部门："+outStockTaskInfoModel.getDepartmentName());
         listItemView.txtPcikName.setText("拣货人:"+outStockTaskInfoModel.getPickUserName());
-        listItemView.txtFloorName.setText("楼层："+outStockTaskInfoModel.getFloorName());
+        listItemView.txtFloorName.setText("区："+outStockTaskInfoModel.getFloorName());
         listItemView.txtStockLeave.setText("货位："+outStockTaskInfoModel.getHeightAreaName());
         listItemView.txtVouUser.setText("制单人："+outStockTaskInfoModel.getVouUser());
         listItemView.txtIssueType.setText(outStockTaskInfoModel.getIssueType());
