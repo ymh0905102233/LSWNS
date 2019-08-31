@@ -491,11 +491,12 @@ public class UpShelfScanActivity extends BaseActivity {
 //                if (isFinish) {
 //                    closeActiviry();
 //                } else {
-                GetInStockTaskDetail(inStockTaskInfoModel);
+
                 // }
             } else {
                 ClearFrm();
             }
+            GetInStockTaskDetail(inStockTaskInfoModel);
 
         } catch (Exception ex) {
             MessageBox.Show(context, ex.getMessage());
@@ -570,7 +571,8 @@ public class UpShelfScanActivity extends BaseActivity {
                 }
             } else {
                 MessageBox.Show(context, getString(R.string.Error_BarcodeNotInList) + "|" + StockInfo_Model.getSerialNo());
-                return false;
+                CommonUtil.setEditFocus(edtUpShelfScanBarcode);
+                return true;
             }
         }
         return true;
@@ -602,7 +604,7 @@ public class UpShelfScanActivity extends BaseActivity {
 
 
     void ClearFrm() {
-        edtStockScan.setEnabled(true);
+
         stockInfoModels = new ArrayList<>();
         areaInfoModel = null;
         edtStockScan.setText("");
@@ -613,6 +615,7 @@ public class UpShelfScanActivity extends BaseActivity {
         edtUpScanQty.setText("");
         barcodeQty = 0;
         isInStock = false;
+        edtStockScan.setEnabled(true);
     }
 
     String[] GetReferStockArray(ArrayList<AreaInfo_Model> areaInfoModels) {
