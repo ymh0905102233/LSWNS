@@ -485,7 +485,7 @@ public class UpShelfScanActivity extends BaseActivity {
 //                } else {
                 GetInStockTaskDetail(inStockTaskInfoModel);
                 // }
-            }else{
+            } else {
                 ClearFrm();
             }
 
@@ -543,6 +543,7 @@ public class UpShelfScanActivity extends BaseActivity {
                             inStockTaskDetailsInfoModels.get(index).setErpVoucherType("DB6");
                             inStockTaskDetailsInfoModels.get(index).setFromErpAreaNo("");
                             inStockTaskDetailsInfoModels.get(index).setToErpAreaNo("");
+                            inStockTaskDetailsInfoModels.get(index).setFromBatchNo(StockInfo_Model.getBatchNo());
                         }
 
                         inStockTaskDetailsInfoModels.get(index).setScanQty(qty);
