@@ -359,7 +359,7 @@ public class ReceiptionScan extends BaseActivity {
                             }
 
                             //是否指定批次
-                            if (receiptDetailModels.get(index).getIsSpcBatch().equals("Y")) {
+                            if (receiptModel.getVoucherType()==33 ) { // 调拨单入库单不允许其它批次扫描 receiptDetailModels.get(index).getIsSpcBatch().equals("Y")
                                 if (!receiptDetailModels.get(index).getFromBatchNo().equals(barCodeInfo.getBatchNo())) {
                                     MessageBox.Show(context, getString(R.string.Error_batchNONotMatch) + "|" + barCodeInfo.getSerialNo());
                                     break;
