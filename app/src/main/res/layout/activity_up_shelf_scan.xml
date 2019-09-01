@@ -107,7 +107,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView8">
 
-        <requestFocus />
     </EditText>
 
     <EditText
@@ -126,7 +125,6 @@
         app:layout_constraintLeft_toRightOf="@+id/textView2"
         app:layout_constraintRight_toRightOf="parent">
 
-        <requestFocus />
     </EditText>
 
     <TextView
