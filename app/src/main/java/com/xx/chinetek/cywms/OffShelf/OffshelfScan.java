@@ -285,7 +285,7 @@ public class OffshelfScan extends BaseActivity {
                     if (CommonUtil.EqualFloat(qty ,scanQty) ) {
                         stockInfoModels = new ArrayList<>();
                         stockInfoModels.add(newmodel);
-                        currentPickMaterialIndex = FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getStrongHoldCode());
+                        currentPickMaterialIndex = FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getStrongHoldCode(),stockInfoModels.get(0).getWarehouseNo());
                         if (currentPickMaterialIndex != -1) {
                             if (SumReaminQty < qty) {//qty > remainqty ||
                                 MessageBox.Show(context, getString(R.string.Error_offshelfQtyBiger)
@@ -301,6 +301,11 @@ public class OffshelfScan extends BaseActivity {
                                 txtEDate.setText(CommonUtil.DateToString(stockInfoModels.get(0).getEDate()));
                                 txtStatus.setText(stockInfoModels.get(0).getStrStatus());
                                 SetOutStockTaskDetailsInfoModels(newmodel.getQty(), 3);
+
+                                if(!checkdetail(outStockTaskDetailsInfoModels)){
+                                    MessageBox.Show(context,"提交的数据异常，退出重新扫描！");
+                                    return true;
+                                }
 
                                 //提交数据
                                 final Map<String, String> params = new HashMap<String, String>();
@@ -526,6 +531,7 @@ public class OffshelfScan extends BaseActivity {
         try {
             ReturnMsgModelList<OutStockTaskDetailsInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<OutStockTaskDetailsInfo_Model>>() {
             }.getType());
+            outStockTaskDetailsInfoModels=new ArrayList<>();
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 outStockTaskDetailsInfoModels = returnMsgModel.getModelJson();
                 int size=outStockTaskDetailsInfoModels.size();
@@ -778,6 +784,11 @@ AreaInfo_Model AreaModel;
         ReturnMsgModel<AreaInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<AreaInfo_Model>>() {}.getType());
         if(returnMsgModel.getHeaderStatus().equals("S")){
             AreaModel=returnMsgModel.getModelJson();
+            //判断库位是否和单据一致
+            if (!AreaModel.getHouseProp().equals(outStockTaskDetailsInfoModels.get(0).getHouseProp())){
+                MessageBox.Show(context,"扫描的储位所属仓库属性和单据仓库属性不一致！");
+                AreaModel= new AreaInfo_Model();
+            }
             CommonUtil.setEditFocus(edtOffShelfScanbarcode);
         }else{
             MessageBox.Show(context,returnMsgModel.getMessage());
@@ -841,13 +852,18 @@ AreaInfo_Model AreaModel;
                 }
                 stockInfoModels = new ArrayList<>();
                 stockInfoModels.add(stockInfoModel);
-                currentPickMaterialIndex = FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getStrongHoldCode());
+                currentPickMaterialIndex = FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getStrongHoldCode(),stockInfoModels.get(0).getWarehouseNo());
                 if (currentPickMaterialIndex != -1) {
                     if (CheckStockInfo()) {  //判断是否拣货完毕、是否指定批次
                         ShowPickMaterialInfo();
                         txtEDate.setText(CommonUtil.DateToString(stockInfoModels.get(0).getEDate()));
                         txtStatus.setText(stockInfoModels.get(0).getStrStatus());
                         SetOutStockTaskDetailsInfoModels(stockInfoModel.getQty(), 3);
+
+                        if(!checkdetail(outStockTaskDetailsInfoModels)){
+                            MessageBox.Show(context,"拆零完成，提交的数据异常，退出重新扫描！");
+                            return;
+                        }
 
                         //提交数据
                         final Map<String, String> params = new HashMap<String, String>();
@@ -870,6 +886,20 @@ AreaInfo_Model AreaModel;
         }
         edtUnboxing.setText("");
         CommonUtil.setEditFocus(edtOffShelfScanbarcode);
+
+    }
+
+    //检查提交列表是否存在超条码现象
+    private boolean checkdetail(ArrayList<OutStockTaskDetailsInfo_Model> models){
+        int count=0;
+        if (models!=null&&models.size()>0){
+            for (int i=0;i<models.size();i++){
+                if (models.get(i).getLstStockInfo()!=null&&models.get(i).getLstStockInfo().size()>0){
+                    count=count+models.get(i).getLstStockInfo().size();
+                }
+            }
+        }
+        if (count!=1){return false;}else{return true;}
 
     }
 
@@ -952,7 +982,7 @@ AreaInfo_Model AreaModel;
     }
 
     void insertStockInfo(){
-        currentPickMaterialIndex=FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getStrongHoldCode());
+        currentPickMaterialIndex=FindFirstCanPickMaterialByMaterialNo(stockInfoModels.get(0).getMaterialNo(), stockInfoModels.get(0).getStrongHoldCode(),stockInfoModels.get(0).getWarehouseNo());
         if (currentPickMaterialIndex != -1) {
             if (CheckStockInfo()) {  //判断是否拣货完毕、是否指定批次
                 ShowPickMaterialInfo();
@@ -1251,7 +1281,7 @@ AreaInfo_Model AreaModel;
         return index;
     }
 
-    int FindFirstCanPickMaterialByMaterialNo(String MaterialNo,String StrongHoldCode){
+    int FindFirstCanPickMaterialByMaterialNo(String MaterialNo,String StrongHoldCode,String warehouseNo){
         int size=outStockTaskDetailsInfoModels.size();
         int index=-1;
         for(int i=0;i<size;i++){
@@ -1264,7 +1294,8 @@ AreaInfo_Model AreaModel;
 
             if( (!outStockTaskDetailsInfoModels.get(i).getPickFinish())//没有拣货完毕
                     && outStockTaskDetailsInfoModels.get(i).getMaterialNo().equals(MaterialNo)
-                    && outStockTaskDetailsInfoModels.get(i).getStrongHoldCode().equals(StrongHoldCode)){
+                    && outStockTaskDetailsInfoModels.get(i).getStrongHoldCode().equals(StrongHoldCode)
+                    && outStockTaskDetailsInfoModels.get(i).getWareHouseNo().equals(warehouseNo)){
                 // && outStockTaskDetailsInfoModels.get(i).getHeaderID()==HeadID){
                 ErpVoucherno= outStockTaskDetailsInfoModels.get(i).getErpVoucherNo();
                 index= i;

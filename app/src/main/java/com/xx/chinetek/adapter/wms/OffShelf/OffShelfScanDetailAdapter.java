@@ -78,7 +78,7 @@ public class OffShelfScanDetailAdapter extends BaseAdapter {
         }
        final OutStockTaskDetailsInfo_Model outStockTaskDetailsInfoModel=outStockTaskDetailsInfoModels.get(selectID);
         listItemView.txtbarcode.setText(outStockTaskDetailsInfoModel.getMaterialNo());
-//        listItemView.txtScanNum.setText("扫描数："+outStockTaskDetailsInfoModel.getScanQty());
+        listItemView.txtScanNum.setText("楼层："+outStockTaskDetailsInfoModel.getFloorType()+"楼");
         listItemView.txtRemainQty.setText("可拣数："+outStockTaskDetailsInfoModel.getRePickQty());
         listItemView.txtreferStock.setText(outStockTaskDetailsInfoModel.getAreaNo()+"-"+outStockTaskDetailsInfoModel.getToBatchno());
         listItemView.txtERPVoucherNo.setText(outStockTaskDetailsInfoModel.getErpVoucherNo());
