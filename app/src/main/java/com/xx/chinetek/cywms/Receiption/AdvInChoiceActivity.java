@@ -289,7 +289,8 @@ public class AdvInChoiceActivity extends BaseActivity {
                 eDate = year + "-" + month + "-" + dayOfMonth;
                 btnDate.setText(eDate);
                 String bdate = BasisTimesUtils.getDateStr(eDate, materialPack.getQUALITYDAY());
-                etBatch.setText(bdate);
+               // etBatch.setText(bdate);
+                etBatch.setText(year + "" + month + "" + dayOfMonth);
                 CommonUtil.setEditFocus(etScanQty);
             }
 
