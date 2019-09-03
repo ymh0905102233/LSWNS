@@ -149,7 +149,7 @@ public class ReviewScan extends BaseActivity {
         super.initData();
         lsvReviewscan.setOnScrollListener(onScrollListener);
         outStockModel=getIntent().getParcelableExtra("outStock_model");
-        stockInfoModels=getIntent().getParcelableArrayListExtra("stockInfoModels");
+//        stockInfoModels=getIntent().getParcelableArrayListExtra("stockInfoModels");
         GetOutStockDetailInfo(outStockModel);
 
     }

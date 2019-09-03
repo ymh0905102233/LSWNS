@@ -418,7 +418,7 @@ public class IntentoryScan extends BaseActivity {
                 barcodeModels=new ArrayList<>();
                 inventoryScanItemAdapter=new InventoryScanItemAdapter(context,model,barcodeModels);
                 lsvIntentoryScan.setAdapter(inventoryScanItemAdapter);
-                CommonUtil.setEditFocus(edtInvScanBarcode);
+                CommonUtil.setEditFocus(edtStockScan);
             }else
                 MessageBox.Show(context, returnMsgModel.getMessage());
         } catch (Exception ex) {

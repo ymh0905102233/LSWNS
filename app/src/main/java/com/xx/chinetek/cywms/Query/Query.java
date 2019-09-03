@@ -37,6 +37,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.xx.chinetek.util.function.GsonUtil.parseModelToJson;
+
 @ContentView(R.layout.activity_query)
 public class Query extends BaseActivity {
 
@@ -96,6 +98,7 @@ int Type=-1;
     void GetStockInfo(String barcode){
         if(!TextUtils.isEmpty(barcode)){
             final Map<String, String> params = new HashMap<String, String>();
+            params.put("UserJson", parseModelToJson(BaseApplication.userInfo));
             params.put("MaterialNo", barcode);
             params.put("ScanType", Type+"");
             String para = (new JSONObject(params)).toString();
@@ -108,14 +111,22 @@ int Type=-1;
         LogUtil.WriteLog(Query.class, TAG_GetStockByMaterialNoADF,result);
         try {
             List<StockInfo_Model> stockInfoModels = new ArrayList<>();
+            List<StockInfo_Model> newstockInfoModels = new ArrayList<>();
             ReturnMsgModelList<StockInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<StockInfo_Model>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 stockInfoModels = returnMsgModel.getModelJson();
+                //过滤仓库
+                for (StockInfo_Model model: stockInfoModels) {
+                    if (model.getWareHouseID()==BaseApplication.userInfo.getWarehouseID()){
+                        newstockInfoModels.add(model);
+                    }
+                }
+
             } else {
                 MessageBox.Show(context, returnMsgModel.getMessage());
             }
-            queryItemAdapter = new QueryItemAdapter(context, stockInfoModels);
+            queryItemAdapter = new QueryItemAdapter(context, newstockInfoModels);
             lsvQuery.setAdapter(queryItemAdapter);
         }catch (Exception ex){
             MessageBox.Show(context,ex.getMessage());
