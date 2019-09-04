@@ -125,30 +125,33 @@ public class UpShelfBillChoice extends BaseActivity implements SwipeRefreshLayou
     private boolean onKey(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
         {
+            int index = -1;
+            String code = edtfilterContent.getText().toString().trim();
             if (inStockTaskInfoModels != null && inStockTaskInfoModels.size() > 0) {
-                String code = edtfilterContent.getText().toString().trim();
                 //扫描单据号、检查单据列表
                 InStockTaskInfo_Model inStockTaskInfoModel = new InStockTaskInfo_Model(code);
-                int index = inStockTaskInfoModels.indexOf(inStockTaskInfoModel);
-                if (index != -1) {
-                    StartScanIntent(inStockTaskInfoModels.get(index), null);
-                    return false;
-                } else {
-                    //扫描箱条码
-                    final Map<String, String> params = new HashMap<String, String>();
-                    params.put("SerialNo", code);
-                    params.put("ERPVoucherNo", "");
-                    params.put("TaskNo", "");
-                    params.put("AreaNo", "");
-                    params.put("WareHouseID", BaseApplication.userInfo.getWarehouseID() + "");
-                    isScanOrder = true;
-                    LogUtil.WriteLog(UpShelfBillChoice.class, TAG_GetT_ScanInStockModelADF, code);
-                    RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_ScanInStockModelADF, getString(R.string.Msg_GetT_InStockListADF), context, mHandler, RESULT_GetT_ScanInStockModelADF, null, URLModel.GetURL().GetT_ScanInStockModelADF, params, null);
-                    return false;
-                }
+                index = inStockTaskInfoModels.indexOf(inStockTaskInfoModel);
             }
+            if (index != -1) {
+                StartScanIntent(inStockTaskInfoModels.get(index), null);
+                return false;
+            } else {
+                //扫描箱条码
+                final Map<String, String> params = new HashMap<String, String>();
+                params.put("SerialNo", code);
+                params.put("ERPVoucherNo", "");
+                params.put("TaskNo", "");
+                params.put("AreaNo", "");
+                params.put("WareHouseID", BaseApplication.userInfo.getWarehouseID() + "");
+                isScanOrder = true;
+                LogUtil.WriteLog(UpShelfBillChoice.class, TAG_GetT_ScanInStockModelADF, code);
+                RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_ScanInStockModelADF, getString(R.string.Msg_GetT_InStockListADF), context, mHandler, RESULT_GetT_ScanInStockModelADF, null, URLModel.GetURL().GetT_ScanInStockModelADF, params, null);
+
+            }
+
             // StartScanIntent(null,null);
             CommonUtil.setEditFocus(edtfilterContent);
+            return false;
         }
         return false;
     }

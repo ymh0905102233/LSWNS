@@ -479,25 +479,25 @@ public class UpShelfScanActivity extends BaseActivity {
             ReturnMsgModel<Base_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<Base_Model>>() {
             }.getType());
             MessageBox.Show(context, returnMsgModel.getMessage());
-            if (returnMsgModel.getHeaderStatus().equals("S")) {
-                ClearFrm();
-//                Boolean isFinish = true;
-//                for (InStockTaskDetailsInfo_Model inStockTaskDetail : inStockTaskDetailsInfoModels) {
-//                    if (inStockTaskDetail.getScanQty().compareTo(inStockTaskDetail.getRemainQty()) != 0) {
-//                        isFinish = false;
-//                        break;
-//                    }
-//                }
-//                if (isFinish) {
-//                    closeActiviry();
-//                } else {
-
-                // }
-            } else {
-                ClearFrm();
-            }
+            ClearFrm();
             GetInStockTaskDetail(inStockTaskInfoModel);
-
+//            if (returnMsgModel.getHeaderStatus().equals("S")) {
+//                ClearFrm();
+////                Boolean isFinish = true;
+////                for (InStockTaskDetailsInfo_Model inStockTaskDetail : inStockTaskDetailsInfoModels) {
+////                    if (inStockTaskDetail.getScanQty().compareTo(inStockTaskDetail.getRemainQty()) != 0) {
+////                        isFinish = false;
+////                        break;
+////                    }
+////                }
+////                if (isFinish) {
+////                    closeActiviry();
+////                } else {
+//
+//                // }
+//            } else {
+//                ClearFrm();
+//            }
         } catch (Exception ex) {
             MessageBox.Show(context, ex.getMessage());
 
@@ -607,6 +607,7 @@ public class UpShelfScanActivity extends BaseActivity {
 
         stockInfoModels = new ArrayList<>();
         areaInfoModel = null;
+        inStockTaskDetailsInfoModels =new ArrayList<InStockTaskDetailsInfo_Model>();
         edtStockScan.setText("");
         edtUpShelfScanBarcode.setText("");
         // txtUpShelfScanNum.setText("");
@@ -615,7 +616,7 @@ public class UpShelfScanActivity extends BaseActivity {
         edtUpScanQty.setText("");
         barcodeQty = 0;
         isInStock = false;
-        edtStockScan.setEnabled(true);
+        CommonUtil.setEditFocus(edtStockScan);
     }
 
     String[] GetReferStockArray(ArrayList<AreaInfo_Model> areaInfoModels) {
