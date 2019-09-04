@@ -523,7 +523,7 @@ public class UpShelfScanActivity extends BaseActivity {
 
     boolean CheckBarcode(StockInfo_Model StockInfo_Model, float upQty) {
         if (StockInfo_Model != null && inStockTaskDetailsInfoModels != null) {
-            InStockTaskDetailsInfo_Model inStockTaskDetailsInfoModel = new InStockTaskDetailsInfo_Model(StockInfo_Model.getMaterialNo());
+            InStockTaskDetailsInfo_Model inStockTaskDetailsInfoModel = new InStockTaskDetailsInfo_Model(StockInfo_Model.getMaterialNo(),upQty);
             int index = -1;
             try {
                 index = inStockTaskDetailsInfoModels.indexOf(inStockTaskDetailsInfoModel);
@@ -578,23 +578,23 @@ public class UpShelfScanActivity extends BaseActivity {
         return true;
     }
 
-    void InsertStock() {
-        for (StockInfo_Model StockInfo_Model : stockInfoModels) {
-            if (StockInfo_Model != null && inStockTaskDetailsInfoModels != null) {
-                InStockTaskDetailsInfo_Model inStockTaskDetailsInfoModel = new InStockTaskDetailsInfo_Model(StockInfo_Model.getMaterialNo());
-                int index = inStockTaskDetailsInfoModels.indexOf(inStockTaskDetailsInfoModel);
-                if (index != -1) {
-                    if (areaInfoModel != null) {
-                        inStockTaskDetailsInfoModels.get(index).setAreaID(areaInfoModel.getID());
-                        inStockTaskDetailsInfoModels.get(index).setHouseID(areaInfoModel.getHouseID());
-                        inStockTaskDetailsInfoModels.get(index).setWarehouseID(areaInfoModel.getWarehouseID());
-                        inStockTaskDetailsInfoModels.get(index).setToErpAreaNo(areaInfoModel.getAreaNo());
-                        inStockTaskDetailsInfoModels.get(index).setToErpWarehouse(areaInfoModel.getWarehouseNo());
-                    }
-                }
-            }
-        }
-    }
+//    void InsertStock() {
+//        for (StockInfo_Model StockInfo_Model : stockInfoModels) {
+//            if (StockInfo_Model != null && inStockTaskDetailsInfoModels != null) {
+//                InStockTaskDetailsInfo_Model inStockTaskDetailsInfoModel = new InStockTaskDetailsInfo_Model(StockInfo_Model.getMaterialNo());
+//                int index = inStockTaskDetailsInfoModels.indexOf(inStockTaskDetailsInfoModel);
+//                if (index != -1) {
+//                    if (areaInfoModel != null) {
+//                        inStockTaskDetailsInfoModels.get(index).setAreaID(areaInfoModel.getID());
+//                        inStockTaskDetailsInfoModels.get(index).setHouseID(areaInfoModel.getHouseID());
+//                        inStockTaskDetailsInfoModels.get(index).setWarehouseID(areaInfoModel.getWarehouseID());
+//                        inStockTaskDetailsInfoModels.get(index).setToErpAreaNo(areaInfoModel.getAreaNo());
+//                        inStockTaskDetailsInfoModels.get(index).setToErpWarehouse(areaInfoModel.getWarehouseNo());
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 
     private void BindListVIew(ArrayList<InStockTaskDetailsInfo_Model> inStockTaskDetailsInfoModels) {

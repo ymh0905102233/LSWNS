@@ -29,8 +29,10 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
         this.BatchNo = BatchNo;
     }
 
-    public InStockTaskDetailsInfo_Model(String MaterialNo) {
+    public InStockTaskDetailsInfo_Model(String MaterialNo,float postQty) {
         this.MaterialNo = MaterialNo;
+        this.PostQty =postQty;
+
     }
 
     private String MaterialNo;
@@ -686,9 +688,13 @@ public class InStockTaskDetailsInfo_Model extends Base_Model implements Parcelab
 
         // return MaterialNo.equals(that.MaterialNo) && BatchNo.equals(that.BatchNo);
         if (BatchNo== null || BatchNo.equals("")) {
-            return MaterialNo.equals(that.MaterialNo);
+
+            return MaterialNo.equals(that.MaterialNo)&&that.RemainQty>=PostQty;
+
         } else {
+
             return MaterialNo.equals(that.MaterialNo) && BatchNo.equals(that.BatchNo);
+
         }
 
 
