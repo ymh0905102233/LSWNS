@@ -466,28 +466,28 @@ public class InnerMoveScan extends BaseActivity {
             ReturnMsgModel<List<StockInfo_Model>> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModel<List<StockInfo_Model>>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
-                if (!InAreaInfoModel.getHouseProp().equals("2")) {
-                    List<StockInfo_Model> listStock = returnMsgModel.getModelJson();
-                    if (listStock != null && listStock.size() > 0) {
-
-                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
-                        builder.setTitle("提示");
-                        builder.setMessage("移库过程中产生了新标签是否打印？");
-                        builder.setPositiveButton("现在打印", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        });
-                        builder.setNeutralButton("不打印", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        });
-                        builder.show();
-                    }
-                }
+//                if (!InAreaInfoModel.getHouseProp().equals("2")) {
+//                    List<StockInfo_Model> listStock = returnMsgModel.getModelJson();
+//                    if (listStock != null && listStock.size() > 0) {
+//
+//                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
+//                        builder.setTitle("提示");
+//                        builder.setMessage("移库过程中产生了新标签是否打印？");
+//                        builder.setPositiveButton("现在打印", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                            }
+//                        });
+//                        builder.setNeutralButton("不打印", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                            }
+//                        });
+//                        builder.show();
+//                    }
+//                }
                 intiFrm();
             } else {
                 MessageBox.Show(context, returnMsgModel.getMessage());
@@ -505,13 +505,20 @@ public class InnerMoveScan extends BaseActivity {
         if (InAreaInfoModel == null) {
             MessageBox.Show(context, "请确定移入库位信息");
             CommonUtil.setEditFocus(edtMoveInArea);
+            return;
         }
 
         if (OutAreaInfoModel == null) {
             MessageBox.Show(context, "请确定移出库位信息");
             CommonUtil.setEditFocus(edtMoveInArea);
+            return;
         }
 
+        if(InAreaInfoModel.getAreaNo().equals(OutAreaInfoModel.getAreaNo())){
+            MessageBox.Show(context, "移出库位与移入库位一致，请重新扫描");
+            CommonUtil.setEditFocus(edtMoveInArea);
+            return;
+        }
         if (!cbMoveArea.isChecked()) {
             if (moveStockInfo == null) {
                 MessageBox.Show(context, "请扫描条码信息");

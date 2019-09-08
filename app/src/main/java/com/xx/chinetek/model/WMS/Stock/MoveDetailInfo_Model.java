@@ -10,7 +10,6 @@ public class MoveDetailInfo_Model extends Base_Model {
     public MoveDetailInfo_Model(){
 
     }
-
     private String MaterialNo;
     private String MaterialDesc;
     private String Unit;
@@ -74,4 +73,5 @@ public class MoveDetailInfo_Model extends Base_Model {
     public void setToErpWarehouse(String toErpWarehouse) {
         ToErpWarehouse = toErpWarehouse;
     }
+
 }
