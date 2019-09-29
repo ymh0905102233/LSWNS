@@ -64,8 +64,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
                     android:maxLines="1"
+                    android:textAlignment="textStart"
                     android:textColor="@color/chocolate"
-                      android:textSize="18sp"/>
+                    android:textSize="15sp" />
         </LinearLayout>
 
         <TextView

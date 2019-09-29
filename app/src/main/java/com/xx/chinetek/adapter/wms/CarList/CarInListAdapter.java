@@ -28,6 +28,10 @@ public class CarInListAdapter extends BaseAdapter {
         public TextView txtBarcode;
         public TextView txtMaterialName;
         public TextView txtBatch;
+
+        public TextView txtlink;
+        public TextView txtaddress;
+        public TextView txtaddress1;
     }
 
     public CarInListAdapter(Context context, ArrayList<TransportSupplier> TransportSuppliers) {
@@ -66,14 +70,22 @@ public class CarInListAdapter extends BaseAdapter {
             listItemView.txtBarcode = (TextView) convertView.findViewById(R.id.item_Barcode);
             listItemView.txtMaterialName = (TextView) convertView.findViewById(R.id.item_MattterialName);
             listItemView.txtBatch = (TextView) convertView.findViewById(R.id.item_Batch);
+
+            listItemView.txtlink = (TextView) convertView.findViewById(R.id.item_link);
+            listItemView.txtaddress = (TextView) convertView.findViewById(R.id.item_address);
+            listItemView.txtaddress1 = (TextView) convertView.findViewById(R.id.item_address1);
             convertView.setTag(listItemView);
         } else {
             listItemView = (ListItemView) convertView.getTag();
         }
         TransportSupplier ransportSupplier=transportSuppliers.get(selectID);
-        listItemView.txtBarcode.setText(ransportSupplier.getErpvoucherno());
-        listItemView.txtMaterialName.setText(ransportSupplier.getCustomername());
-        listItemView.txtBatch.setText(ransportSupplier.getBoxcount()+ "");
+        listItemView.txtBarcode.setText(ransportSupplier.getErpVoucherNo());
+        listItemView.txtMaterialName.setText("客户："+ransportSupplier.getCustomerName());
+        listItemView.txtBatch.setText("箱数："+ransportSupplier.getBoxCount()+ "");
+
+        listItemView.txtlink.setText("联系人："+ransportSupplier.getContact()+"("+ransportSupplier.getPhone()+")");
+        listItemView.txtaddress.setText("收货地址："+ransportSupplier.getAddress()+"");
+        listItemView.txtaddress1.setText("物流地址："+ransportSupplier.getAddress1()+"");
         return convertView;
     }
 

@@ -120,18 +120,22 @@ public class OffSehlfBillChoiceItemAdapter extends BaseAdapter {
         listItemView.txtStrVoucherType.setText(outStockTaskInfoModel.getStrVoucherType());
         listItemView.txtCompany.setText("据点："+outStockTaskInfoModel.getStrongHoldName());
         listItemView.txtdepartment.setText("部门："+outStockTaskInfoModel.getDepartmentName());
-        listItemView.txtPcikName.setText("拣货人:"+outStockTaskInfoModel.getPickUserName());
-        listItemView.txtFloorName.setText("区："+outStockTaskInfoModel.getFloorName());
-        listItemView.txtStockLeave.setText("货位："+outStockTaskInfoModel.getHeightAreaName());
-        listItemView.txtVouUser.setText("制单人："+outStockTaskInfoModel.getVouUser());
-        listItemView.txtIssueType.setText(outStockTaskInfoModel.getIssueType());
+        listItemView.txtPcikName.setText("区域:"+outStockTaskInfoModel.getStrHouseProp());
+        listItemView.txtFloorName.setText("楼层："+outStockTaskInfoModel.getFloorName());
+        listItemView.txtStockLeave.setText("拣货人："+outStockTaskInfoModel.getPickUserName());
+        listItemView.txtVouUser.setText("状态："+outStockTaskInfoModel.getStrStatus() );
+        listItemView.txtIssueType.setText("任务数："+ outStockTaskInfoModel.getTaskCount());
        // listItemView.txtCustoms.setText("客户名称1，客户名称2，客户名称3，客户名称4,客户名称5,客户名称6");
-        if(outStockTaskInfoModel.getIsEdate().equals("1"))
-            convertView.setBackgroundResource(R.color.antiquewhite);
-        else if(outStockTaskInfoModel.getIsEdate().equals("2"))
-            convertView.setBackgroundResource(R.color.khaki);
-        else
+//        if(outStockTaskInfoModel.getIsEdate().equals("1"))
+//            convertView.setBackgroundResource(R.color.antiquewhite);
+//        else if(outStockTaskInfoModel.getIsEdate().equals("2"))
+//            convertView.setBackgroundResource(R.color.khaki);
+//        else
+        if(outStockTaskInfoModel.getStrStatus().equals("新建")){
             convertView.setBackgroundColor(Color.TRANSPARENT);
+        }else{
+            convertView.setBackgroundColor(Color.YELLOW);
+        }
 
         if(isPickingAdmin){
             if(!TextUtils.isEmpty(outStockTaskInfoModel.getPickUserNo())){

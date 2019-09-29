@@ -26,10 +26,9 @@
                     android:maxLines="1"
                     android:textAlignment="viewEnd"
                     android:textColor="@color/goldenrod"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
         </LinearLayout>
-
 
 
         <TextView
@@ -39,7 +38,35 @@
             android:layout_weight="0.5"
             android:maxLines="1"
             android:textColor="@color/darkblue"
-            android:textSize="20sp" />
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/item_link"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:maxLines="1"
+            android:textColor="@color/darkblue"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/item_address"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:maxLines="1"
+            android:textColor="@color/darkblue"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/item_address1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:maxLines="1"
+            android:textColor="@color/darkblue"
+            android:textSize="14sp" />
+
 
 
 

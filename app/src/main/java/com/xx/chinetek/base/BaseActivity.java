@@ -308,7 +308,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
                     lpk130.NFCP_printStrLine(model.getBatchNo()==null?"":model.getBatchNo().toString());
                     lpk130.NFCP_feed(7);
 
-                    lpk130.NFCP_printStr("拣货数量："+ model.getQty()==null?"":model.getQty().toString());
+                    lpk130.NFCP_printStr("拣货数量："+ (model.getQty()==null?"":model.getQty().toString()));
                     lpk130.NFCP_printStrLine("  拣货人："+BaseApplication.userInfo.getUserName());
                     lpk130.NFCP_feed(7);
 
@@ -344,7 +344,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
                     lpk130.NFCP_feed(16);
 
                     lpk130.NFCP_printStr("产品编号：");
-                    lpk130.NFCP_printStrLine(model.getMaterialNo()==null?"":model.getMaterialNo().toString());
+                    lpk130.NFCP_printStrLine(model.getMaterialNo()==null?"":model.getMaterialNo().toString()+"("+ model.getAreaNo()+")");
                     lpk130.NFCP_feed(16);
 
 

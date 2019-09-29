@@ -27,6 +27,9 @@
         <activity android:name=".UpShelf.UpshelfBillDetail" />
         <activity android:name=".OffShelf.OffshelfScan" />
         <activity android:name=".OffShelf.OffShelfBillChoice" />
+        <activity android:name=".Bu.BuBillChoice" />
+        <activity android:name=".Bu.BuScan" />
+        <activity android:name=".Landmark.Landmark" />
         <activity android:name=".Review.ReviewScan" />
         <activity android:name=".Review.ReviewBillChoice" />
         <activity android:name="com.xx.chinetek.Pallet.CombinPalletDetail" />
@@ -106,6 +109,8 @@
         <activity android:name="com.xx.chinetek.cyproduct.LineStockOut.Zcj" />
         <activity android:name=".Intentory.IntentoryFinc" />
         <activity android:name=".Query.AddProductActivity"></activity>
+        <activity android:name=".Query.AddProductQHActivity"></activity>
+
     </application>
 
 </manifest>

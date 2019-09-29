@@ -78,11 +78,13 @@ public class CarIn extends BaseActivity {
     @ViewInject(R.id.lsv_LineStockOutProduct)
     ListView lsvLineStockOutProduct;
     @ViewInject(R.id.edtorderno)
-    TextView edtorderno;
+    EditText edtorderno;
     @ViewInject(R.id.edt_LineStockOutScanBarcode)
     EditText edtLineStockOutScanBarcode;
     @ViewInject(R.id.edtmoney)
     EditText edtmoney;
+    @ViewInject(R.id.textView79)
+    TextView textView79;
 
 
     CarInListAdapter carInListAdapter;
@@ -93,7 +95,7 @@ public class CarIn extends BaseActivity {
     protected void initViews() {
         super.initViews();
         BaseApplication.context = context;
-        BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.Product_ProductStockout_subtitleYMH), true);
+        BaseApplication.toolBarTitle = new ToolBarTitle("物流扫描"+ "-"+BaseApplication.userInfo.getUserName(), true);
         x.view().inject(this);
         BaseApplication.isCloseActivity=false;
 
@@ -153,6 +155,8 @@ public class CarIn extends BaseActivity {
         return true;
     }
 
+
+    String guid="";
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_filter) {
@@ -161,17 +165,29 @@ public class CarIn extends BaseActivity {
             }
             //提交
             if(SumbitTransportSuppliers!=null && SumbitTransportSuppliers.size()!=0){
-                if(FEIGHT.equals("")|| orderno.equals("")){
-                    MessageBox.Show(context,"输入物流费和物流单号！");
+                if(orderno.equals("")){
+                    MessageBox.Show(context,"输入物流单号！");
                     return  false;
                 }
-
+                if(FEIGHT.equals("")&&!SumbitTransportSuppliers.get(0).getTradingConditionsCode().contains("MS0")){
+                    MessageBox.Show(context,"输入物流费！");
+                    return  false;
+                }
+                String strguid="";
+                if (guid.equals("")){
+                    guid=java.util.UUID.randomUUID().toString();
+                }
+                strguid=guid;
                 for(int i=0;i<SumbitTransportSuppliers.size();i++){
                     SumbitTransportSuppliers.get(i).setType("2");
-                    SumbitTransportSuppliers.get(i).setFEIGHT(FEIGHT);
-                    SumbitTransportSuppliers.get(i).setVoucherno(orderno);
-                    SumbitTransportSuppliers.get(i).setCreater(BaseApplication.userInfo.getUserNo());
+                    if(!SumbitTransportSuppliers.get(0).getTradingConditionsCode().contains("MS0")){
+                        SumbitTransportSuppliers.get(i).setFeight(FEIGHT);
+                    }
+                    SumbitTransportSuppliers.get(i).setGUID(strguid);
+                    SumbitTransportSuppliers.get(i).setVoucherNo(orderno);
+                    SumbitTransportSuppliers.get(i).setCreater(BaseApplication.userInfo.getUserName());
                 }
+
 
                 final Map<String, String> params = new HashMap<String, String>();
                 params.put("ModelJson", GsonUtil.parseModelToJson(SumbitTransportSuppliers));
@@ -192,9 +208,13 @@ public class CarIn extends BaseActivity {
         try {
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 ClearFrm();
-                MessageBox.Show(context,"提交成功！");
-            } else {
                 MessageBox.Show(context,returnMsgModel.getMessage());
+                guid="";
+            } else {
+                MessageBox.Show(context,"错误信息："+returnMsgModel.getMessage()+"再次提交或者退出重新扫描！");
+                edtmoney.setVisibility(View.INVISIBLE);
+                edtLineStockOutScanBarcode.setVisibility(View.INVISIBLE);
+                edtorderno.setVisibility(View.INVISIBLE);
             }
         }catch (Exception ex){
             MessageBox.Show(context,ex.toString());
@@ -212,11 +232,23 @@ public class CarIn extends BaseActivity {
                 Bindbarcode(SumbitTransportSuppliers);
             } else {
                 MessageBox.Show(context,returnMsgModel.getMessage());
+                return;
+            }
+
+            if (SumbitTransportSuppliers.get(0).getTradingConditionsCode().contains("MS0")){
+                edtmoney.setVisibility(View.INVISIBLE);
+                textView79.setVisibility(View.INVISIBLE);
+                CommonUtil.setEditFocus(edtorderno);
+            }else{
+                edtmoney.setVisibility(View.VISIBLE);
+                textView79.setVisibility(View.VISIBLE);
+                CommonUtil.setEditFocus(edtmoney);
             }
         }catch (Exception ex){
             MessageBox.Show(context,ex.toString());
         }
-        CommonUtil.setEditFocus(edtmoney);
+
+
     }
 
     void Bindbarcode(final ArrayList<TransportSupplier> TransportSuppliers){

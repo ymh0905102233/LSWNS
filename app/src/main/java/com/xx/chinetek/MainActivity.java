@@ -26,10 +26,12 @@ import com.xx.chinetek.cyproduct.LineStockOut.LineStockOutReturnBillChoice;
 import com.xx.chinetek.cyproduct.LineStockOut.Zcj;
 import com.xx.chinetek.cyproduct.Manage.LineManage;
 import com.xx.chinetek.cyproduct.WoBillChoice;
+import com.xx.chinetek.cywms.Bu.BuBillChoice;
 import com.xx.chinetek.cywms.Car.CarIn;
 import com.xx.chinetek.cywms.Car.CarOut;
 import com.xx.chinetek.cywms.InnerMove.InnerMoveScan;
 import com.xx.chinetek.cywms.Intentory.InventoryBillChoice;
+import com.xx.chinetek.cywms.Landmark.Landmark;
 import com.xx.chinetek.cywms.MaterialChange.MaterialChangeReceiptBillChoice;
 import com.xx.chinetek.cywms.OffShelf.OffShelfBillChoice;
 import com.xx.chinetek.cywms.Qc.QCBillChoice;
@@ -150,7 +152,15 @@ public class MainActivity extends BaseActivity {
         }else if(textView.getText().toString().equals("预收货")){
             intent.setClass(context, ReceiptBillChoice.class);
             intent.putExtra("BusinesType","预收货");
+        }else if(textView.getText().toString().equals("补货扫描")){
+            intent.setClass(context, BuBillChoice.class);
+        }else if(textView.getText().toString().equals("地标扫描")){
+            intent.setClass(context, Landmark.class);
+        }else if(textView.getText().toString().equals("物流拼箱")){
+            intent.setClass(context, Boxing.class);
         }
+
+
         if(intent!=null)
             startActivityLeft(intent);
     }
@@ -286,6 +296,18 @@ public class MainActivity extends BaseActivity {
                     case 34:
                         itemIconList.add(R.drawable.deliveryproduct);
                         itemNamesList.add("物流扫描");
+                        break;
+                    case 35:
+                        itemIconList.add(R.drawable.offshelf);
+                        itemNamesList.add("补货扫描");
+                        break;
+                    case 36:
+                        itemIconList.add(R.drawable.productmanage);
+                        itemNamesList.add("地标扫描");
+                        break;
+                    case 37:
+                        itemIconList.add(R.drawable.dismounting);
+                        itemNamesList.add("物流拼箱");
                         break;
                 }
             }

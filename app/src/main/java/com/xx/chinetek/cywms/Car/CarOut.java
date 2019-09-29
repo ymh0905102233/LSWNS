@@ -80,7 +80,7 @@ public class CarOut extends BaseActivity {
     @ViewInject(R.id.lsv_LineStockOutProduct)
     ListView lsvLineStockOutProduct;
     @ViewInject(R.id.edt_LineOutStockNum)
-    TextView edtLineOutStockNum;
+    EditText edtLineOutStockNum;
     @ViewInject(R.id.edt_LineStockOutScanBarcode)
     EditText edtLineStockOutScanBarcode;
     @ViewInject(R.id.edt_car)
@@ -96,7 +96,7 @@ public class CarOut extends BaseActivity {
     protected void initViews() {
         super.initViews();
         BaseApplication.context = context;
-        BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.Product_ProductStockout_subtitleYMH), true);
+        BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.Product_ProductStockout_subtitleYMH)+ "-"+BaseApplication.userInfo.getUserName(), true);
         x.view().inject(this);
         BaseApplication.isCloseActivity=false;
         CommonUtil.setEditFocus(edtcar);
@@ -157,10 +157,19 @@ public class CarOut extends BaseActivity {
                 }
                 for (int i=0;i<SumbittransportSuppliers.size();i++){
                     if (SumbittransportSuppliers.get(i).getPalletNo().equals(palletno)){
-                        SumbittransportSuppliers.get(i).setBoxcount(edtLineOutStockNum.getText().toString());
+                        float fnum =1;
+                        float scannum = CommonUtil.convertToFloat(edtLineOutStockNum.getText().toString(),fnum );
+                        float oldnnum = CommonUtil.convertToFloat(SumbittransportSuppliers.get(i).getBoxCount(),fnum );
+                        if (oldnnum<scannum){
+                            MessageBox.Show(context,"箱数不能大于实物数量！");
+                            return true;
+                        }
+                        SumbittransportSuppliers.get(i).setBoxCount(edtLineOutStockNum.getText().toString());
                     }
                 }
+                CommonUtil.setEditFocus(edtLineStockOutScanBarcode);
                 BindListVIew(SumbittransportSuppliers);
+                return true;
             }catch (Exception ex){
                 MessageBox.Show(context,ex.toString());
             }
@@ -185,6 +194,10 @@ public class CarOut extends BaseActivity {
             }
             //提交
             if(SumbittransportSuppliers!=null && SumbittransportSuppliers.size()!=0){
+                for(int i=0;i<SumbittransportSuppliers.size();i++){
+                    SumbittransportSuppliers.get(i).setCreater(BaseApplication.userInfo.getUserName());
+                }
+
                 final Map<String, String> params = new HashMap<String, String>();
                 params.put("ModelJson", GsonUtil.parseModelToJson(SumbittransportSuppliers));
                 RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_SaveBarCodeADF, getString(R.string.Msg_GetT_SaveStouckOutADF),
@@ -204,7 +217,8 @@ public class CarOut extends BaseActivity {
         try {
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 ClearFrm();
-                MessageBox.Show(context,"提交成功！");
+                MessageBox.Show(context,returnMsgModel.getMessage());
+                CommonUtil.setEditFocus(edtcar);
             } else {
                 MessageBox.Show(context,returnMsgModel.getMessage());
             }
@@ -225,8 +239,9 @@ public class CarOut extends BaseActivity {
         try {
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 ArrayList<BarCodeInfo> barCodeInfos = returnMsgModel.getModelJson();
-                Bindbarcode(barCodeInfos);
                 palletno=edtLineStockOutScanBarcode.getText().toString();
+                Bindbarcode(barCodeInfos);
+                CommonUtil.setEditFocus(edtLineOutStockNum);
             } else {
                 MessageBox.Show(context,returnMsgModel.getMessage());
             }
@@ -244,14 +259,19 @@ public class CarOut extends BaseActivity {
                 ArrayList<TransportSupplier> transportSuppliers=new ArrayList<>();
                 for (int i=0;i<barCodeInfos.size();i++){
                     TransportSupplier transportSupplier = new TransportSupplier();
-                    transportSupplier.setPlatenumber(carno);
+                    transportSupplier.setPlateNumber(carno);
                     transportSupplier.setRemark(barCodeInfos.get(i).getPalletno());
-                    transportSupplier.setErpvoucherno(barCodeInfos.get(i).getErpVoucherNo());
-                    transportSupplier.setCustomername(barCodeInfos.get(i).getSupName());
-                    transportSupplier.setBoxcount(barCodeInfos.get(i).getOutCount()+"");
+                    transportSupplier.setErpVoucherNo(barCodeInfos.get(i).getErpVoucherNo());
+                    transportSupplier.setCustomerName(barCodeInfos.get(i).getSupName());
+                    transportSupplier.setBoxCount(barCodeInfos.get(i).getOutCount()+"");
                     transportSupplier.setType("1");
                     transportSupplier.setPalletNo(barCodeInfos.get(i).getPalletNo());
                     transportSupplier.setCreater(BaseApplication.userInfo.getUserNo());
+
+                    transportSupplier.setContact(barCodeInfos.get(i).getContact());
+                    transportSupplier.setPhone(barCodeInfos.get(i).getPhone());
+                    transportSupplier.setAddress(barCodeInfos.get(i).getAddress());
+                    transportSupplier.setAddress1(barCodeInfos.get(i).getAddress1());
                     transportSuppliers.add(transportSupplier);
 
                 }
@@ -270,11 +290,13 @@ public class CarOut extends BaseActivity {
                 int sumAll=0;
                 for (TransportSupplier model : transportSuppliers) {
                     SumbittransportSuppliers.add(0,model);
-                    sumAll=sumAll+ Integer.parseInt(model.getBoxcount());
+                    sumAll=sumAll+ Integer.parseInt(model.getBoxCount());
                 }
                 edtLineOutStockNum.setText(String.valueOf(sumAll));
                 for (int j=0;j<SumbittransportSuppliers.size();j++){
-                    SumbittransportSuppliers.get(j).setBoxcount(sumAll+"");
+                    if(SumbittransportSuppliers.get(j).getPalletNo().equals(palletno)){
+                        SumbittransportSuppliers.get(j).setBoxCount(sumAll+"");
+                    }
                 }
                 BindListVIew(SumbittransportSuppliers);
             }catch (Exception ex){

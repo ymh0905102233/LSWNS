@@ -138,7 +138,7 @@ public class ReviewScan extends BaseActivity {
     protected void initViews() {
         super.initViews();
         BaseApplication.context = context;
-        BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.Review_subtitle), true);
+        BaseApplication.toolBarTitle = new ToolBarTitle( getString(R.string.Review_subtitle)+ "-" + BaseApplication.userInfo.getWarehouseName(), true);
         x.view().inject(this);
         BaseApplication.isCloseActivity=false;
     }

@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -13,22 +11,21 @@ import android.widget.ListView;
 import com.android.volley.Request;
 import com.google.gson.reflect.TypeToken;
 import com.xx.chinetek.adapter.wms.Query.AddProductAdapter;
+import com.xx.chinetek.adapter.wms.Query.AddProductQHAdapter;
 import com.xx.chinetek.base.BaseActivity;
 import com.xx.chinetek.base.BaseApplication;
 import com.xx.chinetek.base.ToolBarTitle;
 import com.xx.chinetek.cywms.R;
 import com.xx.chinetek.cywms.Receiption.ReceiptBillChoice;
 import com.xx.chinetek.model.Base_Model;
-import com.xx.chinetek.model.Receiption.Receipt_Model;
 import com.xx.chinetek.model.ReturnMsgModel;
 import com.xx.chinetek.model.ReturnMsgModelList;
 import com.xx.chinetek.model.URLModel;
-import com.xx.chinetek.model.WMS.Stock.MoveDetailInfo_Model;
+import com.xx.chinetek.model.WMS.Stock.MoveTaskDetailInfo_Model;
 import com.xx.chinetek.util.Network.NetworkError;
 import com.xx.chinetek.util.Network.RequestHandler;
 import com.xx.chinetek.util.dialog.MessageBox;
 import com.xx.chinetek.util.dialog.ToastUtil;
-import com.xx.chinetek.util.function.CommonUtil;
 import com.xx.chinetek.util.function.GsonUtil;
 import com.xx.chinetek.util.log.LogUtil;
 
@@ -40,10 +37,11 @@ import org.xutils.x;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-@ContentView(R.layout.activity_add_product)
-public class AddProductActivity extends BaseActivity {
 
-    Context context = AddProductActivity.this;
+@ContentView(R.layout.activity_add_product)
+public class AddProductQHActivity extends BaseActivity {
+
+    Context context = AddProductQHActivity.this;
     String TAG_GetT_MoveTaskInfo = "GetT_MoveTaskInfo";
     private final int RESULT_GetT_MoveTaskInfo = 101;
 
@@ -56,14 +54,14 @@ public class AddProductActivity extends BaseActivity {
     @ViewInject(R.id.btn_addproduct_addtask)
     Button btnAddTask;
 
-    List<MoveDetailInfo_Model> listMoveDetail = null;
-    AddProductAdapter addProductAdapter;
+    List<MoveTaskDetailInfo_Model> listMoveDetail = null;
+    AddProductQHAdapter addProductAdapter;
 
     @Override
     protected void initViews() {
         super.initViews();
         BaseApplication.context = context;
-        BaseApplication.toolBarTitle = new ToolBarTitle("库存补货" + "-" + BaseApplication.userInfo.getWarehouseName(), false);
+        BaseApplication.toolBarTitle = new ToolBarTitle("欠货补货" + "-" + BaseApplication.userInfo.getWarehouseName(), false);
         x.view().inject(this);
 
     }
@@ -100,14 +98,15 @@ public class AddProductActivity extends BaseActivity {
 
     void GetT_InStockList() {
         try {
-            MoveDetailInfo_Model moveDetailInfo_model = new MoveDetailInfo_Model();
+
+            MoveTaskDetailInfo_Model moveDetailInfo_model = new MoveTaskDetailInfo_Model();
             moveDetailInfo_model.setFromErpWarehouse(String.valueOf(BaseApplication.userInfo.getWarehouseID()));
             String ModelJson = GsonUtil.parseModelToJson(moveDetailInfo_model);
             Map<String, String> params = new HashMap<>();
             params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
             params.put("ModelJson", ModelJson);
             LogUtil.WriteLog(ReceiptBillChoice.class, TAG_GetT_MoveTaskInfo, ModelJson);
-            RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_MoveTaskInfo, "获取补货清单", context, mHandler, RESULT_GetT_MoveTaskInfo, null, URLModel.GetURL().GetT_MoveTaskInfo, params, null);
+            RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_GetT_MoveTaskInfo, "获取补货清单", context, mHandler, RESULT_GetT_MoveTaskInfo, null, URLModel.GetURL().GetT_MoveTaskScatInfo, params, null);
         } catch (Exception ex) {
 
             MessageBox.Show(context, ex.getMessage());
@@ -117,11 +116,11 @@ public class AddProductActivity extends BaseActivity {
     void AnalysisGetT_InStockList(String result) {
         try {
 
-            ReturnMsgModelList<MoveDetailInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<MoveDetailInfo_Model>>() {
+            ReturnMsgModelList<MoveTaskDetailInfo_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<MoveTaskDetailInfo_Model>>() {
             }.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 listMoveDetail = returnMsgModel.getModelJson();
-                 addProductAdapter = new AddProductAdapter(context, listMoveDetail);
+                 addProductAdapter = new AddProductQHAdapter(context, listMoveDetail);
                 lvAddProduct.setAdapter(addProductAdapter);
             }else{
                 MessageBox.Show(context,returnMsgModel.getMessage());
@@ -133,15 +132,20 @@ public class AddProductActivity extends BaseActivity {
 
     void Save_MoveTask() {
         try {
-            MoveDetailInfo_Model moveDetailInfo_model = new MoveDetailInfo_Model();
+            MoveTaskDetailInfo_Model moveDetailInfo_model = new MoveTaskDetailInfo_Model();
+            if (listMoveDetail!=null&&listMoveDetail.size()>0){
+                for (int i=0;i<listMoveDetail.size();i++){
+                    listMoveDetail.get(0).setToErpWarehouse(BaseApplication.userInfo.getWarehouseID()+"");
+                }
+            }
+
             String ModelJson = GsonUtil.parseModelToJson(listMoveDetail);
             Map<String, String> params = new HashMap<>();
             params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
             params.put("ModelJson", ModelJson);
             LogUtil.WriteLog(ReceiptBillChoice.class, TAG_Save_MoveTask, ModelJson);
-            RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_Save_MoveTask, "保存补货任务", context, mHandler, RESULT_Save_MoveTask, null, URLModel.GetURL().Save_MoveTask, params, null);
+            RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_Save_MoveTask, "保存补货任务", context, mHandler, RESULT_Save_MoveTask, null, URLModel.GetURL().Save_MoveTaskScat, params, null);
         } catch (Exception ex) {
-
             MessageBox.Show(context, ex.getMessage());
         }
     }

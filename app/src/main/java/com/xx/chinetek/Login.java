@@ -106,7 +106,7 @@ public class Login extends BaseActivity{
         SharePreferUtil.ReadUserShare(context);
         if (BaseApplication.userInfo != null) {
             edtUserName.setText(BaseApplication.userInfo.getUserNo());
-            edtPassword.setText(DESUtil.decode(BaseApplication.userInfo.getPassWord()));
+//            edtPassword.setText(DESUtil.decode(BaseApplication.userInfo.getPassWord()));
             txtWareHousName.setText(BaseApplication.userInfo.getWarehouseName());
             lstWarehouse = BaseApplication.userInfo.getLstWarehouse();
         }

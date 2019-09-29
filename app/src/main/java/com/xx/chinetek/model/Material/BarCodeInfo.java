@@ -71,6 +71,42 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
     private String LabelMark; //标记
 
     private  String EAN;//ENA码
+    private  String Contact;
+    private  String Address;
+    private  String Address1;
+    private  String Phone;
+
+    public String getContact() {
+        return Contact;
+    }
+
+    public void setContact(String contact) {
+        Contact = contact;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String address) {
+        Address = address;
+    }
+
+    public String getAddress1() {
+        return Address1;
+    }
+
+    public void setAddress1(String address1) {
+        Address1 = address1;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
+    }
 
     public String getPalletNo() {
         return PalletNo;
@@ -521,6 +557,10 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
         dest.writeString(this.RelaWeight);
         dest.writeString(this.LabelMark);
         dest.writeString(this.EAN);
+        dest.writeString(this.Contact);
+        dest.writeString(this.Address);
+        dest.writeString(this.Address1);
+        dest.writeString(this.Phone);
     }
 
     protected BarCodeInfo(Parcel in) {
@@ -574,6 +614,10 @@ public class BarCodeInfo extends Base_Model implements Parcelable{
         this.RelaWeight = in.readString();
         this.LabelMark = in.readString();
         this.EAN = in.readString();
+        this.Contact = in.readString();
+        this.Address = in.readString();
+        this.Address1 = in.readString();
+        this.Phone = in.readString();
     }
 
     public static final Creator<BarCodeInfo> CREATOR = new Creator<BarCodeInfo>() {

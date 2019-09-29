@@ -59,6 +59,46 @@ public class OutStockTaskInfo_Model extends Base_Model implements Parcelable {
     private String IssueType;
     private String IsEdate; //1:不检查 2：检查
     private  int  WareHouseID;
+    private  String  StrHouseProp;
+    private  String  CarNo;
+    private  String  BarCode;
+    private  int  TaskCount;
+
+    public int getTaskCount() {
+        return TaskCount;
+    }
+
+    public void setTaskCount(int taskCount) {
+        TaskCount = taskCount;
+    }
+
+    public String getBarCode() {
+        return BarCode;
+    }
+
+    public void setBarCode(String barCode) {
+        BarCode = barCode;
+    }
+
+    public String getCarNo() {
+        return CarNo;
+    }
+
+    public void setCarNo(String carNo) {
+        CarNo = carNo;
+    }
+
+    public String getStrHouseProp() {
+        return StrHouseProp;
+    }
+
+    public void setStrHouseProp(String strHouseProp) {
+        StrHouseProp = strHouseProp;
+    }
+
+    public static Creator<OutStockTaskInfo_Model> getCREATOR() {
+        return CREATOR;
+    }
 
     public String getHeightAreaName() {
         return HeightAreaName;
@@ -432,6 +472,10 @@ public class OutStockTaskInfo_Model extends Base_Model implements Parcelable {
         dest.writeString(this.IssueType);
         dest.writeString(this.IsEdate);
         dest.writeInt(this.WareHouseID);
+        dest.writeString(this.StrHouseProp);
+        dest.writeString(this.CarNo);
+        dest.writeString(this.BarCode);
+        dest.writeInt(this.TaskCount);
     }
 
     protected OutStockTaskInfo_Model(Parcel in) {
@@ -476,6 +520,10 @@ public class OutStockTaskInfo_Model extends Base_Model implements Parcelable {
         this.IssueType = in.readString();
         this.IsEdate = in.readString();
         this.WareHouseID = in.readInt();
+        this.StrHouseProp = in.readString();
+        this.CarNo = in.readString();
+        this.BarCode = in.readString();
+        this.TaskCount = in.readInt();
     }
 
     public static final Creator<OutStockTaskInfo_Model> CREATOR = new Creator<OutStockTaskInfo_Model>() {

@@ -9,23 +9,93 @@ import android.os.Parcelable;
 
 public class TransportSupplier  implements Parcelable{
 
-    public int id ;
-    public String platenumber ;
-    public int isdel;
+    public int ID ;
+    public String PlateNumber ;
+    public float IsDel;
     public String PalletNo ;
-    public String boxcount ;
-    public String outboxcount ;
-    public String creater ;
-    public String erpvoucherno;
-    public String customername;
-    public String FEIGHT;
-    public String voucherno;
-    public String type ;
-    public String remark ;
-    public String remark1;
-    public String remark2;
-    public String remark3;
-    public String palletno ;
+    public String BoxCount ;
+    public String OutBoxCount ;
+    public String Creater ;
+    public String ErpVoucherNo;
+    public String CustomerName;
+    public String Feight;
+    public String VoucherNo;
+    public String Type ;
+    public String Remark ;
+    public String Remark1;
+    public String Remark2;
+    public String Remark3;
+    public String TradingConditionsCode;
+    public String GUID;
+
+    private  String Contact;
+    private  String Address;
+    private  String Address1;
+    private  String Phone;
+
+    public String getContact() {
+        return Contact;
+    }
+
+    public void setContact(String contact) {
+        Contact = contact;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String address) {
+        Address = address;
+    }
+
+    public String getAddress1() {
+        return Address1;
+    }
+
+    public void setAddress1(String address1) {
+        Address1 = address1;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
+    }
+
+    public String getGUID() {
+        return GUID;
+    }
+
+    public void setGUID(String GUID) {
+        this.GUID = GUID;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getPlateNumber() {
+        return PlateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        PlateNumber = plateNumber;
+    }
+
+    public float getIsDel() {
+        return IsDel;
+    }
+
+    public void setIsDel(float isDel) {
+        IsDel = isDel;
+    }
 
     public String getPalletNo() {
         return PalletNo;
@@ -35,145 +105,113 @@ public class TransportSupplier  implements Parcelable{
         PalletNo = palletNo;
     }
 
-    public String getPalletno() {
-        return palletno;
+    public String getBoxCount() {
+        return BoxCount;
     }
 
-    public void setPalletno(String palletno) {
-        this.palletno = palletno;
+    public void setBoxCount(String boxCount) {
+        BoxCount = boxCount;
+    }
+
+    public String getOutBoxCount() {
+        return OutBoxCount;
+    }
+
+    public void setOutBoxCount(String outBoxCount) {
+        OutBoxCount = outBoxCount;
     }
 
     public String getCreater() {
-        return creater;
+        return Creater;
     }
 
     public void setCreater(String creater) {
-        this.creater = creater;
+        Creater = creater;
     }
 
-
-
-    public String getErpvoucherno() {
-        return erpvoucherno;
+    public String getErpVoucherNo() {
+        return ErpVoucherNo;
     }
 
-    public void setErpvoucherno(String erpvoucherno) {
-        this.erpvoucherno = erpvoucherno;
+    public void setErpVoucherNo(String erpVoucherNo) {
+        ErpVoucherNo = erpVoucherNo;
     }
 
-
-
-    public String getBoxcount() {
-        return boxcount;
+    public String getCustomerName() {
+        return CustomerName;
     }
 
-    public String getOutboxcount() {
-        return outboxcount;
+    public void setCustomerName(String customerName) {
+        CustomerName = customerName;
     }
 
-
-
-    public void setBoxcount(String boxcount) {
-        this.boxcount = boxcount;
+    public String getFeight() {
+        return Feight;
     }
 
-    public void setOutboxcount(String outboxcount) {
-        this.outboxcount = outboxcount;
+    public void setFeight(String feight) {
+        Feight = feight;
+    }
+
+    public String getVoucherNo() {
+        return VoucherNo;
+    }
+
+    public void setVoucherNo(String voucherNo) {
+        VoucherNo = voucherNo;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
     }
 
     public String getRemark() {
-        return remark;
+        return Remark;
     }
 
     public void setRemark(String remark) {
-        this.remark = remark;
+        Remark = remark;
+    }
+
+    public String getRemark1() {
+        return Remark1;
+    }
+
+    public void setRemark1(String remark1) {
+        Remark1 = remark1;
+    }
+
+    public String getRemark2() {
+        return Remark2;
+    }
+
+    public void setRemark2(String remark2) {
+        Remark2 = remark2;
+    }
+
+    public String getRemark3() {
+        return Remark3;
+    }
+
+    public void setRemark3(String remark3) {
+        Remark3 = remark3;
+    }
+
+    public String getTradingConditionsCode() {
+        return TradingConditionsCode;
+    }
+
+    public void setTradingConditionsCode(String tradingConditionsCode) {
+        TradingConditionsCode = tradingConditionsCode;
     }
 
     public static Creator<TransportSupplier> getCREATOR() {
         return CREATOR;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getPlatenumber() {
-        return platenumber;
-    }
-
-    public void setPlatenumber(String platenumber) {
-        this.platenumber = platenumber;
-    }
-
-    public int getIsdel() {
-        return isdel;
-    }
-
-    public void setIsdel(int isdel) {
-        this.isdel = isdel;
-    }
-
-
-    public String getCustomername() {
-        return customername;
-    }
-
-    public void setCustomername(String customername) {
-        this.customername = customername;
-    }
-
-    public String getFEIGHT() {
-        return FEIGHT;
-    }
-
-    public void setFEIGHT(String FEIGHT) {
-        this.FEIGHT = FEIGHT;
-    }
-
-    public String getVoucherno() {
-        return voucherno;
-    }
-
-    public void setVoucherno(String voucherno) {
-        this.voucherno = voucherno;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getRemark1() {
-        return remark1;
-    }
-
-    public void setRemark1(String remark1) {
-        this.remark1 = remark1;
-    }
-
-    public String getRemark2() {
-        return remark2;
-    }
-
-    public void setRemark2(String remark2) {
-        this.remark2 = remark2;
-    }
-
-    public String getRemark3() {
-        return remark3;
-    }
-
-    public void setRemark3(String remark3) {
-        this.remark3 = remark3;
-    }
-
 
     public TransportSupplier() {
     }
@@ -185,43 +223,53 @@ public class TransportSupplier  implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
-        dest.writeString(this.platenumber);
-        dest.writeInt(this.isdel);
+        dest.writeInt(this.ID);
+        dest.writeString(this.PlateNumber);
+        dest.writeFloat(this.IsDel);
         dest.writeString(this.PalletNo);
-        dest.writeString(this.boxcount);
-        dest.writeString(this.outboxcount);
-        dest.writeString(this.creater);
-        dest.writeString(this.erpvoucherno);
-        dest.writeString(this.customername);
-        dest.writeString(this.FEIGHT);
-        dest.writeString(this.voucherno);
-        dest.writeString(this.type);
-        dest.writeString(this.remark);
-        dest.writeString(this.remark1);
-        dest.writeString(this.remark2);
-        dest.writeString(this.remark3);
-        dest.writeString(this.palletno);
+        dest.writeString(this.BoxCount);
+        dest.writeString(this.OutBoxCount);
+        dest.writeString(this.Creater);
+        dest.writeString(this.ErpVoucherNo);
+        dest.writeString(this.CustomerName);
+        dest.writeString(this.Feight);
+        dest.writeString(this.VoucherNo);
+        dest.writeString(this.Type);
+        dest.writeString(this.Remark);
+        dest.writeString(this.Remark1);
+        dest.writeString(this.Remark2);
+        dest.writeString(this.Remark3);
+        dest.writeString(this.TradingConditionsCode);
+        dest.writeString(this.GUID);
+        dest.writeString(this.Contact);
+        dest.writeString(this.Address);
+        dest.writeString(this.Address1);
+        dest.writeString(this.Phone);
     }
 
     protected TransportSupplier(Parcel in) {
-        this.id = in.readInt();
-        this.platenumber = in.readString();
-        this.isdel = in.readInt();
+        this.ID = in.readInt();
+        this.PlateNumber = in.readString();
+        this.IsDel = in.readFloat();
         this.PalletNo = in.readString();
-        this.boxcount = in.readString();
-        this.outboxcount = in.readString();
-        this.creater = in.readString();
-        this.erpvoucherno = in.readString();
-        this.customername = in.readString();
-        this.FEIGHT = in.readString();
-        this.voucherno = in.readString();
-        this.type = in.readString();
-        this.remark = in.readString();
-        this.remark1 = in.readString();
-        this.remark2 = in.readString();
-        this.remark3 = in.readString();
-        this.palletno = in.readString();
+        this.BoxCount = in.readString();
+        this.OutBoxCount = in.readString();
+        this.Creater = in.readString();
+        this.ErpVoucherNo = in.readString();
+        this.CustomerName = in.readString();
+        this.Feight = in.readString();
+        this.VoucherNo = in.readString();
+        this.Type = in.readString();
+        this.Remark = in.readString();
+        this.Remark1 = in.readString();
+        this.Remark2 = in.readString();
+        this.Remark3 = in.readString();
+        this.TradingConditionsCode = in.readString();
+        this.GUID = in.readString();
+        this.Contact = in.readString();
+        this.Address = in.readString();
+        this.Address1 = in.readString();
+        this.Phone = in.readString();
     }
 
     public static final Creator<TransportSupplier> CREATOR = new Creator<TransportSupplier>() {

@@ -197,10 +197,21 @@ public class URLModel {
     //ymh复核
     public String PostT_OutStockReviewDetailADF =GetWCFAdress()+"PostT_OutStockReviewDetailADF";//复核过账
 
-    //装车卸车
+    //ymh装车卸车
     public String GetPalletInfoByPalletNo =GetWCFAdress()+"GetPalletInfoByPalletNo";//获取物流标签
     public String GetTransportSupplierDetailListADF =GetWCFAdress()+"GetTransportSupplierDetailListADF";//装车信息
 
+    public String LockTaskOperUser =GetWCFAdress()+"LockTaskOperUser";//锁任务
+    public String UnLockTaskOperUser =GetWCFAdress()+"UnLockTaskOperUser";//开任务
+
+    //ymh 拣货单补货
+    public String GetT_MoveTaskScatInfo =GetWCFAdress()+"GetT_MoveTaskScatInfo";//拣货单补货
+    public String Save_MoveTaskScat =GetWCFAdress()+"Save_MoveTaskScat";//拣货单补货
+
+    //ymh地标模块
+    public String GetLandmark =GetWCFAdress()+"GetLandmark";
+    public String GetTaskForLandmark =GetWCFAdress()+"GetTaskForLandmark";
+    public String SaveTaskwithandmark =GetWCFAdress()+"SaveTaskwithandmark";
 
 
 }

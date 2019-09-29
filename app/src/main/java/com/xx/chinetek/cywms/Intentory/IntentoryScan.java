@@ -321,37 +321,42 @@ public class IntentoryScan extends BaseActivity {
     }
 
     void AnalysisGetScanInfoJson(String result){
-        LogUtil.WriteLog(IntentoryScan.class, TAG_GetScanInfo,result);
-        ReturnMsgModelList<Barcode_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<Barcode_Model>>() {}.getType());
-        if(returnMsgModel.getHeaderStatus().equals("S")){
-            barcodeModels=returnMsgModel.getModelJson();
-            if(barcodeModels!=null && barcodeModels.size()!=0){
-                txtCompany.setText(barcodeModels.get(0).getStrongHoldName());
-                txtBatch.setText(barcodeModels.get(0).getBatchNo());
-                txtStatus.setText("");
-                txtMaterialName.setText(barcodeModels.get(0).getMaterialDesc());
-                txtStockNum.setText(barcodeModels.size()+"");
-                Float packageNum=0f;
-                for (int i=0;i<barcodeModels.size();i++) {
-                    barcodeModels.get(i).setCHECKNO(checkModel.getCHECKNO());//盘点单号
-                    barcodeModels.get(i).setAREAID(checkAreaModel.getID());//盘点库位
-                    packageNum= ArithUtil.add(packageNum, barcodeModels.get(i).getQty());
-                }
-                //edtInvNum.setText(packageNum+"");
+        try{
+            LogUtil.WriteLog(IntentoryScan.class, TAG_GetScanInfo,result);
+            ReturnMsgModelList<Barcode_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<Barcode_Model>>() {}.getType());
+            if(returnMsgModel.getHeaderStatus().equals("S")){
+                barcodeModels=returnMsgModel.getModelJson();
+                if(barcodeModels!=null && barcodeModels.size()!=0){
+                    txtCompany.setText(barcodeModels.get(0).getStrongHoldName());
+                    txtBatch.setText(barcodeModels.get(0).getBatchNo());
+                    txtStatus.setText("");
+                    txtMaterialName.setText(barcodeModels.get(0).getMaterialDesc());
+                    txtStockNum.setText(barcodeModels.size()+"");
+                    Float packageNum=0f;
+                    for (int i=0;i<barcodeModels.size();i++) {
+                        barcodeModels.get(i).setCHECKNO(checkModel.getCHECKNO());//盘点单号
+                        barcodeModels.get(i).setAREAID(checkAreaModel.getID());//盘点库位
+                        packageNum= ArithUtil.add(packageNum, barcodeModels.get(i).getQty());
+                    }
+                    edtInvNum.setText(packageNum+"");
 
-                inventoryScanItemAdapter=new InventoryScanItemAdapter(context,model,barcodeModels);
-                lsvIntentoryScan.setAdapter(inventoryScanItemAdapter);
-                if(barcodeModels.size()>1){
-                    btnPalletConfig.setVisibility(View.VISIBLE);
-                }else{
-                    CommonUtil.setEditFocus(edtInvNum);
-                }
+                    inventoryScanItemAdapter=new InventoryScanItemAdapter(context,model,barcodeModels);
+                    lsvIntentoryScan.setAdapter(inventoryScanItemAdapter);
+                    if(barcodeModels.size()>1){
+                        btnPalletConfig.setVisibility(View.VISIBLE);
+                    }else{
+                        CommonUtil.setEditFocus(edtInvNum);
+                    }
 
+                }
+            }else{
+                MessageBox.Show(context,returnMsgModel.getMessage());
+                CommonUtil.setEditFocus(edtInvScanBarcode);
             }
-        }else{
-            MessageBox.Show(context,returnMsgModel.getMessage());
-            CommonUtil.setEditFocus(edtInvScanBarcode);
+        }catch(Exception ex){
+            MessageBox.Show(context,ex.toString());
         }
+
     }
 
     void AnalysisGetAreanobyCheckno2Json(String result){
@@ -421,6 +426,7 @@ public class IntentoryScan extends BaseActivity {
                 CommonUtil.setEditFocus(edtStockScan);
             }else
                 MessageBox.Show(context, returnMsgModel.getMessage());
+            CommonUtil.setEditFocus(edtStockScan);
         } catch (Exception ex) {
             MessageBox.Show(context, ex.getMessage());
         }

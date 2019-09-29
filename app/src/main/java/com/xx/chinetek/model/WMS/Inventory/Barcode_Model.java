@@ -33,6 +33,19 @@ public class Barcode_Model implements Parcelable{
     private Date EDate;
     private String Eds;
     private int BarcodeType;
+    private String EAN;
+
+    public String getEAN() {
+        return EAN;
+    }
+
+    public void setEAN(String EAN) {
+        this.EAN = EAN;
+    }
+
+    public static Creator<Barcode_Model> getCREATOR() {
+        return CREATOR;
+    }
 
     public String getVoucherNo() {
         return VoucherNo;
@@ -455,6 +468,7 @@ public class Barcode_Model implements Parcelable{
         dest.writeLong(this.EDate != null ? this.EDate.getTime() : -1);
         dest.writeString(this.Eds);
         dest.writeInt(this.BarcodeType);
+        dest.writeString(this.EAN);
         dest.writeString(this.Creater);
         dest.writeInt(this.STATUS);
         dest.writeString(this.warehousename);
@@ -467,7 +481,10 @@ public class Barcode_Model implements Parcelable{
         dest.writeInt(this.BarcodeNo);
         dest.writeString(this.RelaWeight);
         dest.writeString(this.StoreCondition);
+        dest.writeString(this.SupName);
         dest.writeString(this.ProtectWay);
+        dest.writeString(this.VoucherNo);
+        dest.writeInt(this.VoucherType);
         dest.writeString(this.CompanyCode);
         dest.writeString(this.RowNoDel);
         dest.writeInt(this.BoxCount);
@@ -499,6 +516,7 @@ public class Barcode_Model implements Parcelable{
         this.EDate = tmpEDate == -1 ? null : new Date(tmpEDate);
         this.Eds = in.readString();
         this.BarcodeType = in.readInt();
+        this.EAN = in.readString();
         this.Creater = in.readString();
         this.STATUS = in.readInt();
         this.warehousename = in.readString();
@@ -511,7 +529,10 @@ public class Barcode_Model implements Parcelable{
         this.BarcodeNo = in.readInt();
         this.RelaWeight = in.readString();
         this.StoreCondition = in.readString();
+        this.SupName = in.readString();
         this.ProtectWay = in.readString();
+        this.VoucherNo = in.readString();
+        this.VoucherType = in.readInt();
         this.CompanyCode = in.readString();
         this.RowNoDel = in.readString();
         this.BoxCount = in.readInt();

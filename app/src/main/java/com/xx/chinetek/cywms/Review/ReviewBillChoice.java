@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.google.gson.reflect.TypeToken;
@@ -74,7 +75,8 @@ public class ReviewBillChoice extends BaseActivity implements SwipeRefreshLayout
     SwipeRefreshLayout mSwipeLayout;
     @ViewInject(edt_filterContent)
     EditText edtfilterContent;
-
+    @ViewInject(R.id.txt_billchoice_sumrow)
+    TextView tvSumrwo;
 
     Context context = ReviewBillChoice.this;
     ReviewBillChioceItemAdapter reviewBillChioceItemAdapter;
@@ -85,7 +87,7 @@ public class ReviewBillChoice extends BaseActivity implements SwipeRefreshLayout
     protected void initViews() {
         super.initViews();
         BaseApplication.context = context;
-        BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.Review_title), false);
+        BaseApplication.toolBarTitle = new ToolBarTitle(getString(R.string.Review_title)+ "-" + BaseApplication.userInfo.getWarehouseName(), false);
         x.view().inject(this);
     }
 
@@ -183,17 +185,24 @@ public class ReviewBillChoice extends BaseActivity implements SwipeRefreshLayout
 
     void AnalysisGetT_OutStockListADFJson(String result){
         LogUtil.WriteLog(ReviewBillChoice.class, TAG_GetT_OutStockReviewListADF,result);
-        ReturnMsgModelList<OutStock_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<OutStock_Model>>() {}.getType());
-        if(returnMsgModel.getHeaderStatus().equals("S")){
-            outStockModels=returnMsgModel.getModelJson();
-            if (outStockModels != null && outStockModels.size() == 1 && stockInfoModels != null && stockInfoModels.size()!=0)
-                StartScanIntent(outStockModels.get(0), stockInfoModels);
-            else
-                BindListVIew(outStockModels);
-        }else
-        {
-            ToastUtil.show(returnMsgModel.getMessage());
+        try{
+            ReturnMsgModelList<OutStock_Model> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<OutStock_Model>>() {}.getType());
+            if(returnMsgModel.getHeaderStatus().equals("S")){
+                outStockModels=returnMsgModel.getModelJson();
+                if (outStockModels != null && outStockModels.size() == 1 && stockInfoModels != null && stockInfoModels.size()!=0){
+                    StartScanIntent(outStockModels.get(0), stockInfoModels);
+                }else{
+                    BindListVIew(outStockModels);
+                    tvSumrwo.setText("合计:" + outStockModels.size());
+                }
+            }else
+            {
+                ToastUtil.show(returnMsgModel.getMessage());
+            }
+        }catch(Exception ex){
+            MessageBox.Show(context, ex.toString());
         }
+
     }
 
     void AnalysisScanOutStockReviewByBarCodeADFJson(String result){
