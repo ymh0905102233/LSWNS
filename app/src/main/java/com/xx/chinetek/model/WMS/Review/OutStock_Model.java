@@ -33,6 +33,28 @@ public class OutStock_Model extends Base_Model implements Parcelable{
     private Float ReviewStatus;
     private String VoucherNo;
     private String Note;
+    private Integer TaskCount;
+    private String StrLandmark;
+
+    public String getStrLandmark() {
+        return StrLandmark;
+    }
+
+    public void setStrLandmark(String strLandmark) {
+        StrLandmark = strLandmark;
+    }
+
+    public Integer getTaskCount() {
+        return TaskCount;
+    }
+
+    public void setTaskCount(Integer taskCount) {
+        TaskCount = taskCount;
+    }
+
+    public static Creator<OutStock_Model> getCREATOR() {
+        return CREATOR;
+    }
 
     public String getCustomerCode() {
         return CustomerCode;
@@ -157,6 +179,7 @@ public class OutStock_Model extends Base_Model implements Parcelable{
         return ErpVoucherNo.equals(that.ErpVoucherNo) ;
 
     }
+
     @Override
     public int describeContents() {
         return 0;
@@ -179,6 +202,8 @@ public class OutStock_Model extends Base_Model implements Parcelable{
         dest.writeValue(this.ReviewStatus);
         dest.writeString(this.VoucherNo);
         dest.writeString(this.Note);
+        dest.writeValue(this.TaskCount);
+        dest.writeString(this.StrLandmark);
     }
 
     protected OutStock_Model(Parcel in) {
@@ -197,6 +222,8 @@ public class OutStock_Model extends Base_Model implements Parcelable{
         this.ReviewStatus = (Float) in.readValue(Float.class.getClassLoader());
         this.VoucherNo = in.readString();
         this.Note = in.readString();
+        this.TaskCount = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.StrLandmark = in.readString();
     }
 
     public static final Creator<OutStock_Model> CREATOR = new Creator<OutStock_Model>() {

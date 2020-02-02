@@ -42,6 +42,8 @@
         <activity android:name=".Intentory.IntentoryDetial" />
         <activity android:name="com.xx.chinetek.Pallet.DismantlePallet" />
         <activity android:name="com.xx.chinetek.Box.Boxing" />
+        <activity android:name="com.xx.chinetek.Box.BoxingForWuliu" />
+
         <activity android:name=".Stock.AdjustStock" />
         <activity android:name=".Qc.QCBillChoice" />
         <activity android:name=".Qc.QCScan" />
@@ -54,6 +56,8 @@
         <activity android:name=".Qc.QCMaterialChoice" />
         <activity android:name=".Car.CarIn" />
         <activity android:name=".Car.CarOut" />
+        <activity android:name=".Car.CarQuery" />
+
 
         <activity android:name="com.xx.chinetek.Login">
             <intent-filter>

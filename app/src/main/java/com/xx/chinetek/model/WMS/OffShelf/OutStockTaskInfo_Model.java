@@ -63,6 +63,33 @@ public class OutStockTaskInfo_Model extends Base_Model implements Parcelable {
     private  String  CarNo;
     private  String  BarCode;
     private  int  TaskCount;
+    private String TradingConditionsName;
+    private String CustomerName;
+    private String WareHouseName;
+
+    public String getWareHouseName() {
+        return WareHouseName;
+    }
+
+    public void setWareHouseName(String wareHouseName) {
+        WareHouseName = wareHouseName;
+    }
+
+    public String getCustomerName() {
+        return CustomerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        CustomerName = customerName;
+    }
+
+    public String getTradingConditionsName() {
+        return TradingConditionsName;
+    }
+
+    public void setTradingConditionsName(String tradingConditionsName) {
+        TradingConditionsName = tradingConditionsName;
+    }
 
     public int getTaskCount() {
         return TaskCount;
@@ -476,6 +503,9 @@ public class OutStockTaskInfo_Model extends Base_Model implements Parcelable {
         dest.writeString(this.CarNo);
         dest.writeString(this.BarCode);
         dest.writeInt(this.TaskCount);
+        dest.writeString(this.TradingConditionsName);
+        dest.writeString(this.CustomerName);
+        dest.writeString(this.WareHouseName);
     }
 
     protected OutStockTaskInfo_Model(Parcel in) {
@@ -524,6 +554,9 @@ public class OutStockTaskInfo_Model extends Base_Model implements Parcelable {
         this.CarNo = in.readString();
         this.BarCode = in.readString();
         this.TaskCount = in.readInt();
+        this.TradingConditionsName = in.readString();
+        this.CustomerName = in.readString();
+        this.WareHouseName = in.readString();
     }
 
     public static final Creator<OutStockTaskInfo_Model> CREATOR = new Creator<OutStockTaskInfo_Model>() {

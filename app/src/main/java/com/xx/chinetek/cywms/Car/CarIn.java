@@ -1,6 +1,7 @@
 package com.xx.chinetek.cywms.Car;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -151,7 +152,7 @@ public class CarIn extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_receiptbilldetail, menu);
+        getMenuInflater().inflate(R.menu.menu_postcar, menu);
         return true;
     }
 
@@ -197,6 +198,15 @@ public class CarIn extends BaseActivity {
             }else{
                 MessageBox.Show(context,"先扫描物流标签！");
             }
+        }
+        if (item.getItemId() == R.id.action_detail) {
+            if (DoubleClickCheck.isFastDoubleClick(context)) {
+                return false;
+            }
+            Intent intent = new Intent();
+            intent.setClass(context, CarQuery.class);
+            startActivityLeft(intent);
+
         }
         return super.onOptionsItemSelected(item);
     }

@@ -197,6 +197,9 @@ public class OffshelfScan extends BaseActivity {
     TextView textView133;
     @ViewInject(R.id.txterpvoucherno)
     TextView txterpvoucherno;
+    @ViewInject(R.id.txtcustomername)
+    TextView txtcustomername;
+
 
     ArrayList<OutStockTaskInfo_Model> outStockTaskInfoModels;
     ArrayList<OutStockTaskDetailsInfo_Model> outStockTaskDetailsInfoModels;
@@ -230,6 +233,8 @@ public class OffshelfScan extends BaseActivity {
         TaskNo=outStockTaskInfoModels.get(0).getTaskNo();
         GetT_OutTaskDetailListByHeaderIDADF(outStockTaskInfoModels);
         txterpvoucherno.setText(Erpvoucherno);
+        txtcustomername.setText(outStockTaskInfoModels.get(0).getSupcusName()==null?"":outStockTaskInfoModels.get(0).getSupcusName());
+        edtcar.setText(outStockTaskInfoModels.get(0).getCarNo()==null?"":outStockTaskInfoModels.get(0).getCarNo());
 //        String UserJson=GsonUtil.parseModelToJson(BaseApplication.userInfo);
     }
 
@@ -313,7 +318,8 @@ public class OffshelfScan extends BaseActivity {
                                 //打印拆零标签
                                 if (edtOffShelfScanbarcode.getText().toString().contains("@")){
                                     stockInfoModels.get(0).setSN(txterpvoucherno.getText().toString());
-                                    LPK130DEMO(stockInfoModels.get(0),"Jian");
+                                    stockInfoModels.get(0).setDecimalLngth(outStockTaskInfoModels.get(0).getSupcusName());
+                                    LPK130DEMO(stockInfoModels.get(0),"Jian",outStockTaskInfoModels.get(0).getTaskCount());
                                 }
 
                                 txtEDate.setText(CommonUtil.DateToString(stockInfoModels.get(0).getEDate()));
@@ -582,6 +588,7 @@ public class OffshelfScan extends BaseActivity {
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 outStockTaskDetailsInfoModels = returnMsgModel.getModelJson();
                 int size=outStockTaskDetailsInfoModels.size();
+                txterpvoucherno.setText(Erpvoucherno+"  （行数："+size+"）");
                 MoveIndex=size;
                 //处理拣货数量为0的
                 for(int i=0;i<size;i++) {
@@ -629,11 +636,12 @@ public class OffshelfScan extends BaseActivity {
                     //判断是扫描EAN还是条码
                     if (edtOffShelfScanbarcode.getText().toString().trim().contains("@")){
                         insertStockInfo();
+                        CommonUtil.setEditFocus(edtUnboxing);
                     }else{
                         if (stockInfoModels.size()>1){
                             Batchs = new String[stockInfoModels.size()];
                             for (int i=0;i<stockInfoModels.size();i++){
-                                Batchs[i]=stockInfoModels.get(i).getBatchNo()+","+stockInfoModels.get(i).getMaterialNo();
+                                Batchs[i]=stockInfoModels.get(i).getBatchNo()+","+stockInfoModels.get(i).getMaterialNo()+","+stockInfoModels.get(i).getQty();
                             }
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -908,7 +916,8 @@ AreaInfo_Model AreaModel;
                 //打印拆零标签
                 if (edtOffShelfScanbarcode.getText().toString().contains("@")){
                     stockInfoModel.setSN(txterpvoucherno.getText().toString());
-                    LPK130DEMO(stockInfoModel,"Jian");
+                    stockInfoModel.setDecimalLngth(outStockTaskInfoModels.get(0).getSupcusName());
+                    LPK130DEMO(stockInfoModel,"Jian",outStockTaskInfoModels.get(0).getTaskCount());
                 }
                 stockInfoModels = new ArrayList<>();
                 stockInfoModels.add(stockInfoModel);
@@ -1240,7 +1249,7 @@ AreaInfo_Model AreaModel;
             MessageBox.Show(context, getString(R.string.Error_PickingFinish));
             BindListVIew(outStockTaskDetailsInfoModels);
             CommonUtil.setEditFocus(edtOffShelfScanbarcode);
-            backCheckTask();//ymh拣货完毕自动关闭
+//            backCheckTask();//ymh拣货完毕自动关闭
         }
 
     }

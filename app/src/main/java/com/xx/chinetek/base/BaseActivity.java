@@ -266,7 +266,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
     }
 
 
-    public void LPK130DEMO(StockInfo_Model model,String flag) {
+    public void LPK130DEMO(StockInfo_Model model,String flag,int taskcount) {
         LPK130 lpk130 = new LPK130();
         lpk130.closeDevice();
         if (lpk130.openDevice(URLModel.MacAdress) >= 0) {
@@ -283,7 +283,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
                     lpk130.NFCP_fontSize((byte) 1, (byte) 1);
                     lpk130.NFCP_setSnapMode((byte) 0);
                     lpk130.NFCP_printStr("品号：");
-                    lpk130.NFCP_printStrLine(model.getMaterialNo()==null?"":model.getMaterialNo().toString());
+                    lpk130.NFCP_printStrLine((model.getMaterialNo()==null?"":model.getMaterialNo().toString())+(model.getAreaNo()==null?"":("("+model.getAreaNo()+")")));
                     lpk130.NFCP_feed(7);
 
                     lpk130.NFCP_printStr("品名：");
@@ -297,7 +297,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
 
 
                     lpk130.NFCP_printStr("出库单号：");
-                    lpk130.NFCP_printStrLine(model.getSN()==null?"":model.getSN().toString());
+                    lpk130.NFCP_printStrLine((model.getSN()==null?"":model.getSN().toString())+(taskcount==0?"":("("+taskcount+")")));
                     lpk130.NFCP_feed(7);
 
                     lpk130.NFCP_printStr("有效期：");
@@ -305,10 +305,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IHandleM
                     lpk130.NFCP_feed(7);
 
                     lpk130.NFCP_printStr("批次号：");
-                    lpk130.NFCP_printStrLine(model.getBatchNo()==null?"":model.getBatchNo().toString());
+                    lpk130.NFCP_printStrLine((model.getBatchNo()==null?"":model.getBatchNo().toString())+(model.getDecimalLngth()==null?"":("客户："+model.getDecimalLngth().toString())));
                     lpk130.NFCP_feed(7);
 
-                    lpk130.NFCP_printStr("拣货数量："+ (model.getQty()==null?"":model.getQty().toString()));
+                    lpk130.NFCP_printStr("拣货数："+ (model.getQty()==null?"":model.getQty().toString())+"/"+(model.getUnitNum()==null?"":model.getUnitNum().toString())+"/"+(model.getNum()==null?"":model.getNum().toString()));
                     lpk130.NFCP_printStrLine("  拣货人："+BaseApplication.userInfo.getUserName());
                     lpk130.NFCP_feed(7);
 

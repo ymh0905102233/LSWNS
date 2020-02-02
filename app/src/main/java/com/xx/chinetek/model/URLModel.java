@@ -200,6 +200,8 @@ public class URLModel {
     //ymh装车卸车
     public String GetPalletInfoByPalletNo =GetWCFAdress()+"GetPalletInfoByPalletNo";//获取物流标签
     public String GetTransportSupplierDetailListADF =GetWCFAdress()+"GetTransportSupplierDetailListADF";//装车信息
+    public String GetTransportSupplierDetailListForQueryADF =GetWCFAdress()+"GetTransportSupplierDetailListForQueryADF";//查询装车信息
+
 
     public String LockTaskOperUser =GetWCFAdress()+"LockTaskOperUser";//锁任务
     public String UnLockTaskOperUser =GetWCFAdress()+"UnLockTaskOperUser";//开任务
@@ -212,6 +214,8 @@ public class URLModel {
     public String GetLandmark =GetWCFAdress()+"GetLandmark";
     public String GetTaskForLandmark =GetWCFAdress()+"GetTaskForLandmark";
     public String SaveTaskwithandmark =GetWCFAdress()+"SaveTaskwithandmark";
+
+    public String UpdatePalletBoxQty =GetWCFAdress()+"UpdatePalletBoxQty";
 
 
 }

@@ -151,12 +151,19 @@ public class Landmark extends BaseActivity {
         return false;
     }
 
+    @Event(R.id.btn_change)
+    private void btnchange(View view){
+        model=new landmark();
+        edtlandmark.setText("");
+        CommonUtil.setEditFocus(edtlandmark);
+    }
+
 
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_receiptbilldetail, menu);
+//        getMenuInflater().inflate(R.menu.menu_receiptbilldetail, menu);
         return true;
     }
 
@@ -232,6 +239,24 @@ public class Landmark extends BaseActivity {
                 textErpvoucherno.setText("ERP单号："+postmodel.getErpVoucherNo());
                 textTaskno.setText("任务号："+postmodel.getTaskNo());
                 CommonUtil.setEditFocus(edtbarcode);
+
+
+                //获取成功，直接提交
+                if(postmodel!=null && model!=null){
+                    if (postmodel.getTaskNo()==null||postmodel.getTaskNo().isEmpty()||model.getID()==0){
+                        MessageBox.Show(context,"绑定地标的货物没有任务或者地标扫描错误，请重新操作！");
+                    }else{
+                        final Map<String, String> params = new HashMap<String, String>();
+                        params.put("ModelJson", GsonUtil.parseModelToJson(postmodel));
+                        params.put("UserJson", GsonUtil.parseModelToJson(BaseApplication.userInfo));
+                        RequestHandler.addRequestWithDialog(Request.Method.POST, TAG_SaveTaskwithandmark, getString(R.string.Msg_GetT_SaveStouckOutADF),
+                                context, mHandler, RESULT_SaveTaskwithandmark, null,  URLModel.GetURL().SaveTaskwithandmark, params, null);
+                    }
+
+                }else{
+                    MessageBox.Show(context,"先绑定地标和货物再提交！");
+                }
+
             } else {
                 MessageBox.Show(context,returnMsgModel.getMessage());
                 textErpvoucherno.setText("");
@@ -250,9 +275,9 @@ public class Landmark extends BaseActivity {
 
     void ClearFrm(){
         postmodel=new landmarkwithtaskno();
-        model=new landmark();
+//        model=new landmark();
         edtbarcode.setText("");
-        edtlandmark.setText("");
+//        edtlandmark.setText("");
         textTaskno.setText("");
         textErpvoucherno.setText("");
 

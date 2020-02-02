@@ -573,6 +573,7 @@ public class BuScan extends BaseActivity {
                     //判断是扫描EAN还是条码
                     if (edtOffShelfScanbarcode.getText().toString().trim().contains("@")){
                         insertStockInfo();
+                        CommonUtil.setEditFocus(edtUnboxing);
                     }else{
                         if (stockInfoModels.size()>1){
                             Batchs = new String[stockInfoModels.size()];
@@ -852,7 +853,7 @@ AreaInfo_Model AreaModel;
                 //打印拆零标签
                 if (edtOffShelfScanbarcode.getText().toString().contains("@")){
                     stockInfoModel.setSN(txterpvoucherno.getText().toString());
-                    LPK130DEMO(stockInfoModel,"Jian");
+                    LPK130DEMO(stockInfoModel,"Jian",outStockTaskInfoModels.get(0).getTaskCount());
                 }
                 stockInfoModels = new ArrayList<>();
                 stockInfoModels.add(stockInfoModel);

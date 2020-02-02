@@ -190,7 +190,7 @@ public class Setting extends BaseActivity {
     private void btnTest(View view){
         try{
             StockInfo_Model model = new StockInfo_Model();
-            LPK130DEMO(model,"");
+            LPK130DEMO(model,"",0);
         }catch(Exception ex){
             MessageBox.Show(context, ex.toString());
         }

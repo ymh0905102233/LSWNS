@@ -27,7 +27,7 @@
             android:layout_weight="1"
             android:maxLines="1"
             android:textColor="@color/peru"
-            android:textSize="16sp" />
+            android:textSize="13sp" />
 
         <LinearLayout
             android:layout_width="match_parent"

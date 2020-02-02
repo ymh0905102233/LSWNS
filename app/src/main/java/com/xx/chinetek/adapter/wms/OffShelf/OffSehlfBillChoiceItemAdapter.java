@@ -7,9 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.xx.chinetek.adapter.product.BillsStockIn.BillAdapter;
 import com.xx.chinetek.cywms.R;
+import com.xx.chinetek.model.Production.Wo.WoModel;
 import com.xx.chinetek.model.WMS.OffShelf.OutStockTaskInfo_Model;
 
 import java.util.ArrayList;
@@ -19,13 +23,15 @@ import java.util.List;
  * Created by GHOST on 2017/1/13.
  */
 
-public class OffSehlfBillChoiceItemAdapter extends BaseAdapter {
+public class OffSehlfBillChoiceItemAdapter extends BaseAdapter implements Filterable {
     private Context context; // 运行上下文
-    private List<OutStockTaskInfo_Model> outStockTaskInfoModels; // 信息集合
+    private ArrayList<OutStockTaskInfo_Model> outStockTaskInfoModels; // 信息集合
     private LayoutInflater listContainer; // 视图容器
     //private int selectItem = -1;
     private List<Boolean> listselected;//用布尔型的list记录每一行的选中状态
     boolean isPickingAdmin=false;
+
+    private ArrayFilter mFilter;
 
     public final class ListItemView { // 自定义控件集合
 
@@ -33,7 +39,7 @@ public class OffSehlfBillChoiceItemAdapter extends BaseAdapter {
         public TextView txtERPVoucherNo;
         public TextView txtStrVoucherType;
         public TextView txtCompany;
-        public TextView txtdepartment;
+        public TextView txtCustoms;
         public TextView txtPcikName;
         public TextView txtFloorName;
         public TextView txtStockLeave;
@@ -41,7 +47,7 @@ public class OffSehlfBillChoiceItemAdapter extends BaseAdapter {
         public TextView txtIssueType;
     }
 
-    public OffSehlfBillChoiceItemAdapter(Context context,boolean isPickingAdmin, List<OutStockTaskInfo_Model> outStockTaskInfoModels) {
+    public OffSehlfBillChoiceItemAdapter(Context context,boolean isPickingAdmin, ArrayList<OutStockTaskInfo_Model> outStockTaskInfoModels) {
         this.context = context;
         listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         this.outStockTaskInfoModels = outStockTaskInfoModels;
@@ -104,7 +110,7 @@ public class OffSehlfBillChoiceItemAdapter extends BaseAdapter {
             listItemView.txtERPVoucherNo = (TextView) convertView.findViewById(R.id.txtERPVoucherNo);
             listItemView.txtStrVoucherType = (TextView) convertView.findViewById(R.id.txtStrVoucherType);
             listItemView.txtCompany = (TextView) convertView.findViewById(R.id.txtCompany);
-            listItemView.txtdepartment = (TextView) convertView.findViewById(R.id.txtdepartment);
+            listItemView.txtCustoms = (TextView) convertView.findViewById(R.id.txtCustoms);
             listItemView.txtVouUser = (TextView) convertView.findViewById(R.id.txtVouUser);
             listItemView.txtPcikName = (TextView) convertView.findViewById(R.id.txtPcikName);
             listItemView.txtFloorName = (TextView) convertView.findViewById(R.id.txtFloorName);
@@ -118,14 +124,15 @@ public class OffSehlfBillChoiceItemAdapter extends BaseAdapter {
         listItemView.txtTaskNo.setText(outStockTaskInfoModel.getErpVoucherNo());
         listItemView.txtERPVoucherNo.setText(outStockTaskInfoModel.getTaskNo());
         listItemView.txtStrVoucherType.setText(outStockTaskInfoModel.getStrVoucherType());
-        listItemView.txtCompany.setText("据点："+outStockTaskInfoModel.getStrongHoldName());
-        listItemView.txtdepartment.setText("部门："+outStockTaskInfoModel.getDepartmentName());
+        listItemView.txtCompany.setText(outStockTaskInfoModel.getTradingConditionsName()==null?"":outStockTaskInfoModel.getTradingConditionsName());
+//        listItemView.txtdepartment.setText("部门："+outStockTaskInfoModel.getDepartmentName());
         listItemView.txtPcikName.setText("区域:"+outStockTaskInfoModel.getStrHouseProp());
-        listItemView.txtFloorName.setText("楼层："+outStockTaskInfoModel.getFloorName());
+//        listItemView.txtFloorName.setText("楼层："+outStockTaskInfoModel.getFloorName());
+        listItemView.txtFloorName.setText(outStockTaskInfoModel.getWareHouseName());
         listItemView.txtStockLeave.setText("拣货人："+outStockTaskInfoModel.getPickUserName());
         listItemView.txtVouUser.setText("状态："+outStockTaskInfoModel.getStrStatus() );
         listItemView.txtIssueType.setText("任务数："+ outStockTaskInfoModel.getTaskCount());
-       // listItemView.txtCustoms.setText("客户名称1，客户名称2，客户名称3，客户名称4,客户名称5,客户名称6");
+        listItemView.txtCustoms.setText("客户："+outStockTaskInfoModel.getSupcusName());
 //        if(outStockTaskInfoModel.getIsEdate().equals("1"))
 //            convertView.setBackgroundResource(R.color.antiquewhite);
 //        else if(outStockTaskInfoModel.getIsEdate().equals("2"))
@@ -149,4 +156,61 @@ public class OffSehlfBillChoiceItemAdapter extends BaseAdapter {
         return convertView;
     }
 
+    @Override
+    public Filter getFilter() {
+        if (mFilter == null) {
+            mFilter = new ArrayFilter();
+        }
+        return mFilter;
+    }
+
+    private class ArrayFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence prefix) {
+            FilterResults results = new FilterResults();
+
+            if (outStockTaskInfoModels == null) {
+                outStockTaskInfoModels = new ArrayList<OutStockTaskInfo_Model>(outStockTaskInfoModels);
+            }
+
+            if (prefix == null || prefix.length() == 0) {
+                ArrayList<OutStockTaskInfo_Model> list = outStockTaskInfoModels;
+                results.values = list;
+                results.count = list.size();
+            } else {
+                String prefixString = prefix.toString();
+                ArrayList<OutStockTaskInfo_Model> unfilteredValues = outStockTaskInfoModels;
+                int count = unfilteredValues.size();
+
+                ArrayList<OutStockTaskInfo_Model> newValues = new ArrayList<OutStockTaskInfo_Model>(count);
+
+                for (int i = 0; i < count; i++) {
+                    OutStockTaskInfo_Model pc = unfilteredValues.get(i);
+                    if (pc != null) {
+                        if (pc.getTradingConditionsName().toUpperCase().equals(prefixString)) {
+                            newValues.add(pc);
+                        }
+                    }
+                }
+
+                results.values = newValues;
+                results.count = newValues.size();
+            }
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint,FilterResults results) {
+            outStockTaskInfoModels = (ArrayList<OutStockTaskInfo_Model>) results.values;
+            if (results.count > 0) {
+                notifyDataSetChanged();
+            } else {
+                notifyDataSetInvalidated();
+            }
+        }
+
+
+    }
 }

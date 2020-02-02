@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xx.chinetek.Box.Boxing;
+import com.xx.chinetek.Box.BoxingForWuliu;
 import com.xx.chinetek.FillPrint.FillPrint;
 import com.xx.chinetek.Pallet.CombinPallet;
 import com.xx.chinetek.Pallet.CombinPalletSupplier;
@@ -157,7 +158,7 @@ public class MainActivity extends BaseActivity {
         }else if(textView.getText().toString().equals("地标扫描")){
             intent.setClass(context, Landmark.class);
         }else if(textView.getText().toString().equals("物流拼箱")){
-            intent.setClass(context, Boxing.class);
+            intent.setClass(context, BoxingForWuliu.class);
         }
 
 
@@ -272,6 +273,7 @@ public class MainActivity extends BaseActivity {
                     case 21:
                         itemIconList.add(R.drawable.productmanage);
                         itemNamesList.add("生产记录");
+
                         break;
                     case 22:
                         itemIconList.add(R.drawable.receiptproduct);
@@ -304,6 +306,8 @@ public class MainActivity extends BaseActivity {
                     case 36:
                         itemIconList.add(R.drawable.productmanage);
                         itemNamesList.add("地标扫描");
+                        itemIconList.add(R.drawable.productmanage);
+                        itemNamesList.add("物流拼箱");
                         break;
                     case 37:
                         itemIconList.add(R.drawable.dismounting);

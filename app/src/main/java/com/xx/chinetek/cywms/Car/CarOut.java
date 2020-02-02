@@ -1,6 +1,7 @@
 package com.xx.chinetek.cywms.Car;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Message;
 import android.os.Parcel;
 import android.text.TextUtils;
@@ -157,14 +158,18 @@ public class CarOut extends BaseActivity {
                 }
                 for (int i=0;i<SumbittransportSuppliers.size();i++){
                     if (SumbittransportSuppliers.get(i).getPalletNo().equals(palletno)){
-                        float fnum =1;
-                        float scannum = CommonUtil.convertToFloat(edtLineOutStockNum.getText().toString(),fnum );
-                        float oldnnum = CommonUtil.convertToFloat(SumbittransportSuppliers.get(i).getBoxCount(),fnum );
-                        if (oldnnum<scannum){
-                            MessageBox.Show(context,"箱数不能大于实物数量！");
-                            return true;
+                        //限制改过数量的不能被再次改动
+                        if(!SumbittransportSuppliers.get(i).getGUID().equals("1")){
+                            float fnum =1;
+                            float scannum = CommonUtil.convertToFloat(edtLineOutStockNum.getText().toString(),fnum );
+                            float oldnnum = CommonUtil.convertToFloat(SumbittransportSuppliers.get(i).getBoxCount(),fnum );
+                            if (oldnnum<scannum){
+                                MessageBox.Show(context,"箱数不能大于实物数量！");
+                                return true;
+                            }
+                            SumbittransportSuppliers.get(i).setBoxCount(edtLineOutStockNum.getText().toString());
+                            SumbittransportSuppliers.get(i).setGUID("1");
                         }
-                        SumbittransportSuppliers.get(i).setBoxCount(edtLineOutStockNum.getText().toString());
                     }
                 }
                 CommonUtil.setEditFocus(edtLineStockOutScanBarcode);
@@ -182,7 +187,7 @@ public class CarOut extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_receiptbilldetail, menu);
+        getMenuInflater().inflate(R.menu.menu_postcar, menu);
         return true;
     }
 
@@ -207,6 +212,16 @@ public class CarOut extends BaseActivity {
                 MessageBox.Show(context,"没有需要装车的信息！");
             }
         }
+        if (item.getItemId() == R.id.action_detail) {
+            if (DoubleClickCheck.isFastDoubleClick(context)) {
+                return false;
+            }
+            Intent intent = new Intent();
+            intent.setClass(context, CarQuery.class);
+            startActivityLeft(intent);
+
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -234,11 +249,22 @@ public class CarOut extends BaseActivity {
 
 
     void AnalysisetT_PalletDetailByBarCodeJson(String result){
-        LogUtil.WriteLog(LineStockInProduct.class, TAG_GetT_PalletDetailByBarCodeADF,result);
-        ReturnMsgModelList<BarCodeInfo> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<BarCodeInfo>>() {}.getType());
         try {
+            LogUtil.WriteLog(LineStockInProduct.class, TAG_GetT_PalletDetailByBarCodeADF,result);
+            ReturnMsgModelList<BarCodeInfo> returnMsgModel = GsonUtil.getGsonUtil().fromJson(result, new TypeToken<ReturnMsgModelList<BarCodeInfo>>() {}.getType());
             if (returnMsgModel.getHeaderStatus().equals("S")) {
                 ArrayList<BarCodeInfo> barCodeInfos = returnMsgModel.getModelJson();
+                //状态为未复核和等通知的不能装车
+                if(barCodeInfos.get(0).getStatus()!=5){
+                    MessageBox.Show(context,"不是已复核状态的单据不能做装箱操作！");
+                    return;
+                }
+
+                if(barCodeInfos.get(0).getStrStatus().equals("Y")){
+                    MessageBox.Show(context,"等通知的单据不能做装箱操作！");
+                    return;
+                }
+
                 palletno=edtLineStockOutScanBarcode.getText().toString();
                 Bindbarcode(barCodeInfos);
                 CommonUtil.setEditFocus(edtLineOutStockNum);
@@ -272,6 +298,7 @@ public class CarOut extends BaseActivity {
                     transportSupplier.setPhone(barCodeInfos.get(i).getPhone());
                     transportSupplier.setAddress(barCodeInfos.get(i).getAddress());
                     transportSupplier.setAddress1(barCodeInfos.get(i).getAddress1());
+                    transportSupplier.setGUID("0");
                     transportSuppliers.add(transportSupplier);
 
                 }
@@ -294,7 +321,7 @@ public class CarOut extends BaseActivity {
                 }
                 edtLineOutStockNum.setText(String.valueOf(sumAll));
                 for (int j=0;j<SumbittransportSuppliers.size();j++){
-                    if(SumbittransportSuppliers.get(j).getPalletNo().equals(palletno)){
+                    if(SumbittransportSuppliers.get(j).getPalletNo().equals(palletno)&&!SumbittransportSuppliers.get(j).getGUID().equals("1")){
                         SumbittransportSuppliers.get(j).setBoxCount(sumAll+"");
                     }
                 }

@@ -67,26 +67,15 @@
 
                 <TextView
                     android:id="@+id/txtCompany"
-                    android:layout_width="0dp"
+                    android:layout_width="137dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
                     android:maxLines="1"
                     android:text="2"
                     android:textAlignment="textStart"
                     android:textColor="@color/peru"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
-
-                <TextView
-                    android:id="@+id/txtdepartment"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.3"
-                    android:maxLines="1"
-                    android:text="1"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/gray"
-                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/txtVouUser"
@@ -97,7 +86,7 @@
                     android:maxLines="1"
                     android:textAlignment="textStart"
                     android:textColor="@color/mediumvioletred"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -105,8 +94,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:visibility="gone">
+            android:layout_weight="0.5">
+
                 <TextView
                     android:id="@+id/txtCustoms"
                     android:layout_width="0dp"
@@ -114,7 +103,7 @@
                     android:layout_weight="1"
                     android:maxLines="1"
                     android:textColor="@color/gray"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
 
         </LinearLayout>

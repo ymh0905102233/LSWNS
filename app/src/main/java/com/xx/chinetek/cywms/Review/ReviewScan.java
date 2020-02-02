@@ -115,6 +115,9 @@ public class ReviewScan extends BaseActivity {
     EditText edtReviewScanBarcode;
     @ViewInject(R.id.txt_VoucherNo)
     TextView txtVoucherNo;
+    @ViewInject(R.id.txt_taskcount)
+    TextView txttaskcount;
+
     @ViewInject(R.id.txt_Company)
     TextView txtCompany;
     @ViewInject(R.id.txt_Batch)
@@ -127,6 +130,11 @@ public class ReviewScan extends BaseActivity {
     TextView txtMaterialName;
     @ViewInject(R.id.lsv_Reviewscan)
     ListView lsvReviewscan;
+
+    @ViewInject(R.id.txt_Customername)
+    TextView txtCustomername;
+
+
 
     ArrayList<OutStockDetailInfo_Model> outStockDetailInfoModels;
     ArrayList<StockInfo_Model> stockInfoModels;//扫描条码
@@ -292,7 +300,9 @@ public class ReviewScan extends BaseActivity {
         */
     void GetOutStockDetailInfo(OutStock_Model outStockModel){
         if(outStockModel!=null) {
+            txttaskcount.setText("任务数："+outStockModel.getTaskCount());
             txtVoucherNo.setText(outStockModel.getErpVoucherNo());
+            txtCustomername.setText(outStockModel.getCustomerName());
             final OutStockDetailInfo_Model outStockDetailInfoModel1 = new OutStockDetailInfo_Model();
             outStockDetailInfoModel1.setHeaderID(outStockModel.getID());
             outStockDetailInfoModel1.setErpVoucherNo(outStockModel.getErpVoucherNo());

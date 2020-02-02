@@ -33,6 +33,8 @@ public class ReviewBillChioceItemAdapter extends BaseAdapter {
         public TextView txtStrVoucherType;
         public TextView txtCompany;
         public TextView txtdepartment;
+        public TextView txtlandmark;
+
     }
 
     public ReviewBillChioceItemAdapter(Context context, List<OutStock_Model> outStockModels) {
@@ -76,16 +78,20 @@ public class ReviewBillChioceItemAdapter extends BaseAdapter {
             listItemView.txtStrVoucherType = (TextView) convertView.findViewById(R.id.txtStrVoucherType);
             listItemView.txtCompany = (TextView) convertView.findViewById(R.id.txtCompany);
             listItemView.txtdepartment = (TextView) convertView.findViewById(R.id.txtdepartment);
+            listItemView.txtlandmark = (TextView) convertView.findViewById(R.id.txtlandmark);
+
             convertView.setTag(listItemView);
         } else {
             listItemView = (ListItemView) convertView.getTag();
         }
         OutStock_Model outStockModel=outStockModels.get(selectID);
         listItemView.txtTaskNo.setText(outStockModel.getErpVoucherNo());
-        listItemView.txtERPVoucherNo.setText(outStockModel.getVoucherNo());
+        listItemView.txtERPVoucherNo.setText(outStockModel.getVoucherNo()+" 任务数："+(outStockModel.getTaskCount()==null?"":outStockModel.getTaskCount()));
         listItemView.txtStrVoucherType.setText(outStockModel.getStrVoucherType());
-        listItemView.txtCompany.setText(outStockModel.getStrongHoldName());
+        listItemView.txtCompany.setText(outStockModel.getCustomerName());
         listItemView.txtdepartment.setText(outStockModel.getDepartmentName());
+        listItemView.txtlandmark.setText(outStockModel.getStrLandmark()==null?"":outStockModel.getStrLandmark());
+
         if (selectItem == position) {
             convertView.setBackgroundColor(context.getResources().getColor(R.color.mediumseagreen));
         }else{

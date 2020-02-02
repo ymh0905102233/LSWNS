@@ -5,12 +5,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.DialogInterface.OnShowListener;
+import android.media.MediaPlayer;
 import android.widget.EditText;
 
+import com.xx.chinetek.cywms.R;
 import com.xx.chinetek.util.function.CommonUtil;
 
 
 public class MessageBox {
+    private static MediaPlayer music = null;
     /**
      * 弹出默认提示框
      *
@@ -18,6 +21,9 @@ public class MessageBox {
      * @param message 需要弹出的消息
      */
     public static void Show(Context context, String message) {
+        music = MediaPlayer.create(context,R.raw.error3);
+        music.start();
+
         new AlertDialog.Builder(context).setTitle("提示").setCancelable(false).setMessage(message).setPositiveButton("确定", null).show();
     }
 

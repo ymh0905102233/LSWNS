@@ -79,12 +79,13 @@ public class OffShelfScanDetailAdapter extends BaseAdapter {
        final OutStockTaskDetailsInfo_Model outStockTaskDetailsInfoModel=outStockTaskDetailsInfoModels.get(selectID);
         listItemView.txtbarcode.setText(outStockTaskDetailsInfoModel.getMaterialNo());
         listItemView.txtScanNum.setText("楼层："+outStockTaskDetailsInfoModel.getFloorType()+"楼");
-        listItemView.txtRemainQty.setText("可拣数："+outStockTaskDetailsInfoModel.getRePickQty());
+        listItemView.txtRemainQty.setText("可拣:"+outStockTaskDetailsInfoModel.getRePickQty()+"(箱:"+outStockTaskDetailsInfoModel.getBoxQty()+"/零:"+outStockTaskDetailsInfoModel.getScatQty()+")");
         listItemView.txtreferStock.setText(outStockTaskDetailsInfoModel.getAreaNo()+"-"+outStockTaskDetailsInfoModel.getToBatchno());
         listItemView.txtERPVoucherNo.setText(outStockTaskDetailsInfoModel.getErpVoucherNo());
         listItemView.txtMaterialDesc.setText(outStockTaskDetailsInfoModel.getMaterialDesc());
-        listItemView.txtbatch.setText((outStockTaskDetailsInfoModel.getIsSpcBatch().toUpperCase().equals("Y")?
-                "指定批：":"批：")+outStockTaskDetailsInfoModel.getFromBatchNo());
+//        listItemView.txtbatch.setText((outStockTaskDetailsInfoModel.getIsSpcBatch().toUpperCase().equals("Y")?
+//                "指定批：":"批：")+outStockTaskDetailsInfoModel.getFromBatchNo());
+        listItemView.txtbatch.setText((outStockTaskDetailsInfoModel.getEAN()==null?"":outStockTaskDetailsInfoModel.getEAN()));
         if (outStockTaskDetailsInfoModel.getScanQty()!=0 &&
                 outStockTaskDetailsInfoModel.getScanQty().compareTo(outStockTaskDetailsInfoModel.getRePickQty())<0) {
             convertView.setBackgroundResource(R.color.khaki);

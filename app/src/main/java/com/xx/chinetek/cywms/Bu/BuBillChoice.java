@@ -372,7 +372,7 @@ public class BuBillChoice extends BaseActivity  implements SwipeRefreshLayout.On
 
 
 
-    private void BindListVIew(List<OutStockTaskInfo_Model> outStockTaskInfoModels) {
+    private void BindListVIew(ArrayList<OutStockTaskInfo_Model> outStockTaskInfoModels) {
         offSehlfBillChoiceItemAdapter=new OffSehlfBillChoiceItemAdapter(context,isPickingAdmin,outStockTaskInfoModels);
         lsvOffshelfChioce.setAdapter(offSehlfBillChoiceItemAdapter);
 

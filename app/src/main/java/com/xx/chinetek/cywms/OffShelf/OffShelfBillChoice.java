@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +32,7 @@ import com.xx.chinetek.model.ReturnMsgModelList;
 import com.xx.chinetek.model.URLModel;
 import com.xx.chinetek.model.User.UerInfo;
 import com.xx.chinetek.model.WMS.OffShelf.OutStockTaskInfo_Model;
+import com.xx.chinetek.model.WMS.Stock.StockInfo_Model;
 import com.xx.chinetek.util.Network.NetworkError;
 import com.xx.chinetek.util.Network.RequestHandler;
 import com.xx.chinetek.util.dialog.MessageBox;
@@ -93,8 +96,14 @@ public class OffShelfBillChoice extends BaseActivity  implements SwipeRefreshLay
     SwipeRefreshLayout mSwipeLayout;
     @ViewInject(R.id.edt_filterContent)
     EditText edtfilterContent;
+    @ViewInject(R.id.edt_filterContent1)
+    EditText edt_filterContent1;
+
     @ViewInject(R.id.btn_StartPicking)
     Button btnStartPicking;
+    @ViewInject(R.id.btn_select)
+    Button btnselect;
+
     @ViewInject(R.id.txt_billchoice_sumrow)
     TextView tvSumrwo;
 
@@ -189,19 +198,20 @@ public class OffShelfBillChoice extends BaseActivity  implements SwipeRefreshLay
     private  boolean onKey(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)// 如果为Enter键
         {
-            if(outStockTaskInfoModels!=null && outStockTaskInfoModels.size()>0) {
+//            if(outStockTaskInfoModels!=null && outStockTaskInfoModels.size()>0) {
                 String code = edtfilterContent.getText().toString().trim();
-                //扫描单据号、检查单据列表
-                OutStockTaskInfo_Model outStockTaskInfoModel = new OutStockTaskInfo_Model(code,code);
-                int index=outStockTaskInfoModels.indexOf(outStockTaskInfoModel);
-                if (index!=-1) {
-                    offSehlfBillChoiceItemAdapter.modifyStates(index);
-                    offSehlfBillChoiceItemAdapter.notifyDataSetInvalidated();
-                }else{
-                    //没有匹配，找小车
-                    InitListViewForcar(code);
-                }
-            }
+//                //扫描单据号、检查单据列表
+//                OutStockTaskInfo_Model outStockTaskInfoModel = new OutStockTaskInfo_Model(code,code);
+//                int index=outStockTaskInfoModels.indexOf(outStockTaskInfoModel);
+//                if (index!=-1) {
+//                    offSehlfBillChoiceItemAdapter.modifyStates(index);
+//                    offSehlfBillChoiceItemAdapter.notifyDataSetInvalidated();
+//                }else{
+//                    //没有匹配，找小车
+//                    InitListViewForcar(code);
+//                }
+                InitListViewForcar(code);
+//            }
             CommonUtil.setEditFocus(edtfilterContent);
         }
         return false;
@@ -242,6 +252,44 @@ public class OffShelfBillChoice extends BaseActivity  implements SwipeRefreshLay
 
     }
 
+    String[] Batchs={"托运，到付，费用客户/供应商承担",
+                    "送货上门，到付，费用客户/供应商承担",
+                    "普通快递，到付，费用客户/供应商承担",
+                    "客户到仓库自提",
+                    "义乌周边送货上门",
+                    "顺丰快递，到付，费用客户/供应商承担",
+                    "配好货，送门店，客户去门店自提",
+                    "德邦快递，到付，费用客户/供应商承担",
+                    "托运，现付，费用公司承担",
+                    "送货上门，现付，费用公司承担",
+                    "普通快递，现付，费用公司承担",
+                    "顺丰快递，现付，费用公司承担",
+                    "德邦快递，现付，费用公司承担",
+                    "托运，现付，费用客户/供应商承担",
+                    "送货上门，现付，费用客户/供应商承担",
+                    "普通快递，现付，费用客户/供应商承担",
+                    "顺丰快递，现付，费用客户/供应商承担",
+                    "德邦快递，现付，费用客户/供应商承担"};
+
+    int BatchType=-1;
+    @Event(R.id.btn_select)
+    private void btnselectClick(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("选择交易条件！");
+        builder.setItems(Batchs, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                String getbatch ="";
+                getbatch =Batchs[which].toString();
+                edt_filterContent1.setText(getbatch);
+                BatchType=which;
+            }
+        });
+        builder.show();
+
+    }
 
     Boolean GetSelectTask(){
         selectoutStockTaskInfoModels = new ArrayList<>();
@@ -272,14 +320,16 @@ public class OffShelfBillChoice extends BaseActivity  implements SwipeRefreshLay
         else
             outStockTaskInfoModel.setPickUserNo(BaseApplication.userInfo.getUserNo());
         GetT_OutStockTaskInfoList(outStockTaskInfoModel);
+        edt_filterContent1.addTextChangedListener(TextWatcher);
     }
 
     private void InitListViewForcar(String CarNo) {
         outStockTaskInfoModels=new ArrayList<>();
         selectoutStockTaskInfoModels=new ArrayList<>();
         OutStockTaskInfo_Model outStockTaskInfoModel=new OutStockTaskInfo_Model();
-        outStockTaskInfoModel.setStatus(1);
-        if (CarNo.contains("@")){outStockTaskInfoModel.setBarCode(CarNo);}else{outStockTaskInfoModel.setCarNo(CarNo);}
+        outStockTaskInfoModel.setStatus(0);
+        if (CarNo.contains("@")){outStockTaskInfoModel.setBarCode(CarNo);}else{
+            if(CarNo.length()>10){outStockTaskInfoModel.setErpVoucherNo(CarNo);}else{outStockTaskInfoModel.setCarNo(CarNo);} }
 
         if(isPickingAdmin)
             outStockTaskInfoModel.setPickLeaderUserNo(BaseApplication.userInfo.getUserNo());
@@ -287,6 +337,8 @@ public class OffShelfBillChoice extends BaseActivity  implements SwipeRefreshLay
             outStockTaskInfoModel.setPickUserNo(BaseApplication.userInfo.getUserNo());
         GetT_OutStockTaskInfoList(outStockTaskInfoModel);
     }
+
+
 
     void GetT_OutStockTaskInfoList(OutStockTaskInfo_Model outStockTaskInfoModel){
         try {
@@ -412,7 +464,7 @@ public class OffShelfBillChoice extends BaseActivity  implements SwipeRefreshLay
 
 
 
-    private void BindListVIew(List<OutStockTaskInfo_Model> outStockTaskInfoModels) {
+    private void BindListVIew(ArrayList<OutStockTaskInfo_Model> outStockTaskInfoModels) {
         offSehlfBillChoiceItemAdapter=new OffSehlfBillChoiceItemAdapter(context,isPickingAdmin,outStockTaskInfoModels);
         lsvOffshelfChioce.setAdapter(offSehlfBillChoiceItemAdapter);
 
@@ -428,5 +480,31 @@ public class OffShelfBillChoice extends BaseActivity  implements SwipeRefreshLay
         intent.putExtras(bundle);
         startActivityLeft(intent);
     }
+
+    /*** 文本变化事件*/
+     TextWatcher TextWatcher=new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            try{
+                if(!edt_filterContent1.getText().toString().equals(""))
+                    offSehlfBillChoiceItemAdapter.getFilter().filter(edt_filterContent1.getText().toString());
+                else{
+                    BindListVIew(outStockTaskInfoModels);
+                }
+            }catch (Exception ex){
+                MessageBox.Show(context,ex.getMessage());
+            }
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 }
 

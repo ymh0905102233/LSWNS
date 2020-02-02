@@ -98,6 +98,46 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
     private String BatchNo;
     private int HouseProp;
 
+    private String EAN;
+    private String PackQty;
+    private String BoxQty;
+    private String ScatQty;
+
+    public String getEAN() {
+        return EAN;
+    }
+
+    public void setEAN(String EAN) {
+        this.EAN = EAN;
+    }
+
+    public String getPackQty() {
+        return PackQty;
+    }
+
+    public void setPackQty(String packQty) {
+        PackQty = packQty;
+    }
+
+    public String getBoxQty() {
+        return BoxQty;
+    }
+
+    public void setBoxQty(String boxQty) {
+        BoxQty = boxQty;
+    }
+
+    public String getScatQty() {
+        return ScatQty;
+    }
+
+    public void setScatQty(String scatQty) {
+        ScatQty = scatQty;
+    }
+
+    public static Creator<OutStockTaskDetailsInfo_Model> getCREATOR() {
+        return CREATOR;
+    }
 
     public int getHouseProp() {
         return HouseProp;
@@ -837,6 +877,10 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
         dest.writeString(this.MoveType);
         dest.writeString(this.BatchNo);
         dest.writeInt(this.HouseProp);
+        dest.writeString(this.EAN);
+        dest.writeString(this.PackQty);
+        dest.writeString(this.BoxQty);
+        dest.writeString(this.ScatQty);
         dest.writeString(this.IsSpcBatch);
         dest.writeString(this.FromBatchNo);
         dest.writeString(this.FromErpAreaNo);
@@ -919,6 +963,10 @@ public class OutStockTaskDetailsInfo_Model extends Base_Model implements Parcela
         this.MoveType = in.readString();
         this.BatchNo = in.readString();
         this.HouseProp = in.readInt();
+        this.EAN = in.readString();
+        this.PackQty = in.readString();
+        this.BoxQty = in.readString();
+        this.ScatQty = in.readString();
         this.IsSpcBatch = in.readString();
         this.FromBatchNo = in.readString();
         this.FromErpAreaNo = in.readString();
